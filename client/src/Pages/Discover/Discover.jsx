@@ -2,18 +2,27 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function Discover() {
-  
-  const searchSpotify = async () => {
-    console.log("search spotify clicked");
-    const url = "https://api.spotify.com/v1/search";
-    const searchQuery = "anderson paak";
-    const typeQuery = `type=artist`;
-    const { data } = await axios.get(`${url}?q=${searchQuery}&${typeQuery}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(data);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const TOKEN = process.env.TOKEN;
+
+  const searchSpotify = () => {
+    // try {
+    //   const searchQuery = "anderson paak";
+    //   const typeQuery = `type=artist`;
+    //   const { data } = await axios.get(
+    //     `${BASE_URL}/search?q=${searchQuery}&${typeQuery}`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${TOKEN}`,
+    //       },
+    //     }
+    //   );
+    //   console.log(data);
+    //   console.log("search spotify clicked");
+    // } catch {
+    //   console.log("Error");
+    // }
+    console.log(BASE_URL);
   };
 
   return (
