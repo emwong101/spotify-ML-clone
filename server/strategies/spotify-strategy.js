@@ -3,6 +3,7 @@ require('dotenv').config();
 const knex = require('knex')(require('../knexfile').development);
 
 const port = process.env.PORT;
+//localhost:8080/auth/callback
 const authCallbackPath = '/callback';
 
 const spotifyStrategy = new SpotifyStrategy(
