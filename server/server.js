@@ -1,16 +1,16 @@
-const path = require("node:path");
+const path = require('node:path');
 
-require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-const usersRoutes = require("./routes/usersRouter");
-app.use("/user", usersRoutes);
+const usersRoutes = require('./routes/usersRouter');
+app.use('/user', usersRoutes);
 
 const PORT = process.env.PORT || 5500;
 

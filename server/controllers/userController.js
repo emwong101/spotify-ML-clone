@@ -1,7 +1,7 @@
-const knex = require("knex")(require("../knexfile").development);
+const knex = require('knex')(require('../knexfile').development);
 
 exports.index = (_req, res) => {
-  knex("users")
+  knex('users')
     .then((data) => {
       res.status(200).json(data);
     })
@@ -9,7 +9,7 @@ exports.index = (_req, res) => {
 };
 
 exports.singleUser = (req, res) => {
-  knex("users")
+  knex('users')
     .where({ id: req.params.id })
     .then((data) => {
       if (!data.length) {
@@ -27,10 +27,10 @@ exports.singleUser = (req, res) => {
 exports.getUserPlaylist = (req, res) => {
   const { id, playlist_id } = req.params;
   knex
-    .select("u.id as user_id", "p.playlist_id as playlist_id", "p.data")
-    .from("users as u")
-    .leftJoin("playlist as p", "u.id", "=", "p.fk_user_id")
-    .where("u.id", parseInt(id))
+    .select('u.id as user_id', 'p.playlist_id as playlist_id', 'p.data')
+    .from('users as u')
+    .leftJoin('playlist as p', 'u.id', '=', 'p.fk_user_id')
+    .where('u.id', parseInt(id))
     .then((data) => {
       if (!data.length) {
         return res

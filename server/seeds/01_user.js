@@ -4,11 +4,11 @@
  */
 exports.seed = async function (knex) {
   // Deletes ALL existing entries
-  await knex("users").del();
-  await knex("users").insert([
+  await knex('users').del();
+  await knex('users').insert([
     {
       id: 1,
-      spotify_token: "spotifytoken",
+      spotify_token: 'spotifytoken',
     },
   ]);
 };
