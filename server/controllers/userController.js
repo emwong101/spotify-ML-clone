@@ -1,7 +1,7 @@
-const knex = require("knex")(require("../knexfile"));
+const knex = require('knex')(require('../knexfile').development);
 
 exports.index = (_req, res) => {
-  knex("users")
+  knex('users')
     .then((data) => {
       res.status(200).json(data);
     })
