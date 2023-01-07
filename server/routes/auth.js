@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-let authCallbackPath = 'http://localhost:8888/callback';
+let authCallbackPath = 'http://localhost:8080/auth/callback';
 // let authCallbackPath = 'spotify/callback';
 
 // Create a login endpoint which kickstarts the auth process and takes user to a consent page
@@ -27,7 +27,7 @@ router.get(
 //localhost:8080/auth/callback
 
 router.get(
-  '/callback',
+  '/spotify/callback',
   passport.authenticate('spotify', { failureRedirect: '/login' }),
   (_req, res) => {
     // Successful authentication, redirect to client-side application

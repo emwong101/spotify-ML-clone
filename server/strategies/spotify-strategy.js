@@ -4,13 +4,13 @@ const knex = require('knex')(require('../knexfile').development);
 
 const port = process.env.PORT;
 //localhost:8080/auth/callback
-const authCallbackPath = '/callback';
+const authCallbackPath = '/auth/spotify/callback';
 
 const spotifyStrategy = new SpotifyStrategy(
   {
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'http://localhost:8888' + authCallbackPath,
+    callbackURL: 'http://localhost:8080/auth/spotify/callback',
   },
   function (accessToken, refreshToken, expires_in, profile, done) {
     // asynchronous verification, for effect...
