@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function Discover() {
-  
   const searchSpotify = async () => {
-    console.log("search spotify clicked");
-    const url = "https://api.spotify.com/v1/search";
-    const searchQuery = "anderson paak";
+    console.log('search spotify clicked');
+    const url = 'https://api.spotify.com/v1/search';
+    const searchQuery = 'anderson paak';
     const typeQuery = `type=artist`;
     const { data } = await axios.get(`${url}?q=${searchQuery}&${typeQuery}`, {
       headers: {
@@ -21,6 +20,9 @@ function Discover() {
       <h1>Discover Playlists</h1>
       <section className="discover__form">
         <h2>Form</h2>
+        <a href="http://localhost:8080/auth/spotify">
+          <button>Login</button>
+        </a>
         <form action="">
           <label htmlFor="mood">
             <h3>Mood</h3>
