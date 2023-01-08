@@ -4,9 +4,9 @@ import "./App.css";
 import Header from "./Components/Header/Header";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Discover from "./Pages/Discover/Discover";
-import Charts from "./Pages/Charts/Charts";
-import About from "./Pages/About/About";
+import Discover from "./pages/Discover/Discover";
+import Charts from "./pages/Charts/Charts";
+import About from "./pages/About/About";
 
 function App() {
   return (

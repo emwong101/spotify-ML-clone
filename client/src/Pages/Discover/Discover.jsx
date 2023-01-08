@@ -8,20 +8,36 @@ function Discover() {
   const authConfig = `Bearer ${TOKEN}`;
   console.log(authConfig);
 
-  const searchSpotify = async (e) => {
+  const [mood, setMood] = useState("");
+
+  const moods = {
+    happy: "&min_danceability=0.55&min_energy=0.6&min_tempo=76&min_valence=0.6",
+    sad: "&max_danceability=0.5&max_energy=0.7&max_valence=0.55",
+    focus: "",
+    chill: "",
+    instrumental: "",
+    workout: "",
+    random: "",
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+  };
+
+  const moodSelection = (e) => {
+    setMood(e.target.value);
+  };
+
+  const getRecommendations = async (e) => {
     try {
-      const searchQuery = "anderson paak";
-      const typeQuery = `type=artist`;
       const { data } = await axios.get(
-        `${BASE_URL}search?q=${searchQuery}&${typeQuery}`,
+        `${BASE_URL}recommendations?limit=5&seed_artists=6aaMZ3fcfLv4tEbmY7bjRM&min_danceability=0.55&min_energy=0.6&min_tempo=76&min_valence=0.6`,
         {
-          headers: {
-            Authorization: authConfig,
-          },
+          headers: { Authorization: authConfig },
         }
       );
       console.log(data);
-      console.log("search spotify clicked");
+      console.log(e.target);
     } catch {
       console.log("Error");
     }
@@ -32,14 +48,21 @@ function Discover() {
       <h1>Discover Playlists</h1>
       <section className="discover__form">
         <h2>Form</h2>
-        {/* <form action=""> */}
-        <label htmlFor="mood">
-          <h3>Mood</h3>
-          insert moods here
-        </label>
-        <label htmlFor="timeframe">insert timeframes here</label>
-        <button onClick={searchSpotify}>Discover</button>
-        {/* </form> */}
+        <form id="discover" action="" onSubmit={submit}>
+          <label htmlFor="discover">
+            <h3>Mood</h3>
+            <input type="radio" name="mood" id="happy" />
+            <p>ooo</p>
+            <input type="radio" name="mood" id="sad" />
+            <input type="radio" name="mood" id="focus" />
+            <input type="radio" name="mood" id="chill" />
+            <input type="radio" name="mood" id="instrumental" />
+            <input type="radio" name="mood" id="workout" />
+            <input type="radio" name="mood" id="random" />
+          </label>
+          <label htmlFor="timeframe">insert timeframes here</label>
+          <button onClick={getRecommendations}>Discover</button>
+        </form>
       </section>
       <section className="discover__results">
         <h2>Results</h2>
