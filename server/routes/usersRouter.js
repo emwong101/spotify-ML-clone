@@ -7,4 +7,6 @@ router.route('/').get(userController.index);
 router.route('/:id').get(userController.singleUser);
 
 router.route('/:id/playlist/:playlist_id').get(userController.getUserPlaylist);
+
+router.route('/:id/playlist/new').post(userController.saveUserPlaylist);
 module.exports = router;

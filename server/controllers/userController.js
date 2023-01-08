@@ -43,3 +43,17 @@ exports.getUserPlaylist = (req, res) => {
       res.status(400).send(`Error retrieving user ${req.params.id} ${err}`)
     );
 };
+
+exports.saveUserPlaylist = (req, res) => {
+  const { id, playlist_id } = req.params;
+  let track_ids = [];
+  req.body.tracks.forEach((i) => track_ids.push({ track_id: i.id }));
+  knex('playlist')
+    .insert({ fk_user_id: id, data: track_ids })
+    .then((d) => res.status(201).json(d[0]))
+    .catch((err) =>
+      res
+        .status(400)
+        .send(`Error saving playlist for user ${req.params.id} ${err}`)
+    );
+};
