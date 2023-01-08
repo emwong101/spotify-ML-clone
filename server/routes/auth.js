@@ -40,8 +40,12 @@ router.get('/profile', (req, res) => {
 });
 
 router.get('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/');
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('http://localhost:5173/charts');
+  });
 });
 
 module.exports = router;
