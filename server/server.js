@@ -10,6 +10,8 @@ const passport = require('passport');
 const consolidate = require('consolidate');
 const app = express();
 
+const knex = require('knex')(require('./knexfile.js').development);
+
 app.use(express.json());
 app.use(cors());
 
@@ -24,16 +26,26 @@ app.use(
 // The data comes from `done` function of the strategy
 // The result of the method is attached to the session as `req.session.passport.user = 12345`
 passport.serializeUser((user, done) => {
-  console.log('serializeUser (user object):', user);
+  // console.log('serializeUser (user object):', user);
 
   // Store only the user id in session
   done(null, user.id);
 });
 
-passport.deserializeUser((obj, done) => {
-  console.log('deserializeUser (user object):', obj);
+passport.deserializeUser((userId, done) => {
+  // console.log('deserializeUser (user object):', obj);
+  knex('users')
+    .where({ id: userId })
+    .then((user) => {
+      // Remember that knex will return an array of records, so we need to get a single record from it
+      console.log('req.user:', user[0]);
 
-  done(null, obj);
+      // The full user object will be attached to request object as `req.user`
+      done(null, user[0]);
+    })
+    .catch((err) => {
+      console.log('Error finding user', err);
+    });
 });
 
 const spotifyStrategy = require('./strategies/spotify-strategy');

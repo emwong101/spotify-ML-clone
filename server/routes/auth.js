@@ -16,16 +16,6 @@ router.get(
   })
 );
 
-// router.get(
-//   authCallbackPath,
-//   passport.authenticate('spotify', { failureRedirect: '/login' }),
-//   function (req, res) {
-//     res.redirect('/');
-//   }
-// );
-
-//localhost:8080/auth/callback
-
 router.get(
   '/spotify/callback',
   passport.authenticate('spotify', { failureRedirect: '/login' }),
