@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function Discover() {
-  
   const searchSpotify = async () => {
     console.log("search spotify clicked");
     const url = "https://api.spotify.com/v1/search";
