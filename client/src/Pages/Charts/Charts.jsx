@@ -45,6 +45,7 @@ function Charts() {
     }
   };
 
+  // This doesn't work yet
   const usersTopItems = async (e) => {
     try {
       const { data } = await axios.get(`${BASE_URL}me/top/tracks`, {
