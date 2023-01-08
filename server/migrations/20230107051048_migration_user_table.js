@@ -7,7 +7,11 @@ exports.up = function (knex) {
     .dropTableIfExists('users')
     .createTable('users', (table) => {
       table.increments('id').primary();
-      table.string('spotify_token').notNullable();
+      table.string('spotify_id').notNullable();
+      table.string('first_name').notNullable();
+      table.string('last_name').notNullable();
+      table.string('email').notNullable();
+      // table.timestamps(true, true)
     });
 };
 
