@@ -4,9 +4,10 @@ require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
 const express = require('express');
 const session = require('express-session');
-const server = express();
+// const server = express();
 const cors = require('cors');
 const passport = require('passport');
+const helmet = require('helmet');
 const consolidate = require('consolidate');
 const app = express();
 
@@ -15,6 +16,8 @@ const knex = require('knex')(require('./knexfile.js').development);
 app.use(express.json());
 app.use(cors());
 
+app.use(helmet());
+
 app.use(
   cors({
     origin: true,
@@ -22,24 +25,36 @@ app.use(
   })
 );
 
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+const spotifyStrategy = require('./strategies/spotify-strategy');
+passport.use('spotify', spotifyStrategy);
+
 // `serializeUser` determines which data of the auth user object should be stored in the session
 // The data comes from `done` function of the strategy
 // The result of the method is attached to the session as `req.session.passport.user = 12345`
 passport.serializeUser((user, done) => {
-  // console.log('serializeUser (user object):', user);
+  console.log('serializeUser (user object):', user.id);
 
   // Store only the user id in session
   done(null, user.id);
 });
 
 passport.deserializeUser((userId, done) => {
-  // console.log('deserializeUser (user object):', obj);
+  console.log('deserializeUser (user id):', userId);
   knex('users')
-    .where({ spotify_id: userId })
+    .where({ id: userId })
     .then((user) => {
       // Remember that knex will return an array of records, so we need to get a single record from it
-      // console.log(userId);
-
       // The full user object will be attached to request object as `req.user`
       done(null, user[0]);
     })
@@ -48,18 +63,8 @@ passport.deserializeUser((userId, done) => {
     });
 });
 
-const spotifyStrategy = require('./strategies/spotify-strategy');
-passport.use('spotify', spotifyStrategy);
-
-app.use(
-  session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })
-);
-
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.engine('html', consolidate.nunjucks);
 
