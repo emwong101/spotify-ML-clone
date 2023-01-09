@@ -17,8 +17,6 @@ function Charts() {
       .catch((err) => {
         if (err.response.status === 401) {
           // Update the state: done authenticating, user is not logged in
-          //  setIsAuthenticating(false);
-          //  setIsLoggedIn(false);
         } else {
           console.log('Error authenticating', err);
         }

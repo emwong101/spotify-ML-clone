@@ -43,36 +43,6 @@ const spotifyStrategy = new SpotifyStrategy(
       .catch((err) => {
         console.log('Error fetching a user', err);
       });
-
-    // process.nextTick(function () {
-    //   // First let's check if we already have this user in our DB
-    //   knex('users')
-    //     .select('id')
-    //     .where({ spotify_id: profile.id })
-    //     .then((user) => {
-    //       if (user.length) {
-    //         // If user is found, pass the user object to serialize function
-    //         console.log(user[0]);
-    //         done(null, user[0]);
-    //       } else {
-    //         knex('users')
-    //           .insert({
-    //             spotify_id: profile.id,
-    //             first_name: profile.displayName.split(' ')[0],
-    //             last_name: profile.displayName.split(' ')[1],
-    //             email: profile.emails[0].value,
-    //           })
-    //           .then((userId) => {
-    //             // Pass the user object to serialize function
-    //             done(null, { id: userId[0] });
-    //           })
-    //           .catch((err) => {
-    //             console.log('Error creating a user', err);
-    //           });
-    //       }
-    //     });
-
-    // });
   }
 );
 

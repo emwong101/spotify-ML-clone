@@ -63,22 +63,22 @@ passport.deserializeUser((userId, done) => {
     });
 });
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'html');
+// app.set('views', __dirname + '/views');
+// app.set('view engine', 'html');
 
-app.engine('html', consolidate.nunjucks);
+// app.engine('html', consolidate.nunjucks);
 
-app.get('/', function (req, res) {
-  res.render('index.html', { user: req.user });
-});
+// app.get('/', function (req, res) {
+//   res.render('index.html', { user: req.user });
+// });
 
-app.get('/account', ensureAuthenticated, function (req, res) {
-  res.render('account.html', { user: req.user });
-});
+// app.get('/account', ensureAuthenticated, function (req, res) {
+//   res.render('account.html', { user: req.user });
+// });
 
-app.get('/login', function (req, res) {
-  res.render('login.html', { user: req.user });
-});
+// app.get('/login', function (req, res) {
+//   res.render('login.html', { user: req.user });
+// });
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
