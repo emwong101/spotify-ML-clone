@@ -22,6 +22,7 @@ function MoodInputs({ moodSelection, type }) {
         value={moods[type]}
         onClick={moodSelection}
       />
+      <label htmlFor={type}>{type}</label>
     </div>
   );
 }
