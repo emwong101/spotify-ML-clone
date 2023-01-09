@@ -18,16 +18,36 @@ router.get(
 
 router.get(
   '/spotify/callback',
-  passport.authenticate('spotify', { failureRedirect: '/login' }),
-  (_req, res) => {
-    // Successful authentication, redirect to client-side application
-    res.redirect('/account');
+  passport.authenticate('spotify', {
+    failureRedirect: 'http://localhost:5173/charts',
+  }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    // res.redirect('/');
+    res.redirect('http://localhost:5173/charts');
   }
 );
 
+// User profile endpoint that requires authentication
+router.get('/profile', (req, res) => {
+  // Passport stores authenticated user information on `req.user` object.
+  // Comes from done function of `deserializeUser`
+  console.log('this is a test', req.user);
+  // If `req.user` isn't found send back a 401 Unauthorized response
+  if (req.user === undefined)
+    return res.status(401).json({ message: 'Unauthorized' });
+
+  // If user is currently authenticated, send back user info
+  res.status(200).json(req.user);
+});
+
 router.get('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/');
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('http://localhost:5173/charts');
+  });
 });
 
 module.exports = router;

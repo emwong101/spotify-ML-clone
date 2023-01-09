@@ -44,7 +44,6 @@ const spotifyStrategy = new SpotifyStrategy(
       .catch((err) => {
         console.log('Error fetching a user', err);
       });
-
     // process.nextTick(function () {
     //   // First let's check if we already have this user in our DB
     //   knex('users')
