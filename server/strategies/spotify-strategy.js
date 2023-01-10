@@ -16,6 +16,8 @@ const spotifyStrategy = new SpotifyStrategy(
   },
   function (accessToken, refreshToken, expires_in, profile, done) {
     // asynchronous verification, for effect...
+    console.log(profile);
+    // console.log('accessToken: ', accessToken);
     knex('users')
       .select('id')
       .where({ spotify_id: profile.id })
