@@ -34,6 +34,7 @@ const spotifyStrategy = new SpotifyStrategy(
               refresh_token: refreshToken,
               first_name: profile.displayName.split(' ')[0],
               last_name: profile.displayName.split(' ')[1],
+              profile_picture: profile.photos[0].value,
               email: profile.emails[0].value,
             })
             .then((userId) => {

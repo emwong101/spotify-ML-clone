@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import './ProfileMenu.scss';
 
-function ProfileMenu({ clickedItem, setClickedItem }) {
+function ProfileMenu({ clickedItem, setClickedItem, userData }) {
+  console.log(userData);
   return (
     <div className="profile-menu">
-      <div className="profile-menu__pfp"></div>
-      <p className="profile-menu__username">USERNAME</p>
+      <img
+        className="profile-menu__pfp"
+        src={userData.profile_picture}
+        alt="profile picture"
+      />
+      <p className="profile-menu__username">{userData.email}</p>
       <p
         className={
           clickedItem === 'Playlists'
