@@ -10,6 +10,7 @@ const passport = require('passport');
 const helmet = require('helmet');
 const consolidate = require('consolidate');
 const app = express();
+const axios = require('axios');
 
 const knex = require('knex')(require('./knexfile.js').development);
 
@@ -82,6 +83,36 @@ passport.deserializeUser((userId, done) => {
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
+
+app.get('/refresh_token', (req, res) => {
+  let refresh_token = req.user.refresh_token;
+  var authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+      Authorization:
+        'Basic ' +
+        Buffer.from(
+          process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
+        ).toString('base64'),
+    },
+    form: {
+      grant_type: 'refresh_token',
+      refresh_token: refresh_token,
+    },
+    json: true,
+  };
+
+  axios.post(authOptions, function (error, response, body) {
+    console.log(body);
+    if (!error && response.statusCode === 200) {
+      var access_token = body.access_token;
+      res.send({
+        access_token: access_token,
+      });
+    }
+  });
+  res.status(200).json(req.user.refresh_token);
+});
 
 const usersRoutes = require('./routes/usersRouter');
 app.use('/user', usersRoutes);

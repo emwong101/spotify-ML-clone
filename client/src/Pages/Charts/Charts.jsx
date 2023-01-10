@@ -4,6 +4,9 @@ import axios from 'axios';
 function Charts() {
   const [profileData, setProfileData] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [fourWeeksArtists, setFourWeeksArtists] = useState([]);
+
+  //grab new access token in one hour and call grabProfile function again
 
   const grabProfile = () => {
     const response = axios
@@ -23,16 +26,64 @@ function Charts() {
       });
   };
 
+  const url = 'https://api.spotify.com/v1/me/top/artists';
+
+  const topArtistsFourWeeks = async () => {
+    const query = 'short_term';
+
+    const { data } = await axios
+      .get(`${url}?time_range=${query}`, {
+        headers: {
+          Authorization: `Bearer ${profileData.access_token}`,
+        },
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          // make a call to the backend to get new access token
+        }
+      });
+
+    console.log(data);
+    data.items.forEach((artist) => {
+      console.log(artist.name);
+    });
+  };
+
+  const topArtistsSixMonths = async () => {
+    const query = 'medium_term';
+
+    const { data } = await axios.get(`${url}?time_range=${query}`, {
+      headers: {
+        Authorization: `Bearer ${profileData.access_token}`,
+      },
+    });
+
+    console.log(data);
+    data.items.forEach((artist) => {
+      console.log(artist.name);
+    });
+  };
+
+  const topArtistsAllTime = async () => {
+    const query = 'long_term';
+
+    const { data } = await axios.get(`${url}?time_range=${query}`, {
+      headers: {
+        Authorization: `Bearer ${profileData.access_token}`,
+      },
+    });
+
+    console.log(data);
+    data.items.forEach((artist) => {
+      console.log(artist.name);
+    });
+  };
+
   useEffect(() => {
     grabProfile();
   }, []);
   return (
-    <div
-      className="page--charts"
-      onClick={() => {
-        console.log(profileData);
-      }}
-    >
+    <div className="page--charts">
       <h1>Charts</h1>
       <h4>Viewing your data</h4>
       {isLoggedIn ? (
@@ -61,9 +112,9 @@ function Charts() {
       <section>
         <p>Selectors</p>
         <div>
-          <button>Last 4 Weeks</button>
-          <button>6 Months</button>
-          <button>All time</button>
+          <button onClick={topArtistsFourWeeks}>Last 4 Weeks</button>
+          <button onClick={topArtistsSixMonths}>6 Months</button>
+          <button onClick={topArtistsAllTime}>All time</button>
         </div>
       </section>
       <section>
