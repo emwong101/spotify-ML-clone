@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { UserContext } from "../../Context/UserContext";
-import axios from "axios";
+import React, { useContext, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { UserContext } from '../../Context/UserContext';
+import axios from 'axios';
 //
 function Landing() {
-  const { isLoggedIn } = useContext(UserContext);
+  const user = useContext(UserContext);
   const navigate = useNavigate();
   const params = useParams();
   // const { data } = await axios.get(
@@ -14,18 +14,19 @@ function Landing() {
   // console.log(isLoggedIn.data);
   // console.log(isLoggedIn.auth);
 
-  useEffect(() => {
-    if (isLoggedIn.auth) navigate("/discover");
-  }, [params]);
-
   // useEffect(() => {
-  //   if (isLoggedIn.auth) navigate("/discover");
-  // }, []);
+  //   if (user.auth) navigate('/discover');
+  // }, [params]);
+  console.log(user);
+
+  useEffect(() => {
+    if (user.auth) navigate('/discover');
+  }, []);
   return (
     <>
-      {isLoggedIn.auth ? (
+      {user.auth ? (
         <div>
-          <div>{isLoggedIn.data.spotify_id}</div>
+          <div>{user.profile.spotify_id}</div>
           <div>
             <a href="http://localhost:8080/auth/logout">
               <button>Logout</button>

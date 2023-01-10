@@ -1,24 +1,36 @@
-import React, { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../Context/UserContext";
-import axios from "axios";
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
+import axios from 'axios';
 
 function Charts() {
-  const { isLoggedIn } = useContext(UserContext);
+  const user = useContext(UserContext);
   const [profileData, setProfileData] = useState(null);
   const [fourWeeksArtists, setFourWeeksArtists] = useState([]);
-  console.log(isLoggedIn);
 
   //grab new access token in one hour and call grabProfile function again
 
-  const url = "https://api.spotify.com/v1/me/top/artists";
+  const grabProfile = async () => {
+    //axios call here
+    const response = await axios.get('http://localhost:8080/auth/profile', {
+      withCredentials: true,
+    });
+
+    user.setProfileData(response.data);
+  };
+
+  useEffect(() => {
+    grabProfile();
+  }, []);
+
+  const url = 'https://api.spotify.com/v1/me/top/artists';
 
   const topArtistsFourWeeks = async () => {
-    const query = "short_term";
+    const query = 'short_term';
 
     const { data } = await axios
       .get(`${url}?time_range=${query}`, {
         headers: {
-          Authorization: `Bearer ${isLoggedIn.data.access_token}`,
+          Authorization: `Bearer ${user.profile.access_token}`,
         },
       })
       .catch((err) => {
@@ -34,11 +46,11 @@ function Charts() {
   };
 
   const topArtistsSixMonths = async () => {
-    const query = "medium_term";
+    const query = 'medium_term';
 
     const { data } = await axios.get(`${url}?time_range=${query}`, {
       headers: {
-        Authorization: `Bearer ${profileData.access_token}`,
+        Authorization: `Bearer ${user.profile.access_token}`,
       },
     });
 
@@ -49,11 +61,11 @@ function Charts() {
   };
 
   const topArtistsAllTime = async () => {
-    const query = "long_term";
+    const query = 'long_term';
 
     const { data } = await axios.get(`${url}?time_range=${query}`, {
       headers: {
-        Authorization: `Bearer ${isLoggedIn.data.access_token}`,
+        Authorization: `Bearer ${user.profile.access_token}`,
       },
     });
 
@@ -68,18 +80,18 @@ function Charts() {
       <div
         className="page--charts"
         onClick={() => {
-          console.log(isLoggedIn.data);
+          console.log(user);
         }}
       >
         <h1>Charts</h1>
         <h4>Viewing your data</h4>
-        {isLoggedIn.auth ? (
+        {user.auth ? (
           <div>
             <h1>Profile Data</h1>
-            <p>{isLoggedIn.data.first_name}</p>
-            <p>{isLoggedIn.data.last_name}</p>
-            <p>{isLoggedIn.data.email}</p>
-            <p>{isLoggedIn.data.spotify_id}</p>
+            <p>{user.profile.first_name}</p>
+            <p>{user.profile.last_name}</p>
+            <p>{user.profile.email}</p>
+            <p>{user.profile.spotify_id}</p>
             <a href="http://localhost:8080/auth/logout">
               <button>Log Out</button>
             </a>

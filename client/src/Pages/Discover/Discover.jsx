@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../Context/UserContext";
-import axios from "axios";
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
+import axios from 'axios';
 
 function Discover() {
-  const { isLoggedIn } = useContext(UserContext);
+  const user = useContext(UserContext);
   const searchSpotify = async () => {
-    console.log("search spotify clicked");
-    const url = "https://api.spotify.com/v1/search";
-    const searchQuery = "anderson paak";
+    console.log('search spotify clicked');
+    const url = 'https://api.spotify.com/v1/search';
+    const searchQuery = 'anderson paak';
     const typeQuery = `type=artist`;
     const { data } = await axios.get(`${url}?q=${searchQuery}&${typeQuery}`, {
       headers: {
@@ -40,9 +40,9 @@ function Discover() {
         <h2>Results</h2>
       </section>
       <div>
-        {isLoggedIn.auth ? (
+        {user.auth ? (
           <div>
-            <div>{isLoggedIn.data.spotify_id}</div>
+            <div>{user.profile.spotify_id}</div>
             <div>
               <a href="http://localhost:8080/auth/logout">
                 <button>Logout</button>

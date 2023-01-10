@@ -19,7 +19,7 @@ router.get(
 router.get(
   '/spotify/callback',
   passport.authenticate('spotify', {
-    failureRedirect: 'http://localhost:5173/charts',
+    failureRedirect: 'http://localhost:5173/landing',
   }),
   function (req, res) {
     // Successful authentication, redirect home.
@@ -46,7 +46,7 @@ router.get('/logout', function (req, res) {
     if (err) {
       return next(err);
     }
-    res.redirect('http://localhost:5173/charts');
+    res.redirect('http://localhost:5173/landing');
   });
 });
 
