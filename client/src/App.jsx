@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Header from "./Components/Header/Header";
@@ -11,7 +11,11 @@ import Charts from "./Pages/Charts/Charts";
 import About from "./Pages/About/About";
 import Landing from "./Pages/Landing/Landing";
 
+import { UserContext } from "./Context/UserContext";
+
 function App() {
+  const { isLoggedIn } = useContext(UserContext);
+
   return (
     <>
       <UserProvider>

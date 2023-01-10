@@ -1,53 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
+import axios from "axios";
 
 function Charts() {
-  const [profileData, setProfileData] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn } = useContext(UserContext);
+  // const [profileData, setProfileData] = useState(null);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //
+  // const grabProfile = () => {
+  //   const response = axios
+  //     .get("http://localhost:8080/auth/profile", {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       setProfileData(res.data);
+  //       setIsLoggedIn(true);
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.status === 401) {
+  //         // Update the state: done authenticating, user is not logged in
+  //       } else {
+  //         console.log("Error authenticating", err);
+  //       }
+  //     });
+  // };
 
-  const grabProfile = () => {
-    const response = axios
-      .get('http://localhost:8080/auth/profile', {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setProfileData(res.data);
-        setIsLoggedIn(true);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // Update the state: done authenticating, user is not logged in
-        } else {
-          console.log('Error authenticating', err);
-        }
-      });
-  };
-
-  useEffect(() => {
-    grabProfile();
-  }, []);
+  // useEffect(() => {
+  //   grabProfile();
+  // }, []);
   return (
     <div
       className="page--charts"
       onClick={() => {
-        console.log(profileData);
+        console.log(isLoggedIn.data);
       }}
     >
       <h1>Charts</h1>
       <h4>Viewing your data</h4>
-      {isLoggedIn ? (
-        profileData && (
-          <div>
-            <h1>Profile Data</h1>
-            <p>{profileData.first_name}</p>
-            <p>{profileData.last_name}</p>
-            <p>{profileData.email}</p>
-            <p>{profileData.spotify_id}</p>
-            <a href="http://localhost:8080/auth/logout">
-              <button>Log Out</button>
-            </a>
-          </div>
-        )
+      {isLoggedIn.auth ? (
+        <div>
+          <h1>Profile Data</h1>
+          <p>{isLoggedIn.data.first_name}</p>
+          <p>{isLoggedIn.data.last_name}</p>
+          <p>{isLoggedIn.data.email}</p>
+          <p>{isLoggedIn.data.spotify_id}</p>
+          <a href="http://localhost:8080/auth/logout">
+            <button>Log Out</button>
+          </a>
+        </div>
       ) : (
         <>
           <p>
