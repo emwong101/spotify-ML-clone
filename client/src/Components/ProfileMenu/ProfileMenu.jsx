@@ -7,10 +7,10 @@ function ProfileMenu({ clickedItem, setClickedItem, userData }) {
     <div className="profile-menu">
       <img
         className="profile-menu__pfp"
-        src={userData.profilePicture}
+        src={userData.profile_picture}
         alt="profile picture"
       />
-      <p className="profile-menu__username">{userData.username}</p>
+      <p className="profile-menu__username">{userData.email}</p>
       <p
         className={
           clickedItem === 'Playlists'
