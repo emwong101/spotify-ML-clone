@@ -9,7 +9,6 @@ import axios from 'axios';
 
 function Profile(props) {
   const [clickedItem, setClickedItem] = useState('Playlists');
-  const [userData, setUserData] = useState({});
   const user = useContext(UserContext);
 
   return (
