@@ -4,30 +4,6 @@ import axios from "axios";
 
 function Charts() {
   const { isLoggedIn } = useContext(UserContext);
-  // const [profileData, setProfileData] = useState(null);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  //
-  // const grabProfile = () => {
-  //   const response = axios
-  //     .get("http://localhost:8080/auth/profile", {
-  //       withCredentials: true,
-  //     })
-  //     .then((res) => {
-  //       setProfileData(res.data);
-  //       setIsLoggedIn(true);
-  //     })
-  //     .catch((err) => {
-  //       if (err.response.status === 401) {
-  //         // Update the state: done authenticating, user is not logged in
-  //       } else {
-  //         console.log("Error authenticating", err);
-  //       }
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   grabProfile();
-  // }, []);
   return (
     <div
       className="page--charts"
