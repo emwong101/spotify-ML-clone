@@ -24,6 +24,7 @@ const spotifyStrategy = new SpotifyStrategy(
       .then((user) => {
         if (user.length) {
           // If user is found, pass the user object to serialize function
+          console.log(accessToken);
           done(null, user[0]);
         } else {
           knex('users')
