@@ -11,7 +11,7 @@ let authCallbackPath = 'http://localhost:8080/auth/callback';
 router.get(
   '/spotify',
   passport.authenticate('spotify', {
-    scope: ['user-read-email', 'user-read-private'],
+    scope: ['user-read-email', 'user-read-private', 'user-top-read'],
     showDialog: true,
   })
 );
@@ -32,13 +32,13 @@ router.get(
 router.get('/profile', (req, res) => {
   // Passport stores authenticated user information on `req.user` object.
   // Comes from done function of `deserializeUser`
-  console.log('this is a test', req.user);
   // If `req.user` isn't found send back a 401 Unauthorized response
   if (req.user === undefined)
     return res.status(401).json({ message: 'Unauthorized' });
 
   // If user is currently authenticated, send back user info
   res.status(200).json(req.user);
+  console.log(req.user);
 });
 
 router.get('/logout', function (req, res) {

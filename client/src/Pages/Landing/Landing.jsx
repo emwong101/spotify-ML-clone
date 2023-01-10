@@ -11,8 +11,8 @@ function Landing() {
   //   "http://localhost:8080/user/1/getspotifytoken"
   // );
 
-  console.log(isLoggedIn.data);
-  console.log(isLoggedIn.auth);
+  // console.log(isLoggedIn.data);
+  // console.log(isLoggedIn.auth);
 
   useEffect(() => {
     if (isLoggedIn.auth) navigate("/discover");
