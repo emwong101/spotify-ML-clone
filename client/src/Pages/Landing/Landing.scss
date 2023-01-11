@@ -1,0 +1,42 @@
+.landing {
+    margin-left: 5vw;
+    // margin-right: 100px;
+    display: flex;
+    border: 1px solid black;
+    width: 90vw;
+    justify-content: center;
+    flex-direction: row;
+    // background-color: blue;
+
+    &__profile-container {
+        margin: 45px;
+        display: infline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 0, 0, 0.3);
+        width: 75vw;
+        height: 400px;
+        display: flex;
+        border-radius: 25px;
+        justify-content: center;
+        padding: 20px;
+
+        // padding-left: 36px;
+    }
+
+    &__heading-txt {
+        font-weight: 800;
+        font-size: 40px;
+        line-height: 45px;
+        padding-bottom: 20px;
+    }
+
+    &__button {
+        background-color: black;
+        color: white;
+        border-radius: 20px;
+        width: 200px;
+    }
+
+}
