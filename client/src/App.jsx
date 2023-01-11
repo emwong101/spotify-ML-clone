@@ -11,6 +11,7 @@ import Charts from './Pages/Charts/Charts';
 import About from './Pages/About/About';
 import Landing from './Pages/Landing/Landing';
 import Profile from './Pages/Profile/Profile';
+import Mood from './Pages/Mood/Mood';
 
 import { UserContext } from './Context/UserContext';
 
@@ -30,6 +31,7 @@ function App() {
               <Route path="/charts" element={<Charts />} />
               <Route path="/about" element={<About />} />
               <Route path="/landing" element={<Landing />} />
+              <Route path="/mood" element={<Mood />} />
             </Routes>
           </div>
         </BrowserRouter>
