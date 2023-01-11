@@ -4,16 +4,20 @@ require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
 const express = require('express');
 const session = require('express-session');
-const server = express();
+// const server = express();
 const cors = require('cors');
 const passport = require('passport');
+const helmet = require('helmet');
 const consolidate = require('consolidate');
 const app = express();
+const axios = require('axios');
 
 const knex = require('knex')(require('./knexfile.js').development);
 
 app.use(express.json());
 app.use(cors());
+
+app.use(helmet());
 
 app.use(
   cors({
@@ -22,24 +26,36 @@ app.use(
   })
 );
 
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+const spotifyStrategy = require('./strategies/spotify-strategy');
+passport.use('spotify', spotifyStrategy);
+
 // `serializeUser` determines which data of the auth user object should be stored in the session
 // The data comes from `done` function of the strategy
 // The result of the method is attached to the session as `req.session.passport.user = 12345`
 passport.serializeUser((user, done) => {
-  // console.log('serializeUser (user object):', user);
+  console.log('serializeUser (user object):', user.id);
 
   // Store only the user id in session
   done(null, user.id);
 });
 
 passport.deserializeUser((userId, done) => {
-  // console.log('deserializeUser (user object):', obj);
+  console.log('deserializeUser (user id):', userId);
   knex('users')
-    .where({ spotify_id: userId })
+    .where({ id: userId })
     .then((user) => {
       // Remember that knex will return an array of records, so we need to get a single record from it
-      // console.log(userId);
-
       // The full user object will be attached to request object as `req.user`
       done(null, user[0]);
     })
@@ -48,35 +64,55 @@ passport.deserializeUser((userId, done) => {
     });
 });
 
-const spotifyStrategy = require('./strategies/spotify-strategy');
-passport.use('spotify', spotifyStrategy);
+// app.set('views', __dirname + '/views');
+// app.set('view engine', 'html');
 
-app.use(
-  session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })
-);
+// app.engine('html', consolidate.nunjucks);
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'html');
+// app.get('/', function (req, res) {
+//   res.render('index.html', { user: req.user });
+// });
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.get('/account', ensureAuthenticated, function (req, res) {
+//   res.render('account.html', { user: req.user });
+// });
 
-app.engine('html', consolidate.nunjucks);
-
-app.get('/', function (req, res) {
-  res.render('index.html', { user: req.user });
-});
-
-app.get('/account', ensureAuthenticated, function (req, res) {
-  res.render('account.html', { user: req.user });
-});
-
-app.get('/login', function (req, res) {
-  res.render('login.html', { user: req.user });
-});
+// app.get('/login', function (req, res) {
+//   res.render('login.html', { user: req.user });
+// });
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
+
+app.get('/refresh_token', (req, res) => {
+  let refresh_token = req.user.refresh_token;
+  var authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+      Authorization:
+        'Basic ' +
+        Buffer.from(
+          process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
+        ).toString('base64'),
+    },
+    form: {
+      grant_type: 'refresh_token',
+      refresh_token: refresh_token,
+    },
+    json: true,
+  };
+
+  axios.post(authOptions, function (error, response, body) {
+    console.log(body);
+    if (!error && response.statusCode === 200) {
+      var access_token = body.access_token;
+      res.send({
+        access_token: access_token,
+      });
+    }
+  });
+  res.status(200).json(req.user.refresh_token);
+});
 
 const usersRoutes = require('./routes/usersRouter');
 app.use('/user', usersRoutes);

@@ -1,0 +1,22 @@
+.profile {
+  width: 100%;
+  &__main {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    padding: 0 8rem;
+  }
+
+  &__back-icon {
+    height: 64px;
+    width: 64px;
+    margin-left: 2rem;
+  }
+
+  &__menu {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__content {
+  }
+}
