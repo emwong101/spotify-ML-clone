@@ -1,0 +1,19 @@
+.mood-label {
+  min-width: 15rem;
+  height: 15rem;
+  padding: 2rem 1rem;
+  border-radius: 50%;
+  border: 3px solid #000;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+  color: #000;
+}
+
+input[type="radio"]:checked + label {
+  background-color: aquamarine;
+}
+
+.moodRadio {
+  display: none;
+}
