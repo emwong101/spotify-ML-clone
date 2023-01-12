@@ -44,14 +44,14 @@ passport.use('spotify', spotifyStrategy);
 // The data comes from `done` function of the strategy
 // The result of the method is attached to the session as `req.session.passport.user = 12345`
 passport.serializeUser((user, done) => {
-  console.log('serializeUser (user object):', user.id);
+  // console.log('serializeUser (user object):', user.id);
 
   // Store only the user id in session
   done(null, user.id);
 });
 
 passport.deserializeUser((userId, done) => {
-  console.log('deserializeUser (user id):', userId);
+  // console.log('deserializeUser (user id):', userId);
   knex('users')
     .where({ id: userId })
     .then((user) => {

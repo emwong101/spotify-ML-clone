@@ -15,16 +15,16 @@ const spotifyStrategy = new SpotifyStrategy(
     callbackURL: 'http://localhost:8080/auth/spotify/callback',
   },
   function (accessToken, refreshToken, expires_in, profile, done) {
-    // asynchronous verification, for effect...
-    console.log(profile);
-    // console.log('accessToken: ', accessToken);
     knex('users')
       .select('id')
       .where({ spotify_id: profile.id })
       .then((user) => {
         if (user.length) {
           // If user is found, pass the user object to serialize function
-          console.log(accessToken);
+          console.log('This is the new token:', accessToken);
+          knex('users')
+            .where('spotify_id', profile.id)
+            .update({ access_token: accessToken });
           done(null, user[0]);
         } else {
           knex('users')

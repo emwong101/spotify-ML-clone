@@ -24,6 +24,40 @@ function Charts() {
 
   const url = 'https://api.spotify.com/v1/me/top/artists';
 
+  const getTotalGenres = (artistList) => {
+    const genres = [];
+
+    artistList.forEach((artist) => {
+      artist.genres.forEach((genre) => {
+        if (!genres.includes(genre)) {
+          genres.push(genre);
+        }
+      });
+    });
+
+    return genres;
+  };
+
+  const getGenreStats = (artistList) => {
+    //define an object
+    const genres = {};
+    //each genre is a key
+    //number of occurances of each genre is a value
+
+    artistList.forEach((artist) => {
+      artist.genres.forEach((genre) => {
+        //if the genre does not exist in our object, add this in as a key with the value of one since its our first occurance
+        if (!Object.keys(genres).includes(genre)) {
+          genres[genre] = 1;
+        } else {
+          genres[genre] += 1;
+        }
+      });
+    });
+
+    return genres;
+  };
+
   const topArtistsFourWeeks = async () => {
     const query = 'short_term';
 
@@ -43,6 +77,12 @@ function Charts() {
     data.items.forEach((artist) => {
       console.log(artist.name);
     });
+
+    const genres = getTotalGenres(data.items);
+
+    const obj = getGenreStats(data.items);
+
+    console.log(obj);
   };
 
   const topArtistsSixMonths = async () => {
