@@ -1,0 +1,27 @@
+.top-item {
+  display: flex;
+  height: 75px;
+  width: 200px;
+  align-items: center;
+
+  &__image {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 75px;
+  }
+
+  &__item-desc {
+    margin-left: 1rem;
+  }
+
+  &__name,
+  &__track-name {
+    font-weight: bold;
+    margin: 0;
+  }
+
+  &__track-name {
+    font-size: 0.875rem;
+  }
+}
