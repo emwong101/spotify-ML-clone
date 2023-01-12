@@ -1,0 +1,20 @@
+.mood {
+  width: 100%;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  &__selection-list {
+    padding: 0rem 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10rem;
+    row-gap: 5rem;
+    justify-content: center;
+  }
+}

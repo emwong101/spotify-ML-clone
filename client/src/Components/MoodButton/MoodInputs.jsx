@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import "./MoodInputs.scss";
 
 function MoodInputs({ moodSelection, type }) {
   const moods = {
@@ -16,13 +18,16 @@ function MoodInputs({ moodSelection, type }) {
   return (
     <div>
       <input
+        className="moodRadio"
         type="radio"
         name="mood"
         id={type}
         value={moods[type]}
         onClick={moodSelection}
       />
-      <label htmlFor={type}>{type}</label>
+      <label className="mood-label" htmlFor={type}>
+        {type}
+      </label>
     </div>
   );
 }
