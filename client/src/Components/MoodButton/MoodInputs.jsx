@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 import "./MoodInputs.scss";
 
-function MoodInputs({ moodSelection, type }) {
+function MoodInputs({ type }) {
+  const user = useContext(UserContext);
+
   const moods = {
     happy: "min_danceability=0.55&min_energy=0.6&min_tempo=76&min_valence=0.6",
     sad: "max_danceability=0.5&max_energy=0.7&max_valence=0.55",
@@ -13,6 +16,10 @@ function MoodInputs({ moodSelection, type }) {
       "min_acousticness=0.65&max_energy=0.25&min_instrumentalness=0.75&max_speechiness=0.05",
     workout: "min_danceability=0.75&min_energy=0.8&min_tempo=115",
     random: "",
+  };
+
+  const moodSelection = (e) => {
+    user.setMood(e.target.value);
   };
 
   return (

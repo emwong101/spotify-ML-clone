@@ -4,6 +4,7 @@ import { UserContext } from "../../Context/UserContext";
 import MoodInputs from "../../components/MoodButton/MoodInputs";
 import { Link } from "react-router-dom";
 import PlaylistLength from "../playlistLength/PlaylistLength";
+import Mood from "../Mood/Mood";
 
 function Discover() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -13,7 +14,6 @@ function Discover() {
 
   const [mood, setMood] = useState();
   const [length, setLength] = useState();
-  const [clickedStart, setClickedStart] = useState(false);
 
   const submit = (e) => {
     e.preventDefault();
@@ -58,56 +58,11 @@ function Discover() {
   return (
     <div className="page--discover">
       <h1>Discover Playlists</h1>
-      {!clickedStart && (
-        <section className="discover__form">
-          <input
-            type="button"
-            value="Start"
-            onClick={() => {
-              setClickedStart(true);
-            }}
-          />
-        </section>
-      )}
-      <form action="" onSubmit={getRecommendations}>
-        {clickedStart && (
-          <section className="mood__selection-list">
-            <MoodInputs
-              moodSelection={moodSelection}
-              type="happy"
-              mood={mood}
-            />
-            <MoodInputs moodSelection={moodSelection} type="sad" mood={mood} />
-            <MoodInputs
-              moodSelection={moodSelection}
-              type="focus"
-              mood={mood}
-            />
-            <MoodInputs
-              moodSelection={moodSelection}
-              type="chill"
-              mood={mood}
-            />
-            <MoodInputs
-              moodSelection={moodSelection}
-              type="instrumental"
-              mood={mood}
-            />
-            <MoodInputs
-              moodSelection={moodSelection}
-              type="workout"
-              mood={mood}
-            />
-            <MoodInputs
-              moodSelection={moodSelection}
-              type="random"
-              mood={mood}
-            />
-          </section>
-        )}
-        {/* {mood && <PlaylistLength />} */}
-        <input type="submit" />
-      </form>
+      <section className="discover__form">
+        <Link to="/mood">
+          <input type="button" value="Start" />
+        </Link>
+      </section>
     </div>
   );
 }

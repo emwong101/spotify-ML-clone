@@ -11,6 +11,7 @@ export const UserContext = createContext({
 const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState({});
   const [topArtists, setTopArtists] = useState([]);
+    const [mood, setMood] = useState();
 
   const setProfileData = (profileData) => {
     setIsLoggedIn({ data: profileData, auth: true });
@@ -36,6 +37,8 @@ const UserProvider = ({ children }) => {
   const contextValue = {
     setProfileData,
     setTopArtists,
+    setMood,
+    mood: mood,
     profile: isLoggedIn.data,
     auth: isLoggedIn.auth,
     artists: topArtists,
