@@ -74,7 +74,7 @@ function Stats(props) {
   const url = 'https://api.spotify.com/v1/me/top/artists';
   const tracksUrl = 'https://api.spotify.com/v1/me/top/tracks';
 
-  const topArtistsDataFourWeeks = async () => {
+  const topDataFourWeeks = async () => {
     const query = 'short_term';
 
     const { data } = await axios
@@ -105,7 +105,7 @@ function Stats(props) {
     setFourWeeksTracks(tracks.data.items);
   };
 
-  const topArtistsDataSixMonths = async () => {
+  const topDataSixMonths = async () => {
     const query = 'medium_term';
 
     const { data } = await axios.get(`${url}?time_range=${query}&limit=10`, {
@@ -130,7 +130,7 @@ function Stats(props) {
     setSixMonthsTracks(tracks.data.items);
   };
 
-  const topArtistsDataAllTime = async () => {
+  const topDataAllTime = async () => {
     const query = 'long_term';
 
     const { data } = await axios.get(`${url}?time_range=${query}&limit=10`, {
@@ -179,13 +179,13 @@ function Stats(props) {
 
   //grab all data on component mount
   useEffect(() => {
-    topArtistsDataFourWeeks();
-    topArtistsDataSixMonths();
-    topArtistsDataAllTime();
+    topDataFourWeeks();
+    topDataSixMonths();
+    topDataAllTime();
   }, []);
 
   useEffect(() => {
-    //initial stats should show 4weeks top artists when component mounts
+    //initial stats should show 4weeks top artists and tracks after component mounts
     getGenreStats(fourWeeksArtists);
     getTopArtistStats(fourWeeksArtists);
     getTopTrackStats(fourWeeksTracks);
