@@ -35,9 +35,6 @@ body {
   font-size: 100%;
   vertical-align: baseline;
   box-sizing: border-box;
-  overflow-y: hidden; /* Hide vertical scrollbar */
-  overflow-x: hidden; /* Hide horizontal scrollbar */
-
 }
 
 *,

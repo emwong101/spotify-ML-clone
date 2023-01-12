@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 
-import './Header.scss';
+import "./Header.scss";
 
 function Header() {
   return (
@@ -23,6 +23,9 @@ function Header() {
           </li>
           <li>
             <Link to="/profile">Profile</Link>
+          </li>
+          <li>
+            <Link to="/playlistgen">Playlist Gen</Link>
           </li>
         </ul>
       </nav>
