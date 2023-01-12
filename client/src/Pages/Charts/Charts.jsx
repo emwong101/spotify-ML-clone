@@ -1,34 +1,65 @@
-import React, { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../Context/UserContext";
-import axios from "axios";
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
+import axios from 'axios';
 
 function Charts() {
   const user = useContext(UserContext);
   const [profileData, setProfileData] = useState(null);
   const [fourWeeksArtists, setFourWeeksArtists] = useState([]);
-
+  const artistArray = [];
   //grab new access token in one hour and call grabProfile function again
 
   const grabProfile = async () => {
     //axios call here
-    const response = await axios.get("http://localhost:8080/auth/profile", {
+    const response = await axios.get('http://localhost:8080/auth/profile', {
       withCredentials: true,
     });
 
     user.setProfileData(response.data);
   };
 
-  useEffect(() => {
-    grabProfile();
-  }, []);
+  const url = 'https://api.spotify.com/v1/me/top/artists';
 
-  const url = "https://api.spotify.com/v1/me/top/artists";
+  const getTotalGenres = (artistList) => {
+    const genres = [];
+
+    artistList.forEach((artist) => {
+      artist.genres.forEach((genre) => {
+        if (!genres.includes(genre)) {
+          genres.push(genre);
+        }
+      });
+    });
+
+    return genres;
+  };
+
+  const getGenreStats = (artistList) => {
+    //define an object
+    const genres = {};
+    //each genre is a key
+    //number of occurances of each genre is a value
+
+    artistList.forEach((artist) => {
+      artist.genres.forEach((genre) => {
+        //if the genre does not exist in our object, add this in as a key with the value of one since its our first occurance
+        if (!Object.keys(genres).includes(genre)) {
+          genres[genre] = 1;
+        } else {
+          genres[genre] += 1;
+        }
+      });
+    });
+
+    const url = 'https://api.spotify.com/v1/me/top/artists';
+    return genres;
+  };
 
   const topArtistsFourWeeks = async () => {
-    const query = "short_term";
+    const query = 'short_term';
 
     const { data } = await axios
-      .get(`${url}?time_range=${query}`, {
+      .get(`${url}?time_range=${query}&limit=5`, {
         headers: {
           Authorization: `Bearer ${user.profile.access_token}`,
         },
@@ -41,12 +72,19 @@ function Charts() {
 
     console.log(data);
     data.items.forEach((artist) => {
-      console.log(artist.name);
+      artistArray.push(artist.id);
+      user.setTopArtists(artistArray);
     });
+
+    const genres = getTotalGenres(data.items);
+
+    const obj = getGenreStats(data.items);
+
+    console.log(obj);
   };
 
   const topArtistsSixMonths = async () => {
-    const query = "medium_term";
+    const query = 'medium_term';
 
     const { data } = await axios.get(`${url}?time_range=${query}`, {
       headers: {
@@ -61,7 +99,7 @@ function Charts() {
   };
 
   const topArtistsAllTime = async () => {
-    const query = "long_term";
+    const query = 'long_term';
 
     const { data } = await axios.get(`${url}?time_range=${query}`, {
       headers: {
@@ -74,6 +112,10 @@ function Charts() {
       console.log(artist.name);
     });
   };
+
+  useEffect(() => {
+    grabProfile();
+  }, []);
 
   return (
     <>
@@ -116,23 +158,7 @@ function Charts() {
         </section>
         <section>
           <h2>Top Artists</h2>
-          <div>
-            <article>
-              <h4>Anderson .Paak</h4>
-            </article>
-            <article>
-              <h4>Anderson .Paak</h4>
-            </article>
-            <article>
-              <h4>Anderson .Paak</h4>
-            </article>
-            <article>
-              <h4>Anderson .Paak</h4>
-            </article>
-            <article>
-              <h4>Anderson .Paak</h4>
-            </article>
-          </div>
+          <div></div>
           <div>
             <p>charts go here</p>
           </div>
