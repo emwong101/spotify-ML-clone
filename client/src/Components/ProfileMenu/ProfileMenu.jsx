@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './ProfileMenu.scss';
 
 function ProfileMenu({ clickedItem, setClickedItem, userData }) {
-  console.log(userData);
   return (
     <div className="profile-menu">
       <img
