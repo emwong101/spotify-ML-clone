@@ -151,8 +151,16 @@ function Stats(props) {
         }
       });
 
+    //grab top 3 artist ids
+    let globalArtistIDs = [];
+
+    data.items.slice(0, 3).forEach((artist) => {
+      globalArtistIDs.push(artist.id);
+    });
+
     setAllTimeArtists(data.items);
     setAllTimeTracks(tracks.data.items);
+    user.setTopArtists(globalArtistIDs);
   };
 
   const genrePieChart = (

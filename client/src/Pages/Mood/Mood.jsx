@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import "./Mood.scss";
+import React, { useState, useEffect } from 'react';
+import './Mood.scss';
 
-import MoodInputs from "../../components/MoodButton/MoodInputs";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../../Context/UserContext";
+import MoodInputs from '../../components/MoodButton/MoodInputs';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
 
 function Mood() {
   const user = useContext(UserContext);
