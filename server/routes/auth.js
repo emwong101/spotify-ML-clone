@@ -24,7 +24,7 @@ router.get(
   function (req, res) {
     // Successful authentication, redirect home.
     // res.redirect('/');
-    res.redirect('http://localhost:5173/charts');
+    res.redirect('http://localhost:5173/profile');
   }
 );
 
