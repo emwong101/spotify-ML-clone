@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './Profile.scss';
-import { IoIosArrowRoundBack } from 'react-icons/io';
-import { UserContext } from '../../Context/UserContext';
+import React, { useState, useEffect, useContext } from "react";
+import "./Profile.scss";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { UserContext } from "../../Context/UserContext";
 
-import ProfileMenu from '../../components/ProfileMenu/ProfileMenu';
-import ProfileContent from '../../components/ProfileContent/ProfileContent';
-import axios from 'axios';
+import ProfileMenu from "../../Components/ProfileMenu/ProfileMenu";
+import ProfileContent from "../../Components/ProfileContent/ProfileContent";
+import axios from "axios";
 
 function Profile(props) {
-  const [clickedItem, setClickedItem] = useState('Playlists');
+  const [clickedItem, setClickedItem] = useState("Playlists");
   const user = useContext(UserContext);
 
   const grabProfile = async () => {
     //axios call here
-    const response = await axios.get('http://localhost:8080/auth/profile', {
+    const response = await axios.get("http://localhost:8080/auth/profile", {
       withCredentials: true,
     });
 

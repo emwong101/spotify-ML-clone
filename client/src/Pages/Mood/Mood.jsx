@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Mood.scss";
 
-import MoodInputs from "../../components/MoodButton/MoodInputs";
+import MoodInputs from "../../Components/MoodButton/MoodInputs";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
