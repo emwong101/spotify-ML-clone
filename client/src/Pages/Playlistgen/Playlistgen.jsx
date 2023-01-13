@@ -1,11 +1,12 @@
-import "./Playlistgen.scss";
-import axios from "axios";
-import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../../Context/UserContext";
+import './Playlistgen.scss';
+import axios from 'axios';
+import { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../../Context/UserContext';
 
 const Playlistgen = () => {
   const user = useContext(UserContext);
-  console.log("recommended data", user.recommended);
+  console.log('recommended dta', user.recommended);
+
   return (
     <>
       <div className="plgen">
@@ -13,19 +14,22 @@ const Playlistgen = () => {
         <div className="plgen__content-con">
           <div className="plgen__content-1">
             <div className="plgen__list">
-              {user.recommended.tracks.map((i) => (
-                <div className="plgen__track-con" key={i.id.toString()}>
-                  <div
-                    className="plgen__track-content1"
-                    style={{ backgroundImage: `url(${i.album.images[2].url})` }}
-                  ></div>
-                  <div className="plgen__track-content2">
-                    <div className="plgen__trackname">{i.name}</div>
-                    <div className="plgen__artist">{i.artists[0].name}</div>
-                    <div className="plgen__trackid">TrackID: {i.id}</div>
+              {user.recommended &&
+                user.recommended.tracks.map((i) => (
+                  <div className="plgen__track-con" key={i.id.toString()}>
+                    <div
+                      className="plgen__track-content1"
+                      style={{
+                        backgroundImage: `url(${i.album.images[2].url})`,
+                      }}
+                    ></div>
+                    <div className="plgen__track-content2">
+                      <div className="plgen__trackname">{i.name}</div>
+                      <div className="plgen__artist">{i.artists[0].name}</div>
+                      <div className="plgen__trackid">TrackID: {i.id}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
           <div className="plgen__content-2">

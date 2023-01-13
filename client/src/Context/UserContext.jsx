@@ -1,55 +1,39 @@
-import { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export const UserContext = createContext({
   profile: {},
-  auth: false,
   setProfileData: () => {},
-  setRecommendedData: () => {},
 });
 
 const UserProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState({});
-  const [topArtists, setTopArtists] = useState([]);
-  const [mood, setMood] = useState();
-  const [recommended, setRecommended] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return JSON.parse(localStorage.getItem('user profile')) || {};
+  });
+  // const [profileLocalStorage, setProfileLocalStorage] =
+  const [recommended, setRecommended] = useState(() => {
+    return JSON.parse(localStorage.getItem('recommended playlist')) || {};
+  });
 
   const setProfileData = (profileData) => {
-    setIsLoggedIn({ data: profileData, auth: true });
+    setIsLoggedIn(profileData);
   };
 
-  const setRecommendedData = (recomm_data) => {
-    setRecommended({ data: recomm_data });
+  const setRecommendedData = (recommendedData) => {
+    setRecommended(recommendedData);
   };
 
-  const logout = () => {
-    const response = axios
-      .get("http://localhost:8080/auth/logout", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setIsLoggedIn((user) => ({ data: {}, auth: false }));
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // Update the state: done authenticating, user is not logged in
-        } else {
-          console.log("Error Logging out", err);
-        }
-      });
-  };
+  const mood = localStorage.getItem('mood');
+  const topArtists = JSON.parse(localStorage.getItem('top artists'));
 
   const contextValue = {
     setProfileData,
-    setTopArtists,
-    setMood,
     setRecommendedData,
     mood: mood,
-    profile: isLoggedIn.data,
-    auth: isLoggedIn.auth,
+    profile: isLoggedIn,
     artists: topArtists,
-    recommended: recommended.data,
+    recommended: recommended,
   };
 
   return (
