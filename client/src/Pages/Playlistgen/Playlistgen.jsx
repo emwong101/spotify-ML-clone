@@ -4,34 +4,8 @@ import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../Context/UserContext";
 
 const Playlistgen = () => {
-  const [tracks, setTracks] = useState([]);
   const user = useContext(UserContext);
-  const tracks_ep = "https://api.spotify.com/v1/me/top/tracks";
-  //this is just temporary code will update to the recommendations endpoint later on
-
-  const grabTracks = () => {
-    axios
-      .get(`${tracks_ep}`, {
-        headers: {
-          Authorization: `Bearer ${user.profile.access_token}`,
-        },
-      })
-      .then((res) => {
-        // console.log(res);
-        setTracks(res.data.items);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
-        }
-      });
-  };
-
-  useEffect(() => {
-    if (user.auth) grabTracks();
-  }, []);
-
-  console.log("tracks: ", tracks);
+  console.log("recommended data", user.recommended);
   return (
     <>
       <div className="plgen">
@@ -39,8 +13,8 @@ const Playlistgen = () => {
         <div className="plgen__content-con">
           <div className="plgen__content-1">
             <div className="plgen__list">
-              {tracks.map((i) => (
-                <div className="plgen__track-con">
+              {user.recommended.tracks.map((i) => (
+                <div className="plgen__track-con" key={i.id.toString()}>
                   <div
                     className="plgen__track-content1"
                     style={{ backgroundImage: `url(${i.album.images[2].url})` }}

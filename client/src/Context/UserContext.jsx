@@ -6,15 +6,21 @@ export const UserContext = createContext({
   profile: {},
   auth: false,
   setProfileData: () => {},
+  setRecommendedData: () => {},
 });
 
 const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState({});
   const [topArtists, setTopArtists] = useState([]);
-    const [mood, setMood] = useState();
+  const [mood, setMood] = useState();
+  const [recommended, setRecommended] = useState({});
 
   const setProfileData = (profileData) => {
     setIsLoggedIn({ data: profileData, auth: true });
+  };
+
+  const setRecommendedData = (recomm_data) => {
+    setRecommended({ data: recomm_data });
   };
 
   const logout = () => {
@@ -38,10 +44,12 @@ const UserProvider = ({ children }) => {
     setProfileData,
     setTopArtists,
     setMood,
+    setRecommendedData,
     mood: mood,
     profile: isLoggedIn.data,
     auth: isLoggedIn.auth,
     artists: topArtists,
+    recommended: recommended.data,
   };
 
   return (
