@@ -1,27 +1,27 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { UserContext } from "../../Context/UserContext";
-import "./MoodInputs.scss";
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../Context/UserContext';
+import './MoodInputs.scss';
 
 function MoodInputs({ type }) {
   const user = useContext(UserContext);
 
   const moods = {
     happy:
-      "seed_genres=happy&min_danceability=0.55&min_energy=0.6&min_tempo=76&min_valence=0.6",
-    sad: "seed_genres=sad&max_danceability=0.5&max_energy=0.7&max_valence=0.55",
-    focus: "seed_genres=focus&min_instrumentalness=0.75",
+      'seed_genres=happy&min_danceability=0.55&min_energy=0.6&min_tempo=76&min_valence=0.6',
+    sad: 'seed_genres=sad&max_danceability=0.5&max_energy=0.7&max_valence=0.55',
+    focus: 'seed_genres=focus&min_instrumentalness=0.75',
     chill:
-      "seed_genres=chill&min_acousticness=0.45&max_danceability=0.4&max_energy=0.3&max_speechiness=0.3",
+      'seed_genres=chill&min_acousticness=0.45&max_danceability=0.4&max_energy=0.3&max_speechiness=0.3',
     instrumental:
-      "seed_genres=classical%2C%20lo-fi&min_instrumentalness=0.8&max_speechiness=0.1",
+      'seed_genres=classical%2C%20lo-fi&min_instrumentalness=0.8&max_speechiness=0.1',
     workout:
-      "seed_genres=work-out&min_danceability=0.75&min_energy=0.8&min_tempo=115",
-    random: "",
+      'seed_genres=work-out&min_danceability=0.75&min_energy=0.8&min_tempo=115',
+    random: '',
   };
 
   const moodSelection = (e) => {
-    user.setMood(e.target.value);
+    localStorage.setItem('mood', e.target.value);
   };
 
   return (

@@ -1,14 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
-import { UserContext } from "../../Context/UserContext";
-import axios from "axios";
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../../Context/UserContext';
+import axios from 'axios';
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-import "./Stats.scss";
-import Top10Item from "../Top10Item/Top10Item";
+import './Stats.scss';
+import Top10Item from '../Top10Item/Top10Item';
 
 function Stats(props) {
   const user = useContext(UserContext);
@@ -71,11 +71,11 @@ function Stats(props) {
     setTop10Track(tracksArr);
   };
 
-  const url = "https://api.spotify.com/v1/me/top/artists";
-  const tracksUrl = "https://api.spotify.com/v1/me/top/tracks";
+  const url = 'https://api.spotify.com/v1/me/top/artists';
+  const tracksUrl = 'https://api.spotify.com/v1/me/top/tracks';
 
   const topDataFourWeeks = async () => {
-    const query = "short_term";
+    const query = 'short_term';
 
     const { data } = await axios
       .get(`${url}?time_range=${query}&limit=10`, {
@@ -106,7 +106,7 @@ function Stats(props) {
   };
 
   const topDataSixMonths = async () => {
-    const query = "medium_term";
+    const query = 'medium_term';
 
     const { data } = await axios.get(`${url}?time_range=${query}&limit=10`, {
       headers: {
@@ -131,7 +131,7 @@ function Stats(props) {
   };
 
   const topDataAllTime = async () => {
-    const query = "long_term";
+    const query = 'long_term';
     const topArtistID = [];
 
     const { data } = await axios.get(`${url}?time_range=${query}&limit=10`, {
@@ -153,10 +153,6 @@ function Stats(props) {
       });
 
     setAllTimeArtists(data.items);
-    data.items.forEach((artist) => {
-      topArtistID.push(artist.id);
-    });
-    user.setTopArtists(topArtistID.slice(0, 3));
     setAllTimeTracks(tracks.data.items);
   };
 
@@ -167,7 +163,7 @@ function Stats(props) {
         labels: Object.keys(genreStats),
         datasets: [
           {
-            label: "My Genres",
+            label: 'My Genres',
             data: Object.values(genreStats),
             backgroundColor: Object.values(genreStats).map(
               (data) =>
@@ -194,7 +190,6 @@ function Stats(props) {
     getGenreStats(fourWeeksArtists);
     getTopArtistStats(fourWeeksArtists);
     getTopTrackStats(fourWeeksTracks);
-    console.log(user.artists);
   }, [fourWeeksArtists]);
 
   const top10ArtistsList = top10Artists.map((artist) => (
