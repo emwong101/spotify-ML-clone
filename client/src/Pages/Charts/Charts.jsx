@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { UserContext } from '../../Context/UserContext';
-import axios from 'axios';
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
+import axios from "axios";
+import Stats from "../../Components/Stats/Stats";
 
 function Charts() {
   const user = useContext(UserContext);
@@ -11,14 +12,14 @@ function Charts() {
 
   const grabProfile = async () => {
     //axios call here
-    const response = await axios.get('http://localhost:8080/auth/profile', {
+    const response = await axios.get("http://localhost:8080/auth/profile", {
       withCredentials: true,
     });
 
     user.setProfileData(response.data);
   };
 
-  const url = 'https://api.spotify.com/v1/me/top/artists';
+  const url = "https://api.spotify.com/v1/me/top/artists";
 
   const getTotalGenres = (artistList) => {
     const genres = [];
@@ -51,12 +52,12 @@ function Charts() {
       });
     });
 
-    const url = 'https://api.spotify.com/v1/me/top/artists';
+    const url = "https://api.spotify.com/v1/me/top/artists";
     return genres;
   };
 
   const topArtistsFourWeeks = async () => {
-    const query = 'short_term';
+    const query = "short_term";
 
     const { data } = await axios
       .get(`${url}?time_range=${query}&limit=5`, {
@@ -84,7 +85,7 @@ function Charts() {
   };
 
   const topArtistsSixMonths = async () => {
-    const query = 'medium_term';
+    const query = "medium_term";
 
     const { data } = await axios.get(`${url}?time_range=${query}`, {
       headers: {
@@ -99,7 +100,7 @@ function Charts() {
   };
 
   const topArtistsAllTime = async () => {
-    const query = 'long_term';
+    const query = "long_term";
 
     const { data } = await axios.get(`${url}?time_range=${query}`, {
       headers: {
