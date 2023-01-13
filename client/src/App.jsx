@@ -1,20 +1,20 @@
-import { useState, useContext } from "react";
-import "./App.scss";
-import Header from "./Components/Header/Header";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import "vite/modulepreload-polyfill";
+import { useState, useContext } from 'react';
+import './App.scss';
+import Header from './Components/Header/Header';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import 'vite/modulepreload-polyfill';
 
-import UserProvider from "./Context/UserContext";
-import Discover from "./pages/Discover/Discover";
-import Charts from "./pages/Charts/Charts";
+import UserProvider from './Context/UserContext';
+import Discover from './pages/Discover/Discover';
+import Charts from './pages/Charts/Charts';
 
-import Landing from "./pages/Landing/Landing";
-import Profile from "./pages/Profile/Profile";
-import Mood from "./pages/Mood/Mood";
-import Playlistgen from "./pages/Playlistgen/Playlistgen";
+import Landing from './pages/Landing/Landing';
+import Profile from './pages/Profile/Profile';
+import Mood from './pages/Mood/Mood';
+import Playlistgen from './pages/Playlistgen/Playlistgen';
 
-import { UserContext } from "./Context/UserContext";
-import PlaylistLength from "./pages/playlistLength/PlaylistLength";
+import { UserContext } from './Context/UserContext';
+import PlaylistLength from './Pages/PlaylistLength/PlaylistLength';
 
 function App() {
   // const { isLoggedIn } = useContext(UserContext);
