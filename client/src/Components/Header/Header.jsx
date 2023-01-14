@@ -13,12 +13,6 @@ function Header() {
             <Link to="/discover">Discover</Link>
           </li>
           <li>
-            <Link to="/charts">Charts</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
             <Link to="/landing">Landing</Link>
           </li>
           <li>

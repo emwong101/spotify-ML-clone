@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import "./App.scss";
-import Header from "./Components/Header/Header";
+import Header from "./components/Header/Header";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "vite/modulepreload-polyfill";
 
@@ -30,7 +30,6 @@ function App() {
               <Route path="/discover" element={<Discover />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/charts" element={<Charts />} />
-
               <Route path="/landing" element={<Landing />} />
               <Route path="/mood" element={<Mood />} />
               <Route path="/playlistgen" element={<Playlistgen />} />
