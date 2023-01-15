@@ -8,12 +8,12 @@ exports.up = function (knex) {
     .createTable('playlist', (table) => {
       table.increments('playlist_id').primary();
       table.json('data').notNullable();
-      table
-        .integer('fk_user_id')
-        .unsigned()
-        .references('users.id')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+      //   table
+      //     .integer('fk_user_id')
+      //     .unsigned()
+      //     .references('users.id')
+      //     .onUpdate('CASCADE')
+      //     .onDelete('CASCADE');
     });
 };
 

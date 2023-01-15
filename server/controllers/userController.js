@@ -76,12 +76,27 @@ exports.saveUserPlaylist = (req, res) => {
   const { id, current_pl } = req.body;
   // let track_ids = [];
   // req.body.tracks.forEach((i) => track_ids.push({ track_id: i.id }));
-  knex('playlist')
-    .insert({ id, data: current_pl })
-    .then((d) => res.status(201).json(d[0]))
-    .catch((err) =>
-      res
-        .status(400)
-        .send(`Error saving playlist for user ${req.params.id} ${err}`)
-    );
+
+  let insert_to_pl = [];
+  insert_to_pl.push(
+    knex('playlist')
+      .insert({ data: current_pl })
+      // .then((d) => res.status(201).json(d[0]))
+      .then((d) => {
+        console.log('after inserting to playlist table', d);
+        // res.status(201).json(d[0]);
+        return knex('userbyplaylist')
+          .insert({
+            fk_user_id: id,
+            fk_playlist_id: d[0],
+          })
+          .then((r) => res.status(201).json(r));
+      })
+      .catch((err) =>
+        res
+          .status(400)
+          .send(`Error saving playlist for user ${req.params.id} ${err}`)
+      )
+  );
+  return Promise.all(insert_to_pl);
 };
