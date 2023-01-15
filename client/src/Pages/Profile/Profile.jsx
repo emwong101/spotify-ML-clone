@@ -41,6 +41,7 @@ function Profile(props) {
     });
 
     localStorage.setItem('top artists', JSON.stringify(topArtistID));
+    user.setTopArtists(topArtistID);
   };
 
   useEffect(() => {

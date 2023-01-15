@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import './PlaylistLength.scss';
@@ -33,6 +33,10 @@ function PlaylistLength() {
     }
     navigate('/playlistgen');
   };
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
   console.log(user);
   return (

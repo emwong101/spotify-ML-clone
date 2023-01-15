@@ -16,6 +16,14 @@ const UserProvider = ({ children }) => {
     return JSON.parse(localStorage.getItem('recommended playlist')) || {};
   });
 
+  const [topArtists, setTopArtists] = useState(() => {
+    return localStorage.getItem('top artists') || [];
+  });
+
+  const [mood, setMood] = useState(() => {
+    return localStorage.getItem('mood');
+  });
+
   const setProfileData = (profileData) => {
     setIsLoggedIn(profileData);
   };
@@ -24,12 +32,11 @@ const UserProvider = ({ children }) => {
     setRecommended(recommendedData);
   };
 
-  const mood = localStorage.getItem('mood');
-  const topArtists = JSON.parse(localStorage.getItem('top artists'));
-
   const contextValue = {
     setProfileData,
     setRecommendedData,
+    setTopArtists,
+    setMood,
     mood: mood,
     profile: isLoggedIn,
     artists: topArtists,
