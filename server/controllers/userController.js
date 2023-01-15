@@ -27,9 +27,16 @@ exports.singleUser = (req, res) => {
 exports.getUserPlaylist = (req, res) => {
   const { id, playlist_id } = req.params;
   knex
-    .select('u.id as user_id', 'p.playlist_id as playlist_id', 'p.data')
+    .select(
+      'u.id as user_id',
+      'p.playlist_id as playlist_id',
+      'ubp.userbyplaylist_id as userbyplaylist_id',
+      'ubp.fk_user_id',
+      'ubp.fk_playlist_id',
+      'p.data'
+    )
     .from('users as u')
-    .leftJoin('playlist as p', 'u.id', '=', 'p.fk_user_id')
+    .leftJoin('userbyplaylist as ubp', 'u.id', '=', 'ubp.fk_user_id')
     .where('u.id', parseInt(id))
     .then((data) => {
       if (!data.length) {
@@ -64,11 +71,13 @@ exports.getSpotifyToken = (req, res) => {
 };
 
 exports.saveUserPlaylist = (req, res) => {
-  const { id, playlist_id } = req.params;
-  let track_ids = [];
-  req.body.tracks.forEach((i) => track_ids.push({ track_id: i.id }));
+  // console.log(req.body);
+  // res.status(201).json(req.body);
+  const { id, current_pl } = req.body;
+  // let track_ids = [];
+  // req.body.tracks.forEach((i) => track_ids.push({ track_id: i.id }));
   knex('playlist')
-    .insert({ fk_user_id: id, data: track_ids })
+    .insert({ id, data: current_pl })
     .then((d) => res.status(201).json(d[0]))
     .catch((err) =>
       res

@@ -1,33 +1,33 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './Profile.scss';
-import { IoIosArrowRoundBack } from 'react-icons/io';
-import { UserContext } from '../../Context/UserContext';
+import React, { useState, useEffect, useContext } from "react";
+import "./Profile.scss";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { UserContext } from "../../Context/UserContext";
 
-import ProfileMenu from '../../Components/ProfileMenu/ProfileMenu';
-import ProfileContent from '../../Components/ProfileContent/ProfileContent';
-import axios from 'axios';
+import ProfileMenu from "../../Components/ProfileMenu/ProfileMenu";
+import ProfileContent from "../../Components/ProfileContent/ProfileContent";
+import axios from "axios";
 
 function Profile(props) {
-  const [clickedItem, setClickedItem] = useState('Playlists');
+  const [clickedItem, setClickedItem] = useState("Playlists");
   const user = useContext(UserContext);
 
   const grabProfile = () => {
     //axios call here
     const response = axios
-      .get('http://localhost:8080/auth/profile', {
+      .get("http://localhost:8080/auth/profile", {
         withCredentials: true,
       })
       .then((res) => {
         user.setProfileData(res.data);
-        localStorage.setItem('user profile', JSON.stringify(res.data));
+        localStorage.setItem("user profile", JSON.stringify(res.data));
         top3ArtistsAllTime(res.data.access_token);
       });
   };
 
-  const url = 'https://api.spotify.com/v1/me/top/artists';
+  const url = "https://api.spotify.com/v1/me/top/artists";
 
   const top3ArtistsAllTime = async (access_token) => {
-    const query = 'long_term';
+    const query = "long_term";
     const topArtistID = [];
 
     const { data } = await axios.get(`${url}?time_range=${query}&limit=3`, {
@@ -40,7 +40,7 @@ function Profile(props) {
       topArtistID.push(artist.id);
     });
 
-    localStorage.setItem('top artists', JSON.stringify(topArtistID));
+    localStorage.setItem("top artists", JSON.stringify(topArtistID));
     user.setTopArtists(topArtistID);
   };
 
