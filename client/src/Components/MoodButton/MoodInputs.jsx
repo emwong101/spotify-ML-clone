@@ -22,6 +22,7 @@ function MoodInputs({ type }) {
 
   const moodSelection = (e) => {
     localStorage.setItem('mood', e.target.value);
+    user.setMood(e.target.value);
   };
 
   return (
