@@ -7,7 +7,6 @@ const Playlistgen = () => {
   const user = useContext(UserContext);
   console.log("recommended dta", user.recommended);
 
-  const url = "http://localhost:8080/user/saveplaylist";
   const { id } = JSON.parse(localStorage.getItem("user profile"));
   // console.log("user id is: ", id);
   const current_pl = JSON.parse(localStorage.getItem("recommended playlist"));
@@ -15,6 +14,7 @@ const Playlistgen = () => {
   console.log("save_pl_data: ", save_pl_data);
   const savePlaylist = () => {
     console.log(`axios post test`);
+    const url = `http://localhost:8080/user/${id}/saveplaylist`;
     axios.post(`${url}`, save_pl_data);
   };
 

@@ -1,0 +1,9 @@
+.saved-pl {
+    &__tracks-lists{
+        display: inline-flex;
+    }
+    &__track{
+        display: flex;
+        flex-direction: row;
+    }
+}

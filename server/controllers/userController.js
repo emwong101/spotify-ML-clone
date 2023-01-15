@@ -24,33 +24,6 @@ exports.singleUser = (req, res) => {
     );
 };
 
-exports.getUserPlaylist = (req, res) => {
-  const { id, playlist_id } = req.params;
-  knex
-    .select(
-      'u.id as user_id',
-      'p.playlist_id as playlist_id',
-      'ubp.userbyplaylist_id as userbyplaylist_id',
-      'ubp.fk_user_id',
-      'ubp.fk_playlist_id',
-      'p.data'
-    )
-    .from('users as u')
-    .leftJoin('userbyplaylist as ubp', 'u.id', '=', 'ubp.fk_user_id')
-    .where('u.id', parseInt(id))
-    .then((data) => {
-      if (!data.length) {
-        return res
-          .status(404)
-          .send(`Record with id: ${req.params.id} is not found`);
-      }
-      res.status(200).json(data[0]);
-    })
-    .catch((err) =>
-      res.status(400).send(`Error retrieving user ${req.params.id} ${err}`)
-    );
-};
-
 exports.getSpotifyToken = (req, res) => {
   const { id } = req.params;
   knex
@@ -83,7 +56,7 @@ exports.saveUserPlaylist = (req, res) => {
       .insert({ data: current_pl })
       // .then((d) => res.status(201).json(d[0]))
       .then((d) => {
-        console.log('after inserting to playlist table', d);
+        // console.log('after inserting to playlist table', d);
         // res.status(201).json(d[0]);
         return knex('userbyplaylist')
           .insert({
@@ -99,4 +72,27 @@ exports.saveUserPlaylist = (req, res) => {
       )
   );
   return Promise.all(insert_to_pl);
+};
+
+exports.getUserPlaylists = (req, res) => {
+  const { id } = req.params;
+  // console.log('grabplaylists id', id);
+  // console.log('grabPlaylists: ', req);
+
+  knex
+    .select(
+      'u.id as user_id',
+      'p.playlist_id as playlist_id',
+      'p.data as playlist_data'
+    )
+    .from('users as u')
+    .leftJoin('userbyplaylist as ubp', 'u.id', '=', 'ubp.fk_user_id')
+    .leftJoin('playlist as p', 'ubp.fk_playlist_id', '=', 'p.playlist_id')
+    .where('u.id', parseInt(id))
+    .then((data) => res.status(200).json(data))
+    .catch((err) =>
+      res
+        .status(400)
+        .send(`Error grabbing playlists for user ${req.params.id} ${err}`)
+    );
 };
