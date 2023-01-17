@@ -8,7 +8,10 @@ const Playlistgen = () => {
   const user = useContext(UserContext);
   console.log("recommended dta", user.recommended);
 
-  const { id } = JSON.parse(localStorage.getItem("user profile"));
+  const { id, spotify_id, access_token } = JSON.parse(
+    localStorage.getItem("user profile")
+  );
+  console.log("access_token", access_token);
   // const { id, spotify_id } = user.profile;
   // console.log("user id is: ", id);
   // const current_pl = JSON.parse(localStorage.getItem("recommended playlist"));
@@ -16,26 +19,33 @@ const Playlistgen = () => {
   let save_pl_data = { id, current_pl };
   console.log("save_pl_data: ", save_pl_data);
   //create playlist
-  // const create_playlist = () => {
-  //   const url = `https://api.spotify.com/v1/users/${spotify_id}/playlists`;
-  //   const req_body = {
-  //     name: "spotifyML-test",
-  //     description: "New playlist description for testing",
-  //     public: false,
-  //   };
-  //   const { data } = axios.post(url, req_body, {
-  //     headers: {
-  //       Authorization: `Bearer ${user.profile.access_token}`,
-  //     },
-  //   });
-  //   console.log("created playlist", data);
-  // };
+  const create_playlist = async () => {
+    const url = `https://api.spotify.com/v1/users/${spotify_id}/playlists`;
+    const req_body = {
+      name: "spotifyML-test",
+      description: "New playlist description for testing",
+      public: false,
+    };
+    let { data } = await axios
+      .post(url, req_body, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          // make a call to the backend to get new access token
+        }
+      });
+
+    console.log("created playlist", data.external_urls.spotify);
+  };
 
   const savePlaylist = () => {
     console.log(`axios post test`);
     const url = `http://localhost:8080/user/${id}/saveplaylist`;
     axios.post(`${url}`, save_pl_data);
-    // create_playlist();
+    create_playlist();
   };
 
   return (
