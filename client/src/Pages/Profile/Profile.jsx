@@ -6,6 +6,7 @@ import { UserContext } from "../../Context/UserContext";
 import ProfileMenu from "../../Components/ProfileMenu/ProfileMenu";
 import ProfileContent from "../../Components/ProfileContent/ProfileContent";
 import axios from "axios";
+import useRefreshToken from "../../useRefreshToken";
 
 function Profile(props) {
   const [clickedItem, setClickedItem] = useState("Playlists");
@@ -21,6 +22,7 @@ function Profile(props) {
         user.setProfileData(res.data);
         localStorage.setItem("user profile", JSON.stringify(res.data));
         top3ArtistsAllTime(res.data.access_token);
+        console.log(res.data);
       });
   };
 
@@ -44,6 +46,19 @@ function Profile(props) {
     user.setTopArtists(topArtistID);
   };
 
+  const grabNewAccessToken = () => {
+    const response = axios
+      .get("http://localhost:8080/refresh", { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+        user.setProfileData(res.data);
+        localStorage.setItem("user profile", JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     grabProfile();
   }, []);
@@ -62,6 +77,7 @@ function Profile(props) {
           </div>
           <div className="profile__content">
             <ProfileContent header={clickedItem} />
+            <button onClick={grabNewAccessToken}>Refresh</button>
           </div>
         </section>
       ) : (

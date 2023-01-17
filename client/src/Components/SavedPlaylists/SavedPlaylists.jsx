@@ -21,7 +21,7 @@ const SavedPlaylists = () => {
   };
 
   const renderPlaylists = () => {
-    const pl_data = JSON.parse(localStorage.getItem("saved playlists"));
+    const pl_data = user.savedplaylists;
     console.log(pl_data);
     if (pl_data !== null) {
       return (
@@ -30,7 +30,7 @@ const SavedPlaylists = () => {
             <h1>Saved Playlists content</h1>
             <div className="saved-pl__list">
               {pl_data.map((i) => (
-                <div className="saved-pl__single-pl">
+                <div className="saved-pl__single-pl" key={i.playlist_id}>
                   <div className="saved-pl__pl-id">
                     Playlist #{i.playlist_id}
                   </div>

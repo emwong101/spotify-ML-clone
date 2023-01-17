@@ -21,11 +21,7 @@ const spotifyStrategy = new SpotifyStrategy(
       .then((user) => {
         if (user.length) {
           // If user is found, pass the user object to serialize function
-          console.log('This is the new token:', accessToken);
-          knex('users')
-            .where('spotify_id', profile.id)
-            .update({ access_token: accessToken });
-          done(null, user[0]);
+          done(null, { id: user[0].id, expiry: expires_in });
         } else {
           knex('users')
             .insert({
@@ -39,7 +35,8 @@ const spotifyStrategy = new SpotifyStrategy(
             })
             .then((userId) => {
               // Pass the user object to serialize function
-              done(null, { id: userId[0] });
+              console.log(userId);
+              done(null, { id: userId[0], expiry: expires_in });
             })
             .catch((err) => {
               console.log('Error creating a user', err);

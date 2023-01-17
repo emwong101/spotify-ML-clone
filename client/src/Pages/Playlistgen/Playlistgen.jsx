@@ -9,7 +9,8 @@ const Playlistgen = () => {
 
   const { id } = JSON.parse(localStorage.getItem("user profile"));
   // console.log("user id is: ", id);
-  const current_pl = JSON.parse(localStorage.getItem("recommended playlist"));
+  // const current_pl = JSON.parse(localStorage.getItem("recommended playlist"));
+  const current_pl = user.recommended;
   let save_pl_data = { id, current_pl };
   console.log("save_pl_data: ", save_pl_data);
   const savePlaylist = () => {
