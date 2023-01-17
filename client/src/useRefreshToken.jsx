@@ -27,10 +27,14 @@ const grabProfile = (user) => {
       top3ArtistsAllTime(res.data.access_token, user);
       console.log(res.data);
 
-      //after grabbing profile for the first time, run this function every hour
+      // after grabbing profile for the first time, run this function every hour
       setInterval(() => {
         grabNewAccessToken(user);
       }, res.data.expiry * 1000);
+    })
+    .catch((err) => {
+      console.log('this is the error', err);
+      return;
     });
 };
 
@@ -57,9 +61,9 @@ const top3ArtistsAllTime = async (access_token, user) => {
 const useRefreshToken = () => {
   const user = useContext(UserContext);
   useEffect(() => {
-    if (window.location.href !== 'http://localhost:5173/landing') {
-      grabProfile(user);
-    }
+    // if (window.location.href !== 'http://localhost:5173/landing') {
+    grabProfile(user);
+    // }
   }, []);
 };
 
