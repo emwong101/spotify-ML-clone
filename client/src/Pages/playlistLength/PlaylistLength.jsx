@@ -13,21 +13,28 @@ function PlaylistLength() {
 
   const getRecommendations = async (e) => {
     try {
-      await axios.post(
-        `http://localhost:8080/recommendations`,
-        {
-          length: "5",
-          artists: "1U1el3k54VvEUzo3ybLPlM",
-          mood: "",
-        },
-        {
-          headers: { withCredentials: true },
-        }
-      );
+      await axios
+        .post(
+          `http://localhost:8080/recommendations`,
+          {
+            length: "5",
+            artists: "1U1el3k54VvEUzo3ybLPlM",
+            mood: "",
+          }
+
+          // { withCredentials: true }
+        )
+        .then((res) => console.log(res));
+
+      // let response = await axios
+      //   .get(`http://localhost:8080/test`, {
+      //     withCredentials: true,
+      //   })
+      //   .then((res) => console.log(res));
     } catch {
       console.log(`Error`);
     }
-    console.log(user.mood);
+    // console.log(user.mood);
   };
 
   console.log(user);

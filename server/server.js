@@ -23,6 +23,7 @@ app.use(
   cors({
     origin: true,
     credentials: true,
+    methods: ["GET", "POST", "DELETE", "PATCH", "PUT"],
   })
 );
 
@@ -37,15 +38,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-<<<<<<< HEAD
 const spotifyStrategy = require("./strategies/spotify-strategy");
+const refresh = require("passport-oauth2-refresh");
 passport.use("spotify", spotifyStrategy);
-=======
-const spotifyStrategy = require('./strategies/spotify-strategy');
-const refresh = require('passport-oauth2-refresh');
-passport.use('spotify', spotifyStrategy);
-refresh.use('spotify', spotifyStrategy);
->>>>>>> dev
+refresh.use("spotify", spotifyStrategy);
 
 // `serializeUser` determines which data of the auth user object should be stored in the session
 // The data comes from `done` function of the strategy
@@ -54,7 +50,7 @@ passport.serializeUser((user, done) => {
   // console.log('serializeUser (user object):', user.id);
 
   // Store only the user id in session
-  console.log('serialized obj', user);
+  console.log("serialized obj", user);
   let userData = {
     id: user.id,
     expiry: user.data.expiry,
@@ -65,17 +61,17 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((userData, done) => {
-  console.log('deserializeUser (user id):', userData);
-  knex('users')
+  console.log("deserializeUser (user id):", userData);
+  knex("users")
     .where({ id: userData.id })
     .then((user) => {
       // Remember that knex will return an array of records, so we need to get a single record from it
       // The full user object will be attached to request object as `req.user`
 
       let userProfile = user[0];
-      user[0]['expiry'] = userData.expiry;
-      user[0]['refresh_token'] = userData.refresh_token;
-      user[0]['access_token'] = userData.access_token;
+      user[0]["expiry"] = userData.expiry;
+      user[0]["refresh_token"] = userData.refresh_token;
+      user[0]["access_token"] = userData.access_token;
       return done(null, user[0]);
     })
     .catch((err) => {
@@ -83,16 +79,16 @@ passport.deserializeUser((userData, done) => {
     });
 });
 
-const authRoutes = require('./routes/auth');
-app.use('/auth', authRoutes);
+const authRoutes = require("./routes/auth");
+app.use("/auth", authRoutes);
 
-const usersRoutes = require('./routes/usersRouter');
-const { reset } = require('nodemon');
-app.use('/user', usersRoutes);
+const usersRoutes = require("./routes/usersRouter");
+const { reset } = require("nodemon");
+app.use("/user", usersRoutes);
 
-app.get('/refresh', (req, res, next) => {
+app.get("/refresh", (req, res, next) => {
   refresh.requestNewAccessToken(
-    'spotify',
+    "spotify",
     req.user.refresh_token,
     function (err, accessToken, refreshToken) {
       // You have a new access token, store it in the user object,
@@ -101,9 +97,9 @@ app.get('/refresh', (req, res, next) => {
       // You probably don't need it anyway, as according to the OAuth 2.0 spec,
       // it should be the same as the initial refresh token.
       let userProfile = req.user;
-      userProfile['access_token'] = accessToken;
+      userProfile["access_token"] = accessToken;
       //update the passport session with the new access token
-      req.session.passport.user['access_token'] = accessToken;
+      req.session.passport.user["access_token"] = accessToken;
 
       res.status(200).json(userProfile);
     }
@@ -116,15 +112,18 @@ app.post("/recommendations", (req, res) => {
       `https://api.spotify.com/v1/recommendations?limit=${req.body.length}&seed_artists=${req.body.artists}&${req.body.mood}`,
       {
         headers: {
-          Authorization: `Bearer BQDcQRtqDbz0QP-3FPQPXWSgfUS39SC27tGcqo1ccpOW704A97uADXrWK__nkARJAVzw9u6jap9qROJp1IQqHoNIGj6Hdbnh_vKeSIEQeylh6M2C9pROhkdqtWDCuujX5dknUmjnqbAbos0TeESYGwJtmZAooyIDFDeic2U6rBdBi8UTc3V40iXJzW9mBDHXCys`,
+          Authorization: req.user,
         },
       }
     );
-    console.log(req.user);
-    res.send(data);
+    res.json(data);
   };
 
   getRecommendations();
+});
+
+app.get("/test", (req, res) => {
+  res.status(200).json(req.session.passport.user);
 });
 
 const PORT = process.env.PORT || 5500;
