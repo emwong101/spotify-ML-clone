@@ -44,20 +44,12 @@ exports.getSpotifyToken = (req, res) => {
 };
 
 exports.saveUserPlaylist = (req, res) => {
-  // console.log(req.body);
-  // res.status(201).json(req.body);
   const { id, current_pl } = req.body;
-  // let track_ids = [];
-  // req.body.tracks.forEach((i) => track_ids.push({ track_id: i.id }));
-
   let insert_to_pl = [];
   insert_to_pl.push(
     knex('playlist')
       .insert({ data: current_pl })
-      // .then((d) => res.status(201).json(d[0]))
       .then((d) => {
-        // console.log('after inserting to playlist table', d);
-        // res.status(201).json(d[0]);
         return knex('userbyplaylist')
           .insert({
             fk_user_id: id,
@@ -76,9 +68,6 @@ exports.saveUserPlaylist = (req, res) => {
 
 exports.getUserPlaylists = (req, res) => {
   const { id } = req.params;
-  // console.log('grabplaylists id', id);
-  // console.log('grabPlaylists: ', req);
-
   knex
     .select(
       'u.id as user_id',

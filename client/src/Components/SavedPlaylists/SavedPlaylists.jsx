@@ -22,8 +22,7 @@ const SavedPlaylists = () => {
 
   const renderPlaylists = () => {
     const pl_data = user.savedplaylists;
-    console.log(pl_data);
-    if (pl_data !== null) {
+    if (Object.keys(pl_data).length !== 0) {
       return (
         <>
           <div className="saved-pl">
