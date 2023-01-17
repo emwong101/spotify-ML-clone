@@ -1,47 +1,46 @@
-import { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export const UserContext = createContext({
   profile: {},
-  auth: false,
   setProfileData: () => {},
 });
 
 const UserProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState({});
-  const [topArtists, setTopArtists] = useState([]);
-    const [mood, setMood] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return JSON.parse(localStorage.getItem('user profile')) || {};
+  });
+  // const [profileLocalStorage, setProfileLocalStorage] =
+  const [recommended, setRecommended] = useState(() => {
+    return JSON.parse(localStorage.getItem('recommended playlist')) || {};
+  });
+
+  const [topArtists, setTopArtists] = useState(() => {
+    return localStorage.getItem('top artists') || [];
+  });
+
+  const [mood, setMood] = useState(() => {
+    return localStorage.getItem('mood');
+  });
 
   const setProfileData = (profileData) => {
-    setIsLoggedIn({ data: profileData, auth: true });
+    setIsLoggedIn(profileData);
   };
 
-  const logout = () => {
-    const response = axios
-      .get("http://localhost:8080/auth/logout", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setIsLoggedIn((user) => ({ data: {}, auth: false }));
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // Update the state: done authenticating, user is not logged in
-        } else {
-          console.log("Error Logging out", err);
-        }
-      });
+  const setRecommendedData = (recommendedData) => {
+    setRecommended(recommendedData);
   };
 
   const contextValue = {
     setProfileData,
+    setRecommendedData,
     setTopArtists,
     setMood,
     mood: mood,
-    profile: isLoggedIn.data,
-    auth: isLoggedIn.auth,
+    profile: isLoggedIn,
     artists: topArtists,
+    recommended: recommended,
   };
 
   return (

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../../Context/UserContext';
-import MoodInputs from '../../components/MoodButton/MoodInputs';
+import MoodInputs from '../../Components/MoodButton/MoodInputs';
 import { Link } from 'react-router-dom';
-import PlaylistLength from '../PlaylistLength/PlaylistLength';
+import PlaylistLength from '../playlistLength/PlaylistLength';
 import Mood from '../Mood/Mood';
 
 function Discover() {

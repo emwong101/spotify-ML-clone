@@ -37,8 +37,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+<<<<<<< HEAD
 const spotifyStrategy = require("./strategies/spotify-strategy");
 passport.use("spotify", spotifyStrategy);
+=======
+const spotifyStrategy = require('./strategies/spotify-strategy');
+const refresh = require('passport-oauth2-refresh');
+passport.use('spotify', spotifyStrategy);
+refresh.use('spotify', spotifyStrategy);
+>>>>>>> dev
 
 // `serializeUser` determines which data of the auth user object should be stored in the session
 // The data comes from `done` function of the strategy
@@ -47,71 +54,60 @@ passport.serializeUser((user, done) => {
   // console.log('serializeUser (user object):', user.id);
 
   // Store only the user id in session
-  done(null, user.id);
+  console.log('serialized obj', user);
+  let userData = {
+    id: user.id,
+    expiry: user.data.expiry,
+    access_token: user.data.access_token,
+    refresh_token: user.data.refresh_token,
+  };
+  done(null, userData);
 });
 
-passport.deserializeUser((userId, done) => {
-  // console.log('deserializeUser (user id):', userId);
-  knex("users")
-    .where({ id: userId })
+passport.deserializeUser((userData, done) => {
+  console.log('deserializeUser (user id):', userData);
+  knex('users')
+    .where({ id: userData.id })
     .then((user) => {
       // Remember that knex will return an array of records, so we need to get a single record from it
       // The full user object will be attached to request object as `req.user`
-      done(null, user[0]);
+
+      let userProfile = user[0];
+      user[0]['expiry'] = userData.expiry;
+      user[0]['refresh_token'] = userData.refresh_token;
+      user[0]['access_token'] = userData.access_token;
+      return done(null, user[0]);
     })
     .catch((err) => {
       console.log("Error finding user", err);
     });
 });
 
-// app.set('views', __dirname + '/views');
-// app.set('view engine', 'html');
+const authRoutes = require('./routes/auth');
+app.use('/auth', authRoutes);
 
-// app.engine('html', consolidate.nunjucks);
+const usersRoutes = require('./routes/usersRouter');
+const { reset } = require('nodemon');
+app.use('/user', usersRoutes);
 
-// app.get('/', function (req, res) {
-//   res.render('index.html', { user: req.user });
-// });
+app.get('/refresh', (req, res, next) => {
+  refresh.requestNewAccessToken(
+    'spotify',
+    req.user.refresh_token,
+    function (err, accessToken, refreshToken) {
+      // You have a new access token, store it in the user object,
+      // or use it to make a new request.
+      // `refreshToken` may or may not exist, depending on the strategy you are using.
+      // You probably don't need it anyway, as according to the OAuth 2.0 spec,
+      // it should be the same as the initial refresh token.
+      let userProfile = req.user;
+      userProfile['access_token'] = accessToken;
+      //update the passport session with the new access token
+      req.session.passport.user['access_token'] = accessToken;
 
-// app.get('/account', ensureAuthenticated, function (req, res) {
-//   res.render('account.html', { user: req.user });
-// });
-
-// app.get('/login', function (req, res) {
-//   res.render('login.html', { user: req.user });
-// });
-
-const authRoutes = require("./routes/auth");
-app.use("/auth", authRoutes);
-
-app.get("/refresh_token", (req, res) => {
-  let refresh_token = req.user.refresh_token;
-  var authOptions = {
-    url: "https://accounts.spotify.com/api/token",
-    headers: {
-      Authorization:
-        "Basic " +
-        Buffer.from(
-          process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET
-        ).toString("base64"),
-    },
-    form: {
-      grant_type: "refresh_token",
-      refresh_token: refresh_token,
-    },
-    json: true,
-  };
-
-  axios.post(authOptions, function (error, response, body) {
-    console.log(body);
-    if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
-      res.send({
-        access_token: access_token,
-      });
+      res.status(200).json(userProfile);
     }
-  });
-  res.status(200).json(req.user.refresh_token);
+  );
 });
 
 app.post("/recommendations", (req, res) => {
@@ -131,18 +127,8 @@ app.post("/recommendations", (req, res) => {
   getRecommendations();
 });
 
-const usersRoutes = require("./routes/usersRouter");
-app.use("/user", usersRoutes);
-
 const PORT = process.env.PORT || 5500;
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT} `);
 });
-
-// function ensureAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     return next();
-//   }
-//   res.redirect('/login');
-// }

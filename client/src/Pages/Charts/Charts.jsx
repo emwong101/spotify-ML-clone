@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../Context/UserContext";
-import axios from "axios";
-import Stats from "../../Components/Stats/Stats";
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
+import axios from 'axios';
+import Stats from '../../Components/Stats/Stats';
 
 function Charts() {
   const user = useContext(UserContext);
@@ -12,14 +12,14 @@ function Charts() {
 
   const grabProfile = async () => {
     //axios call here
-    const response = await axios.get("http://localhost:8080/auth/profile", {
+    const response = await axios.get('http://localhost:8080/auth/profile', {
       withCredentials: true,
     });
 
     user.setProfileData(response.data);
   };
 
-  const url = "https://api.spotify.com/v1/me/top/artists";
+  const url = 'https://api.spotify.com/v1/me/top/artists';
 
   const getTotalGenres = (artistList) => {
     const genres = [];
@@ -52,12 +52,12 @@ function Charts() {
       });
     });
 
-    const url = "https://api.spotify.com/v1/me/top/artists";
+    const url = 'https://api.spotify.com/v1/me/top/artists';
     return genres;
   };
 
   const topArtistsFourWeeks = async () => {
-    const query = "short_term";
+    const query = 'short_term';
 
     const { data } = await axios
       .get(`${url}?time_range=${query}&limit=5`, {
@@ -85,7 +85,7 @@ function Charts() {
   };
 
   const topArtistsSixMonths = async () => {
-    const query = "medium_term";
+    const query = 'medium_term';
 
     const { data } = await axios.get(`${url}?time_range=${query}`, {
       headers: {
@@ -100,7 +100,7 @@ function Charts() {
   };
 
   const topArtistsAllTime = async () => {
-    const query = "long_term";
+    const query = 'long_term';
 
     const { data } = await axios.get(`${url}?time_range=${query}`, {
       headers: {
@@ -128,7 +128,7 @@ function Charts() {
       >
         <h1>Charts</h1>
         <h4>Viewing your data</h4>
-        {user.auth ? (
+        {user.profile.id ? (
           <div>
             <h1>Profile Data</h1>
             <p>{user.profile.first_name}</p>
@@ -136,7 +136,13 @@ function Charts() {
             <p>{user.profile.email}</p>
             <p>{user.profile.spotify_id}</p>
             <a href="http://localhost:8080/auth/logout">
-              <button>Log Out</button>
+              <button
+                onClick={() => {
+                  localStorage.clear();
+                }}
+              >
+                Log Out
+              </button>
             </a>
           </div>
         ) : (
