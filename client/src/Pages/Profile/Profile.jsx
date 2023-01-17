@@ -21,6 +21,7 @@ function Profile(props) {
         user.setProfileData(res.data);
         localStorage.setItem('user profile', JSON.stringify(res.data));
         top3ArtistsAllTime(res.data.access_token);
+        console.log(res.data);
       });
   };
 
