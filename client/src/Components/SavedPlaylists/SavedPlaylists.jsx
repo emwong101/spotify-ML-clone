@@ -15,7 +15,7 @@ const SavedPlaylists = () => {
       console.log("no saved playlists");
     } else {
       user.setSavedplaylistsData(data);
-      localStorage.setItem("saved playlists", JSON.stringify(data));
+      // localStorage.setItem("saved playlists", JSON.stringify(data));
       console.log(data);
     }
   };
