@@ -1,20 +1,20 @@
 import { useState, useContext } from "react";
 import "./App.scss";
-import Header from "./components/Header/Header";
+import Header from "./Components/Header/Header";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "vite/modulepreload-polyfill";
 
 import UserProvider from "./Context/UserContext";
-import Discover from "./pages/Discover/Discover";
-import Charts from "./pages/Charts/Charts";
+import Discover from "./Pages/Discover/Discover";
+import Charts from "./Pages/Charts/Charts";
 
-import Landing from "./pages/Landing/Landing";
-import Profile from "./pages/Profile/Profile";
-import Mood from "./pages/Mood/Mood";
-import Playlistgen from "./pages/Playlistgen/Playlistgen";
+import Landing from "./Pages/Landing/Landing";
+import Profile from "./Pages/Profile/Profile";
+import Mood from "./Pages/Mood/Mood";
+import Playlistgen from "./Pages/Playlistgen/Playlistgen";
 
 import { UserContext } from "./Context/UserContext";
-import PlaylistLength from "./Pages/PlaylistLength/PlaylistLength";
+import PlaylistLength from "./Pages/playlistLength/PlaylistLength";
 
 function App() {
   // const { isLoggedIn } = useContext(UserContext);

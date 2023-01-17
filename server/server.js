@@ -1,18 +1,18 @@
-const path = require('node:path');
+const path = require("node:path");
 
-require('dotenv').config({ path: path.resolve(__dirname, './.env') });
+require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
-const express = require('express');
-const session = require('express-session');
+const express = require("express");
+const session = require("express-session");
 // const server = express();
-const cors = require('cors');
-const passport = require('passport');
-const helmet = require('helmet');
-const consolidate = require('consolidate');
+const cors = require("cors");
+const passport = require("passport");
+const helmet = require("helmet");
+const consolidate = require("consolidate");
 const app = express();
-const axios = require('axios');
+const axios = require("axios");
 
-const knex = require('knex')(require('./knexfile.js').development);
+const knex = require("knex")(require("./knexfile.js").development);
 
 app.use(express.json());
 app.use(cors());
@@ -28,7 +28,7 @@ app.use(
 
 app.use(
   session({
-    secret: 'keyboard cat',
+    secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
   })
@@ -37,8 +37,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const spotifyStrategy = require('./strategies/spotify-strategy');
-passport.use('spotify', spotifyStrategy);
+const spotifyStrategy = require("./strategies/spotify-strategy");
+passport.use("spotify", spotifyStrategy);
 
 // `serializeUser` determines which data of the auth user object should be stored in the session
 // The data comes from `done` function of the strategy
@@ -52,7 +52,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((userId, done) => {
   // console.log('deserializeUser (user id):', userId);
-  knex('users')
+  knex("users")
     .where({ id: userId })
     .then((user) => {
       // Remember that knex will return an array of records, so we need to get a single record from it
@@ -60,7 +60,7 @@ passport.deserializeUser((userId, done) => {
       done(null, user[0]);
     })
     .catch((err) => {
-      console.log('Error finding user', err);
+      console.log("Error finding user", err);
     });
 });
 
@@ -81,22 +81,22 @@ passport.deserializeUser((userId, done) => {
 //   res.render('login.html', { user: req.user });
 // });
 
-const authRoutes = require('./routes/auth');
-app.use('/auth', authRoutes);
+const authRoutes = require("./routes/auth");
+app.use("/auth", authRoutes);
 
-app.get('/refresh_token', (req, res) => {
+app.get("/refresh_token", (req, res) => {
   let refresh_token = req.user.refresh_token;
   var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
+    url: "https://accounts.spotify.com/api/token",
     headers: {
       Authorization:
-        'Basic ' +
+        "Basic " +
         Buffer.from(
-          process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET
-        ).toString('base64'),
+          process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET
+        ).toString("base64"),
     },
     form: {
-      grant_type: 'refresh_token',
+      grant_type: "refresh_token",
       refresh_token: refresh_token,
     },
     json: true,
@@ -114,8 +114,25 @@ app.get('/refresh_token', (req, res) => {
   res.status(200).json(req.user.refresh_token);
 });
 
-const usersRoutes = require('./routes/usersRouter');
-app.use('/user', usersRoutes);
+app.post("/recommendations", (req, res) => {
+  const getRecommendations = async () => {
+    let { data } = await axios.get(
+      `https://api.spotify.com/v1/recommendations?limit=${req.body.length}&seed_artists=${req.body.artists}&${req.body.mood}`,
+      {
+        headers: {
+          Authorization: `Bearer BQDcQRtqDbz0QP-3FPQPXWSgfUS39SC27tGcqo1ccpOW704A97uADXrWK__nkARJAVzw9u6jap9qROJp1IQqHoNIGj6Hdbnh_vKeSIEQeylh6M2C9pROhkdqtWDCuujX5dknUmjnqbAbos0TeESYGwJtmZAooyIDFDeic2U6rBdBi8UTc3V40iXJzW9mBDHXCys`,
+        },
+      }
+    );
+    console.log(req.user);
+    res.send(data);
+  };
+
+  getRecommendations();
+});
+
+const usersRoutes = require("./routes/usersRouter");
+app.use("/user", usersRoutes);
 
 const PORT = process.env.PORT || 5500;
 
@@ -123,9 +140,9 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT} `);
 });
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
+// function ensureAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     return next();
+//   }
+//   res.redirect('/login');
+// }

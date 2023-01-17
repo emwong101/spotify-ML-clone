@@ -6,7 +6,6 @@ import "./Header.scss";
 function Header() {
   return (
     <header className="header">
-      This is the freakin header
       <nav className="nav--header">
         <ul>
           <li>
