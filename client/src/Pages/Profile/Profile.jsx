@@ -12,39 +12,39 @@ function Profile(props) {
   const [clickedItem, setClickedItem] = useState("Playlists");
   const user = useContext(UserContext);
 
-  const grabProfile = () => {
-    //axios call here
-    const response = axios
-      .get("http://localhost:8080/auth/profile", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        user.setProfileData(res.data);
-        localStorage.setItem("user profile", JSON.stringify(res.data));
-        top3ArtistsAllTime(res.data.access_token);
-        console.log(res.data);
-      });
-  };
+  // const grabProfile = () => {
+  //   //axios call here
+  //   const response = axios
+  //     .get('http://localhost:8080/auth/profile', {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       user.setProfileData(res.data);
+  //       localStorage.setItem('user profile', JSON.stringify(res.data));
+  //       top3ArtistsAllTime(res.data.access_token);
+  //       console.log(res.data);
+  //     });
+  // };
 
-  const url = "https://api.spotify.com/v1/me/top/artists";
+  // const url = 'https://api.spotify.com/v1/me/top/artists';
 
-  const top3ArtistsAllTime = async (access_token) => {
-    const query = "long_term";
-    const topArtistID = [];
+  // const top3ArtistsAllTime = async (access_token) => {
+  //   const query = 'long_term';
+  //   const topArtistID = [];
 
-    const { data } = await axios.get(`${url}?time_range=${query}&limit=3`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
+  //   const { data } = await axios.get(`${url}?time_range=${query}&limit=3`, {
+  //     headers: {
+  //       Authorization: `Bearer ${access_token}`,
+  //     },
+  //   });
 
-    data.items.forEach((artist) => {
-      topArtistID.push(artist.id);
-    });
+  //   data.items.forEach((artist) => {
+  //     topArtistID.push(artist.id);
+  //   });
 
-    localStorage.setItem("top artists", JSON.stringify(topArtistID));
-    user.setTopArtists(topArtistID);
-  };
+  //   localStorage.setItem('top artists', JSON.stringify(topArtistID));
+  //   user.setTopArtists(topArtistID);
+  // };
 
   const grabNewAccessToken = () => {
     const response = axios
@@ -59,9 +59,9 @@ function Profile(props) {
       });
   };
 
-  useEffect(() => {
-    grabProfile();
-  }, []);
+  // useEffect(() => {
+  //   grabProfile();
+  // }, []);
 
   return (
     <div className="profile">
