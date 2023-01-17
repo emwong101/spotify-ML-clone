@@ -18,7 +18,12 @@ import { UserContext } from './Context/UserContext';
 import useRefreshToken from './useRefreshToken';
 
 function App() {
+  //custom hook to grab new access token after an hour
   useRefreshToken();
+  // const user = useContext(UserContext);
+  // useEffect(() => {
+  //   console.log(user);
+  // }, []);
 
   return (
     <>

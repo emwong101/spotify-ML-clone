@@ -18,9 +18,13 @@ const grabNewAccessToken = (user) => {
 const useRefreshToken = () => {
   const user = useContext(UserContext);
   useEffect(() => {
-    setInterval(() => {
-      grabNewAccessToken(user);
-    }, user.profile.expiry * 1000);
+    if (!user.profile.expiry) {
+      return;
+    } else {
+      setInterval(() => {
+        grabNewAccessToken(user);
+      }, user.profile.expiry * 1000);
+    }
   }, []);
 };
 
