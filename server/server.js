@@ -97,13 +97,9 @@ app.get('/refresh', (req, res, next) => {
       // it should be the same as the initial refresh token.
       let userProfile = req.user;
       userProfile['access_token'] = accessToken;
+      //update the passport session with the new access token
+      req.session.passport.user['access_token'] = accessToken;
 
-      req.login({ data: userProfile }, function (err) {
-        if (err) return next(err);
-
-        console.log('After relogin: ' + req.session.passport.user);
-        // res.sendStatus(200);
-      });
       res.status(200).json(userProfile);
     }
   );
