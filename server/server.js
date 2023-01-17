@@ -52,7 +52,9 @@ passport.serializeUser((user, done) => {
   console.log('serialized obj', user);
   let userData = {
     id: user.id,
-    expiry: user.expiry,
+    expiry: user.data.expiry,
+    access_token: user.data.access_token,
+    refresh_token: user.data.refresh_token,
   };
   done(null, userData);
 });
@@ -67,6 +69,8 @@ passport.deserializeUser((userData, done) => {
 
       let userProfile = user[0];
       user[0]['expiry'] = userData.expiry;
+      user[0]['refresh_token'] = userData.refresh_token;
+      user[0]['access_token'] = userData.access_token;
       return done(null, user[0]);
     })
     .catch((err) => {
@@ -81,7 +85,7 @@ const usersRoutes = require('./routes/usersRouter');
 const { reset } = require('nodemon');
 app.use('/user', usersRoutes);
 
-app.get('/refresh', (req, res) => {
+app.get('/refresh', (req, res, next) => {
   refresh.requestNewAccessToken(
     'spotify',
     req.user.refresh_token,
@@ -93,9 +97,23 @@ app.get('/refresh', (req, res) => {
       // it should be the same as the initial refresh token.
       let userProfile = req.user;
       userProfile['access_token'] = accessToken;
+      //update the passport session with the new access token
+      req.session.passport.user['access_token'] = accessToken;
+
       res.status(200).json(userProfile);
     }
   );
+});
+
+app.post('/embed', (req, res, next) => {
+  const render_oEmbed = async () => {
+    const base_uri = 'https://open.spotify.com/oembed';
+    const track_uri = 'https://open.spotify.com/track/6chdRBWviHlm7JAtwgflBP';
+    let { data } = await axios.get(`${base_uri}/?url=${track_uri}`);
+    // console.log(render_oEmbed, data);
+    res.status(200).json(data);
+  };
+  render_oEmbed();
 });
 
 const PORT = process.env.PORT || 5500;
