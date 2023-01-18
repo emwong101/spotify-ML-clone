@@ -1,10 +1,11 @@
-import React from 'react';
-import './ProfileContent.scss';
-import Stats from '../Stats/Stats';
+import React from "react";
+import "./ProfileContent.scss";
+import Stats from "../Stats/Stats";
+import SavedPlaylists from "../SavedPlaylists/SavedPlaylists";
 
 function ProfileContent({ header }) {
   const contentSection =
-    header === 'Playlists' ? <h1>playlists content</h1> : <Stats />;
+    header === "Playlists" ? <SavedPlaylists /> : <Stats />;
   return (
     <div className="profile-content">
       <h1 className="profile-content__header">{header.toUpperCase()}</h1>

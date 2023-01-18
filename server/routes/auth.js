@@ -11,7 +11,13 @@ let authCallbackPath = 'http://localhost:8080/auth/callback';
 router.get(
   '/spotify',
   passport.authenticate('spotify', {
-    scope: ['user-read-email', 'user-read-private', 'user-top-read'],
+    scope: [
+      'user-read-email',
+      'user-read-private',
+      'user-top-read',
+      'playlist-modify-private',
+      'playlist-modify-public',
+    ],
     showDialog: true,
   })
 );

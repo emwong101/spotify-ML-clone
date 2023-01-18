@@ -1,6 +1,6 @@
-import { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const UserContext = createContext({
   profile: {},
@@ -9,19 +9,23 @@ export const UserContext = createContext({
 
 const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return JSON.parse(localStorage.getItem('user profile')) || {};
+    return JSON.parse(localStorage.getItem("user profile")) || {};
   });
   // const [profileLocalStorage, setProfileLocalStorage] =
   const [recommended, setRecommended] = useState(() => {
-    return JSON.parse(localStorage.getItem('recommended playlist')) || {};
+    return JSON.parse(localStorage.getItem("recommended playlist")) || {};
+  });
+
+  const [savedplaylists, setSavedplaylists] = useState(() => {
+    return JSON.parse(localStorage.getItem("saved playlists")) || {};
   });
 
   const [topArtists, setTopArtists] = useState(() => {
-    return localStorage.getItem('top artists') || [];
+    return localStorage.getItem("top artists") || [];
   });
 
   const [mood, setMood] = useState(() => {
-    return localStorage.getItem('mood');
+    return localStorage.getItem("mood");
   });
 
   const setProfileData = (profileData) => {
@@ -32,15 +36,21 @@ const UserProvider = ({ children }) => {
     setRecommended(recommendedData);
   };
 
+  const setSavedplaylistsData = (savedplaylistData) => {
+    setSavedplaylists(savedplaylistData);
+  };
+
   const contextValue = {
     setProfileData,
     setRecommendedData,
+    setSavedplaylistsData,
     setTopArtists,
     setMood,
     mood: mood,
     profile: isLoggedIn,
     artists: topArtists,
     recommended: recommended,
+    savedplaylists: savedplaylists,
   };
 
   return (
