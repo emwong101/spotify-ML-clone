@@ -3,10 +3,12 @@ import { useContext, useState, useEffect } from "react";
 import parse from "html-react-parser";
 import axios from "axios";
 
-const SpotifyEmbed = () => {
+const SpotifyEmbed = ({ externalurl }) => {
   let [html_iframe, setHtml_iframe] = useState(null);
   const render_oEmbed = async () => {
-    let { data } = await axios.post("http://localhost:8080/embed", {});
+    let { data } = await axios.post("http://localhost:8080/embed", {
+      externalurl: externalurl,
+    });
     console.log("render_oEmbed", data.html);
     setHtml_iframe(data.html);
   };
@@ -17,7 +19,9 @@ const SpotifyEmbed = () => {
 
   return (
     <>
-      <div className="spotify-embed">{html_iframe && parse(html_iframe)}</div>
+      <div className="spotify-embed">
+        {externalurl ? html_iframe && parse(html_iframe) : "EMBED"}
+      </div>
     </>
   );
 };

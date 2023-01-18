@@ -108,10 +108,10 @@ app.get('/refresh', (req, res, next) => {
 app.post('/embed', (req, res, next) => {
   const render_oEmbed = async () => {
     const base_uri = 'https://open.spotify.com/oembed';
-    const track_uri = 'https://open.spotify.com/track/6chdRBWviHlm7JAtwgflBP';
-    let { data } = await axios.get(`${base_uri}/?url=${track_uri}`);
-    // console.log(render_oEmbed, data);
-    res.status(200).json(data);
+    // const track_uri = 'https://open.spotify.com/track/6chdRBWviHlm7JAtwgflBP';
+    let { data } = await axios.get(`${base_uri}/?url=${req.body.externalurl}`);
+    console.log('render_oEmbed', data);
+    res.status(201).json(data);
   };
   render_oEmbed();
 });

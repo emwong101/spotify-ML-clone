@@ -6,6 +6,9 @@ import SpotifyEmbed from "../../Components/SpotifyEmbed/SpotifyEmbed";
 
 const Playlistgen = () => {
   const user = useContext(UserContext);
+  let [externalurl, setExternalUrl] = useState(null);
+  // let [uris, setUris] = useState([]);
+  let [playlist_id, setPlaylist_id] = useState("");
   console.log("recommended dta", user.recommended);
 
   const { id, spotify_id, access_token } = JSON.parse(
@@ -26,7 +29,7 @@ const Playlistgen = () => {
       description: "New playlist description for testing",
       public: false,
     };
-    let { data } = await axios
+    let data = await axios
       .post(url, req_body, {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -38,13 +41,47 @@ const Playlistgen = () => {
         }
       });
 
-    console.log("created playlist", data.external_urls.spotify);
+    console.log("created playlist", data.data.external_urls.spotify);
+    console.log("pl res", data);
+    console.log("playlist_id", data.data.id);
+    setExternalUrl(data.data.external_urls.spotify);
+    // setPlaylist_id(data.data.id);
+    if (data.status === 201) addRecommendedTracks(data.data.id);
   };
 
-  const savePlaylist = () => {
+  const addRecommendedTracks = (pl_id) => {
+    console.log("addRecommendedTracks");
+    console.log("add playlist_id", pl_id);
+    let uri_arr = [];
+    current_pl.tracks.forEach((i) => uri_arr.push(i.uri));
+    console.log(uri_arr.join(","));
+
+    const url = `https://api.spotify.com/v1/playlists/${pl_id}/tracks?uris=${uri_arr.join(
+      ","
+    )}`;
+    let { data } = axios
+      .post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+      .catch((err) => {
+        if (err.response.status === 401) {
+          // make a call to the backend to get new access token
+        }
+      });
+    console.log("uri_arr: ", uri_arr);
+    // setUris(uri_arr);
+  };
+
+  const savePlaylist = async () => {
     console.log(`axios post test`);
     const url = `http://localhost:8080/user/${id}/saveplaylist`;
-    axios.post(`${url}`, save_pl_data);
+    await axios.post(`${url}`, save_pl_data);
     create_playlist();
   };
 
@@ -75,7 +112,7 @@ const Playlistgen = () => {
           </div>
           <div className="plgen__content-2">
             <div className="plgen__spotify-embed">
-              <SpotifyEmbed />
+              {externalurl && <SpotifyEmbed externalurl={externalurl} />}
             </div>
             <div className="plgen__buttons-con">
               <button className="plgen__btn-spotify">Open in Spotify</button>
