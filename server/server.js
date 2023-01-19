@@ -116,6 +116,22 @@ app.post('/embed', (req, res, next) => {
   render_oEmbed();
 });
 
+app.post('/testendpoint', (req, res, next) => {
+  console.log('passport: ', req.req);
+  const testendpoint = async () => {
+    // const base_uri = 'https://open.spotify.com/oembed';
+    // const track_uri = 'https://open.spotify.com/track/6chdRBWviHlm7JAtwgflBP';
+    const base_uri = `https://api.spotify.com/v1/users/${req.body.spotify_id}/playlists`;
+    let { data } = await axios.get(`${base_uri}`, {
+      headers: {
+        Authorization: `Bearer ${req.body.access_token}`,
+      },
+    });
+    // console.log('testendpoint', data);
+    res.status(200).json(data);
+  };
+  testendpoint();
+});
 const PORT = process.env.PORT || 5500;
 
 app.listen(PORT, () => {

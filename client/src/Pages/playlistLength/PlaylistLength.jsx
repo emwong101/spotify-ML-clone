@@ -13,6 +13,14 @@ function PlaylistLength() {
   const BASE_URL = "https://api.spotify.com/v1/";
   let navigate = useNavigate();
 
+  const testendpoint = async () => {
+    let { data } = await axios.post("http://localhost:8080/auth/testendpoint", {
+      access_token: user.profile.access_token,
+      spotify_id: user.profile.spotify_id,
+    });
+    console.log("testendpoint", data);
+  };
+
   const getRecommendations = async (e) => {
     try {
       console.log("getRecommendations", user.profile.access_token);
@@ -59,6 +67,7 @@ function PlaylistLength() {
       </div>
 
       <button onClick={() => getRecommendations()}>DONE</button>
+      <button onClick={() => testendpoint()}>testendpoint</button>
     </div>
   );
 }
