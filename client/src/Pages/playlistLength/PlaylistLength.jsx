@@ -14,9 +14,8 @@ function PlaylistLength() {
   let navigate = useNavigate();
 
   const testendpoint = async () => {
-    let { data } = await axios.post("http://localhost:8080/auth/testendpoint", {
-      access_token: user.profile.access_token,
-      spotify_id: user.profile.spotify_id,
+    let { data } = await axios.get("http://localhost:8080/testendpoint", {
+      withCredentials: true,
     });
     console.log("testendpoint", data);
   };

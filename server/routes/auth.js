@@ -58,9 +58,10 @@ router.get('/logout', function (req, res) {
 });
 
 const authenticate = passport.authenticate('spotify', { session: false });
-router.post('/testendpoint', authenticate, (req, res) => {
+router.post('/testendpoint', (req, res) => {
   //req.user is the authenticated user
-  res.json('recommendations endpoint', req.user);
+  console.log('post testendpoint', req.user);
+  res.status(200).json(req);
 });
 
 module.exports = router;
