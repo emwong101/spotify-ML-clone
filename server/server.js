@@ -14,11 +14,6 @@ const axios = require('axios');
 
 const knex = require('knex')(require('./knexfile.js').development);
 
-app.use(express.json());
-app.use(cors());
-
-app.use(helmet());
-
 app.use(
   cors({
     origin: true,
@@ -33,6 +28,9 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+app.use(express.json());
+app.use(helmet());
 
 app.use(passport.initialize());
 app.use(passport.session());
