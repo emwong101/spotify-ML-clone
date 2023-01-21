@@ -103,6 +103,11 @@ app.get('/refresh', (req, res, next) => {
   );
 });
 
+app.post('/test', (req, res) => {
+  console.log(req.user);
+  res.status(200).json(req.user);
+});
+
 app.post('/embed', (req, res, next) => {
   const render_oEmbed = async () => {
     const base_uri = 'https://open.spotify.com/oembed';
