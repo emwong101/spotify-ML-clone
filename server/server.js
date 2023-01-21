@@ -14,18 +14,6 @@ const axios = require('axios');
 
 const knex = require('knex')(require('./knexfile.js').development);
 
-app.use(express.json());
-app.use(cors());
-
-app.use(helmet());
-
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
-
 app.use(
   session({
     secret: 'keyboard cat',
@@ -33,6 +21,16 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
+// app.use(cors());
+app.use(express.json());
+app.use(helmet());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -116,21 +114,16 @@ app.post('/embed', (req, res, next) => {
   render_oEmbed();
 });
 
-app.get('/testendpoint', (req, res, next) => {
+app.post('/testendpoint', (req, res, next) => {
   console.log('testendpoint: ', req.user);
   const testendpoint = async () => {
     // const base_uri = 'https://open.spotify.com/oembed';
     // const track_uri = 'https://open.spotify.com/track/6chdRBWviHlm7JAtwgflBP';
     const create_pl = `https://api.spotify.com/v1/users/${req.user.spotify_id}/playlists`;
-    // let { data } = await axios.get(`${base_uri}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${req.user.access_token}`,
-    //   },
-    // });
     let { data } = axios.post(
       create_pl,
       {
-        name: 'testendpoint-pl-name',
+        name: `${req.body.plname}`,
         description: 'test',
         public: 'false',
       },
