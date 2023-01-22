@@ -104,7 +104,7 @@ app.get('/refresh', (req, res, next) => {
 });
 
 app.post('/test', (req, res) => {
-  console.log(req.user);
+  console.log('the req user is: ', req.user);
   res.status(200).json(req.user);
 });
 
