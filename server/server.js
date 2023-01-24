@@ -15,6 +15,13 @@ const axios = require('axios');
 const knex = require('knex')(require('./knexfile.js').development);
 
 app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+
+app.use(
   session({
     secret: 'keyboard cat',
     resave: false,
@@ -28,7 +35,6 @@ app.use(
     credentials: true,
   })
 );
-// app.use(cors());
 app.use(express.json());
 app.use(helmet());
 
@@ -101,6 +107,11 @@ app.get('/refresh', (req, res, next) => {
       res.status(200).json(userProfile);
     }
   );
+});
+
+app.post('/test', (req, res) => {
+  console.log('the req user is: ', req.user);
+  res.status(200).json(req.user);
 });
 
 app.post('/embed', (req, res, next) => {

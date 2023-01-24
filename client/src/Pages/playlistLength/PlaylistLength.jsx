@@ -47,20 +47,7 @@ function PlaylistLength() {
     navigate("/playlistgen");
   };
 
-  const getRecom_test = async () => {
-    // console.log("getRecommendations", user.profile.access_token);
-    // console.log("user artist", user.artists);
-    // const { data } = await axios.get(
-    //   `${BASE_URL}recommendations?limit=${length}&seed_artists=${user.artists.join(
-    //     ","
-    //   )}&${user.mood}`,
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${user.profile.access_token}`,
-    //     },
-    //   }
-    // );
-
+  const getRecomm_test = async () => {
     let opts = {
       length: 5,
       seed_artists: user.artists.join(","),
@@ -101,7 +88,7 @@ function PlaylistLength() {
 
       <button onClick={() => getRecommendations()}>DONE</button>
       <button onClick={() => testendpoint()}>testendpoint</button>
-      <button onClick={() => getRecom_test()}>recomm_test</button>
+      <button onClick={() => getRecomm_test()}>recomm_test</button>
     </div>
   );
 }
