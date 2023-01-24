@@ -20,9 +20,13 @@ function PlaylistLength() {
             length: "5",
             artists: "1U1el3k54VvEUzo3ybLPlM",
             mood: "",
+          },
+          { withCredentials: true },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-
-          // { withCredentials: true }
         )
         .then((res) => console.log(res));
 
