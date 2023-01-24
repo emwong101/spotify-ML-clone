@@ -140,6 +140,23 @@ app.post('/testendpoint', (req, res, next) => {
 
   testendpoint();
 });
+
+app.post('/getrecommtest', async (req, res) => {
+  const BASE_URL = 'https://api.spotify.com/v1/';
+  console.log('length: ', req.body.length);
+  console.log('seed_artists: ', req.body.seed_artists);
+  console.log('mood: ', req.body.mood);
+  let { data } = await axios.get(
+    `${BASE_URL}recommendations?limit=${req.body.length}&seed_artists=${req.body.seed_artists}&${req.body.mood}`,
+    {
+      headers: {
+        Authorization: `Bearer ${req.user.access_token}`,
+      },
+    }
+  );
+  res.status(200).json(data);
+});
+
 const PORT = process.env.PORT || 5500;
 
 app.listen(PORT, () => {

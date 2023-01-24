@@ -47,6 +47,36 @@ function PlaylistLength() {
     navigate("/playlistgen");
   };
 
+  const getRecom_test = async () => {
+    // console.log("getRecommendations", user.profile.access_token);
+    // console.log("user artist", user.artists);
+    // const { data } = await axios.get(
+    //   `${BASE_URL}recommendations?limit=${length}&seed_artists=${user.artists.join(
+    //     ","
+    //   )}&${user.mood}`,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${user.profile.access_token}`,
+    //     },
+    //   }
+    // );
+
+    let opts = {
+      length: 5,
+      seed_artists: user.artists.join(","),
+      mood: user.mood,
+    };
+
+    const { data } = await axios.post(
+      "http://localhost:8080/getrecommtest",
+      opts,
+      { withCredentials: true }
+    );
+    console.log(data);
+    // localStorage.setItem("recommended playlist", JSON.stringify(data));
+    // user.setRecommendedData(data);
+  };
+
   useEffect(() => {
     console.log(user);
   }, []);
@@ -71,6 +101,7 @@ function PlaylistLength() {
 
       <button onClick={() => getRecommendations()}>DONE</button>
       <button onClick={() => testendpoint()}>testendpoint</button>
+      <button onClick={() => getRecom_test()}>recomm_test</button>
     </div>
   );
 }
