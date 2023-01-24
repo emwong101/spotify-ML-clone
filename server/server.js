@@ -14,11 +14,6 @@ const axios = require("axios");
 
 const knex = require("knex")(require("./knexfile.js").development);
 
-app.use(express.json());
-app.use(cors());
-
-app.use(helmet());
-
 app.use(
   cors({
     origin: true,
@@ -34,6 +29,9 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+app.use(express.json());
+app.use(helmet());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -124,6 +122,21 @@ app.post("/recommendations", (req, res) => {
 
 app.get("/test", (req, res) => {
   res.status(200).json(req.session.passport.user);
+});
+app.post("/test", (req, res) => {
+  console.log("the req user is: ", req.user);
+  res.status(200).json(req.user);
+});
+
+app.post("/embed", (req, res, next) => {
+  const render_oEmbed = async () => {
+    const base_uri = "https://open.spotify.com/oembed";
+    // const track_uri = 'https://open.spotify.com/track/6chdRBWviHlm7JAtwgflBP';
+    let { data } = await axios.get(`${base_uri}/?url=${req.body.externalurl}`);
+    console.log("render_oEmbed", data);
+    res.status(201).json(data);
+  };
+  render_oEmbed();
 });
 
 const PORT = process.env.PORT || 5500;

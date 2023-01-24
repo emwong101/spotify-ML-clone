@@ -7,7 +7,6 @@ router.route('/').get(userController.index);
 router.route('/:id').get(userController.singleUser);
 router.route('/:id/getspotifytoken').get(userController.getSpotifyToken);
 
-router.route('/:id/playlist/:playlist_id').get(userController.getUserPlaylist);
-
-router.route('/:id/playlist/new').post(userController.saveUserPlaylist);
+router.route('/:id/saveplaylist').post(userController.saveUserPlaylist);
+router.route('/:id/getuserplaylists').get(userController.getUserPlaylists);
 module.exports = router;

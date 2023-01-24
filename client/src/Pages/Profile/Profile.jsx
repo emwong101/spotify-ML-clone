@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './Profile.scss';
-import { IoIosArrowRoundBack } from 'react-icons/io';
-import { UserContext } from '../../Context/UserContext';
+import React, { useState, useEffect, useContext } from "react";
+import "./Profile.scss";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { UserContext } from "../../Context/UserContext";
 
-import ProfileMenu from '../../Components/ProfileMenu/ProfileMenu';
-import ProfileContent from '../../Components/ProfileContent/ProfileContent';
-import axios from 'axios';
-import useRefreshToken from '../../useRefreshToken';
+import ProfileMenu from "../../Components/ProfileMenu/ProfileMenu";
+import ProfileContent from "../../Components/ProfileContent/ProfileContent";
+import axios from "axios";
+import useRefreshToken from "../../useRefreshToken";
 
 function Profile(props) {
-  const [clickedItem, setClickedItem] = useState('Playlists');
+  const [clickedItem, setClickedItem] = useState("Playlists");
   const user = useContext(UserContext);
 
   // const grabProfile = () => {
@@ -48,11 +48,11 @@ function Profile(props) {
 
   const grabNewAccessToken = () => {
     const response = axios
-      .get('http://localhost:8080/refresh', { withCredentials: true })
+      .get("http://localhost:8080/refresh", { withCredentials: true })
       .then((res) => {
         console.log(res);
         user.setProfileData(res.data);
-        localStorage.setItem('user profile', JSON.stringify(res.data));
+        localStorage.setItem("user profile", JSON.stringify(res.data));
       })
       .catch((err) => {
         console.log(err);
