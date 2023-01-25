@@ -4,11 +4,9 @@ require("dotenv").config({ path: path.resolve(__dirname, "./.env") });
 
 const express = require("express");
 const session = require("express-session");
-// const server = express();
 const cors = require("cors");
 const passport = require("passport");
 const helmet = require("helmet");
-const consolidate = require("consolidate");
 const app = express();
 const axios = require("axios");
 
@@ -120,13 +118,21 @@ app.post("/recommendations", (req, res) => {
   getRecommendations();
 });
 
-app.get("/test", (req, res) => {
-  res.status(200).json(req.session.passport.user);
-});
-app.post("/test", (req, res) => {
-  console.log("the req user is: ", req.user);
-  res.status(200).json(req.user);
-});
+// app.post("/artists", (req, res) => {
+//   const getTopArtists = async () => {
+//     let { data } = await axios.get(
+//       `https://api.spotify.com/v1/me/top/artists?time_range=${req.query}&limit=10`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${req.user.access_token}`,
+//         },
+//       }
+//     );
+//     res.status(200).json(data);
+//   };
+
+//   getTopArtists();
+// });
 
 app.post("/embed", (req, res, next) => {
   const render_oEmbed = async () => {
