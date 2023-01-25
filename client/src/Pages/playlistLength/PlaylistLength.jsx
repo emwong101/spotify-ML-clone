@@ -16,16 +16,11 @@ function PlaylistLength() {
         .post(
           `http://localhost:8080/recommendations`,
           {
-            length: "5",
-            artists: "1U1el3k54VvEUzo3ybLPlM",
-            mood: "",
+            length: length,
+            artists: user.artists,
+            mood: user.mood,
           },
-          { withCredentials: true },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
+          { withCredentials: true }
         )
         .then((res) => console.log(res));
 
@@ -39,4 +34,29 @@ function PlaylistLength() {
     }
     // console.log(user.mood);
   };
+
+  console.log(user);
+
+  return (
+    <div>
+      <div className="playlist-length__slider">
+        <Slider
+          min={5}
+          max={100}
+          value={length}
+          onChange={(e) => {
+            setLength(e.target.value);
+          }}
+          defaultValue={5}
+          aria-label="Default"
+          valueLabelDisplay="auto"
+        />
+        <p>Playlist Length: {length}</p>
+      </div>
+
+      <button onClick={getRecommendations}>DONE</button>
+    </div>
+  );
 }
+
+export default PlaylistLength;

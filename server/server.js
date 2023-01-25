@@ -110,11 +110,11 @@ app.post("/recommendations", (req, res) => {
       `https://api.spotify.com/v1/recommendations?limit=${req.body.length}&seed_artists=${req.body.artists}&${req.body.mood}`,
       {
         headers: {
-          Authorization: req.user,
+          Authorization: `Bearer ${req.user.access_token}`,
         },
       }
     );
-    res.json(data);
+    res.status(200).json(data);
   };
 
   getRecommendations();
