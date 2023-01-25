@@ -93,7 +93,7 @@ const Playlistgen = () => {
           <div className="plgen__content-1">
             <div className="plgen__list">
               {user.recommended &&
-                user.recommended.tracks.map((i) => (
+                user.recommended.map((i) => (
                   <div className="plgen__track-con" key={i.id.toString()}>
                     <div
                       className="plgen__track-content1"
