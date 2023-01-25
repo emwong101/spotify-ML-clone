@@ -4,14 +4,11 @@ require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
 const express = require('express');
 const session = require('express-session');
-// const server = express();
 const cors = require('cors');
 const passport = require('passport');
 const helmet = require('helmet');
-const consolidate = require('consolidate');
 const app = express();
 const axios = require('axios');
-
 const knex = require('knex')(require('./knexfile.js').development);
 
 app.use(
@@ -44,10 +41,7 @@ refresh.use('spotify', spotifyStrategy);
 // The data comes from `done` function of the strategy
 // The result of the method is attached to the session as `req.session.passport.user = 12345`
 passport.serializeUser((user, done) => {
-  // console.log('serializeUser (user object):', user.id);
-
   // Store only the user id in session
-  console.log('serialized obj', user);
   let userData = {
     id: user.id,
     expiry: user.data.expiry,
@@ -58,7 +52,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((userData, done) => {
-  console.log('deserializeUser (user id):', userData);
   knex('users')
     .where({ id: userData.id })
     .then((user) => {
@@ -80,10 +73,10 @@ const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
 const usersRoutes = require('./routes/usersRouter');
-const { reset } = require('nodemon');
+// const { reset } = require('nodemon');
 app.use('/user', usersRoutes);
 
-app.get('/refresh', (req, res, next) => {
+app.get('/refresh', (req, res) => {
   refresh.requestNewAccessToken(
     'spotify',
     req.user.refresh_token,
@@ -97,23 +90,16 @@ app.get('/refresh', (req, res, next) => {
       userProfile['access_token'] = accessToken;
       //update the passport session with the new access token
       req.session.passport.user['access_token'] = accessToken;
-
       res.status(200).json(userProfile);
     }
   );
 });
 
-app.post('/test', (req, res) => {
-  console.log('the req user is: ', req.user);
-  res.status(200).json(req.user);
-});
-
-app.post('/embed', (req, res, next) => {
+app.post('/embed', (req, res) => {
   const render_oEmbed = async () => {
     const base_uri = 'https://open.spotify.com/oembed';
     // const track_uri = 'https://open.spotify.com/track/6chdRBWviHlm7JAtwgflBP';
     let { data } = await axios.get(`${base_uri}/?url=${req.body.externalurl}`);
-    console.log('render_oEmbed', data);
     res.status(201).json(data);
   };
   render_oEmbed();

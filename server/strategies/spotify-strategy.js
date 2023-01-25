@@ -5,7 +5,6 @@ const express = require('express');
 const app = express();
 
 const port = process.env.PORT;
-//localhost:8080/auth/callback
 const authCallbackPath = '/auth/spotify/callback';
 
 const spotifyStrategy = new SpotifyStrategy(
@@ -40,7 +39,6 @@ const spotifyStrategy = new SpotifyStrategy(
             })
             .then((userId) => {
               // Pass the user object to serialize function
-              console.log(userId);
               const obj = {
                 expiry: expires_in,
                 access_token: accessToken,

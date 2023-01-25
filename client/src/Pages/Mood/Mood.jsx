@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Mood.scss';
 
 import MoodInputs from '../../Components/MoodButton/MoodInputs';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from '../../Context/UserContext';
 
 function Mood() {
-  const user = useContext(UserContext);
-
-  useEffect(() => {
-    console.log(user.mood);
-  }, [user.mood]);
-
   return (
     <div className="mood">
       <h1 className="mood__header">What's your mood?</h1>

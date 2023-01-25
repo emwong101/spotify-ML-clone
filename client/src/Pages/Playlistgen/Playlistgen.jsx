@@ -1,32 +1,25 @@
-import "./Playlistgen.scss";
-import axios from "axios";
-import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../../Context/UserContext";
-import SpotifyEmbed from "../../Components/SpotifyEmbed/SpotifyEmbed";
+import './Playlistgen.scss';
+import axios from 'axios';
+import { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../../Context/UserContext';
+import SpotifyEmbed from '../../Components/SpotifyEmbed/SpotifyEmbed';
 
 const Playlistgen = () => {
   const user = useContext(UserContext);
   let [externalurl, setExternalUrl] = useState(null);
-  // let [uris, setUris] = useState([]);
-  let [playlist_id, setPlaylist_id] = useState("");
-  console.log("recommended dta", user.recommended);
+  let [playlist_id, setPlaylist_id] = useState('');
 
   const { id, spotify_id, access_token } = JSON.parse(
-    localStorage.getItem("user profile")
+    localStorage.getItem('user profile')
   );
-  console.log("access_token", access_token);
-  // const { id, spotify_id } = user.profile;
-  // console.log("user id is: ", id);
-  // const current_pl = JSON.parse(localStorage.getItem("recommended playlist"));
   const current_pl = user.recommended;
   let save_pl_data = { id, current_pl };
-  console.log("save_pl_data: ", save_pl_data);
   //create playlist
   const create_playlist = async () => {
     const url = `https://api.spotify.com/v1/users/${spotify_id}/playlists`;
     const req_body = {
-      name: "spotifyML-test",
-      description: "New playlist description for testing",
+      name: 'spotifyML-test',
+      description: 'New playlist description for testing',
       public: false,
     };
     let data = await axios
@@ -40,24 +33,17 @@ const Playlistgen = () => {
           // make a call to the backend to get new access token
         }
       });
-
-    console.log("created playlist", data.data.external_urls.spotify);
-    console.log("pl res", data);
-    console.log("playlist_id", data.data.id);
     setExternalUrl(data.data.external_urls.spotify);
     // setPlaylist_id(data.data.id);
     if (data.status === 201) addRecommendedTracks(data.data.id);
   };
 
   const addRecommendedTracks = (pl_id) => {
-    console.log("addRecommendedTracks");
-    console.log("add playlist_id", pl_id);
     let uri_arr = [];
     current_pl.tracks.forEach((i) => uri_arr.push(i.uri));
-    console.log(uri_arr.join(","));
 
     const url = `https://api.spotify.com/v1/playlists/${pl_id}/tracks?uris=${uri_arr.join(
-      ","
+      ','
     )}`;
     let { data } = axios
       .post(
@@ -74,12 +60,10 @@ const Playlistgen = () => {
           // make a call to the backend to get new access token
         }
       });
-    console.log("uri_arr: ", uri_arr);
     // setUris(uri_arr);
   };
 
   const savePlaylist = async () => {
-    console.log(`axios post test`);
     const url = `http://localhost:8080/user/${id}/saveplaylist`;
     await axios.post(`${url}`, save_pl_data);
     create_playlist();

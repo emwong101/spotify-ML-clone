@@ -1,25 +1,23 @@
-import React from "react";
-import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../../Context/UserContext";
-import { useNavigate } from "react-router-dom";
-import "./PlaylistLength.scss";
-import axios from "axios";
-import Slider from "@mui/material/Slider";
+import React from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../../Context/UserContext';
+import { useNavigate } from 'react-router-dom';
+import './PlaylistLength.scss';
+import axios from 'axios';
+import Slider from '@mui/material/Slider';
 
 function PlaylistLength() {
   const [length, setLength] = useState(5);
   const user = useContext(UserContext);
   // const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const BASE_URL = "https://api.spotify.com/v1/";
+  const BASE_URL = 'https://api.spotify.com/v1/';
   let navigate = useNavigate();
 
   const getRecommendations = async (e) => {
     try {
-      console.log("getRecommendations", user.profile.access_token);
-      console.log("user artist", user.artists);
       const { data } = await axios.get(
         `${BASE_URL}recommendations?limit=${length}&seed_artists=${user.artists.join(
-          ","
+          ','
         )}&${user.mood}`,
         {
           headers: {
@@ -27,20 +25,14 @@ function PlaylistLength() {
           },
         }
       );
-      console.log(data);
-      localStorage.setItem("recommended playlist", JSON.stringify(data));
-      user.setRecommendedData(data);
+      localStorage.setItem('recommended playlist', JSON.stringify(data));
+      user.setRecommended(data);
     } catch {
-      console.log("Error");
+      console.log('Error');
     }
-    navigate("/playlistgen");
+    navigate('/playlistgen');
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
-  console.log(user);
   return (
     <div>
       <div className="playlist-length__slider">

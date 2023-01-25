@@ -1,22 +1,20 @@
-import "./SavedPlaylists.scss";
-import axios from "axios";
-import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../../Context/UserContext";
+import './SavedPlaylists.scss';
+import axios from 'axios';
+import { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../../Context/UserContext';
 
 const SavedPlaylists = () => {
   let user = useContext(UserContext);
-  const { id } = JSON.parse(localStorage.getItem("user profile"));
+  const { id } = JSON.parse(localStorage.getItem('user profile'));
   let grabSavedPlaylists = async () => {
     let { data } = await axios.get(
       `http://localhost:8080/user/${id}/getuserplaylists`
     );
 
     if (data[0].playlist_id === null) {
-      console.log("no saved playlists");
+      console.log('no saved playlists');
     } else {
       user.setSavedplaylistsData(data);
-      // localStorage.setItem("saved playlists", JSON.stringify(data));
-      console.log(JSON.parse(data[0].playlist_data).tracks);
     }
   };
 
