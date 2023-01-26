@@ -15,8 +15,6 @@ const SavedPlaylists = () => {
       console.log("no saved playlists");
     } else {
       user.setSavedplaylistsData(data);
-      // localStorage.setItem("saved playlists", JSON.stringify(data));
-      console.log(JSON.parse(data[0].playlist_data).tracks);
     }
   };
 
@@ -34,7 +32,7 @@ const SavedPlaylists = () => {
                     Playlist #{i.playlist_id}
                   </div>
                   <div className="saved-pl__track-lists">
-                    {JSON.parse(i.playlist_data).tracks.map((track) => (
+                    {JSON.parse(i.playlist_data).map((track) => (
                       <div className="saved-pl__track" key={`${track.id}`}>
                         <div
                           className="saved-pl__track-cover"

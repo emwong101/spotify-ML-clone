@@ -39,8 +39,6 @@ router.get('/profile', (req, res) => {
   // Passport stores authenticated user information on `req.user` object.
   // Comes from done function of `deserializeUser`
   // If `req.user` isn't found send back a 401 Unauthorized response
-
-  console.log('this is another test', req.user);
   if (req.user === undefined)
     return res.status(401).json({ message: 'Unauthorized' });
 

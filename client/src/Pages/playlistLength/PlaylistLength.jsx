@@ -1,10 +1,10 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../Context/UserContext";
+import { useNavigate } from "react-router-dom";
 import "./PlaylistLength.scss";
 import axios from "axios";
 import Slider from "@mui/material/Slider";
-import { useNavigate } from "react-router-dom";
 
 function PlaylistLength() {
   const [length, setLength] = useState(5);
@@ -28,8 +28,8 @@ function PlaylistLength() {
           user.setRecommendedData(res.data.tracks);
           navigate("/playlistgen");
         });
-    } catch {
-      console.log(`Error`);
+    } catch (err) {
+      console.log(`Error`, err);
     }
   };
 

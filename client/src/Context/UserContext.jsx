@@ -32,18 +32,19 @@ const UserProvider = ({ children }) => {
     setIsLoggedIn(profileData);
   };
 
-  const setRecommendedData = (recommendedData) => {
-    setRecommended(recommendedData);
-  };
-
   const setSavedplaylistsData = (savedplaylistData) => {
     setSavedplaylists(savedplaylistData);
   };
 
+  const setRecommendedData = (data) => {
+    setRecommended(data);
+  };
+
   const contextValue = {
     setProfileData,
-    setRecommendedData,
+    setRecommended,
     setSavedplaylistsData,
+    setRecommendedData,
     setTopArtists,
     setMood,
     mood: mood,
