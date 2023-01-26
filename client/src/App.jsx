@@ -20,6 +20,7 @@ import useRefreshToken from "./useRefreshToken";
 function App() {
   //custom hook to grab new access token after an hour
   useRefreshToken();
+  const user = useContext(UserContext);
 
   return (
     <>
@@ -27,11 +28,19 @@ function App() {
         <div className="App">
           <Header />
           <Routes>
-            <Route path="/" element={<Navigate to="/landing" />} />
+            <Route
+              path="/"
+              element={
+                user.profile ? (
+                  <Navigate to="/profile" />
+                ) : (
+                  <Navigate to="/landing" />
+                )
+              }
+            />
             <Route path="/discover" element={<Discover />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/charts" element={<Charts />} />
-
             <Route path="/landing" element={<Landing />} />
             <Route path="/mood" element={<Mood />} />
             <Route path="/playlistgen" element={<Playlistgen />} />

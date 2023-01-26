@@ -71,89 +71,123 @@ function Stats(props) {
     setTop10Track(tracksArr);
   };
 
-  const url = "https://api.spotify.com/v1/me/top/artists";
-  const tracksUrl = "https://api.spotify.com/v1/me/top/tracks";
-
   const topDataFourWeeks = async () => {
     const query = "short_term";
 
-    const { data } = await axios
-      .get(`${url}?time_range=${query}&limit=10`, {
-        headers: {
-          Authorization: `Bearer ${user.profile.access_token}`,
-        },
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
-        }
-      });
+    try {
+      await axios
+        .post(
+          `http://localhost:8080/artists`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setFourWeeksArtists(res.data.items);
+        });
 
-    const tracks = await axios
-      .get(`${tracksUrl}?time_range=${query}&limit=10`, {
-        headers: {
-          Authorization: `Bearer ${user.profile.access_token}`,
-        },
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
+      await axios
+        .post(
+          `http://localhost:8080/tracks`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setFourWeeksTracks(res.data.items);
+        });
+    } catch {
+      (err) => {
+        if (err.response) {
+          console.log(err.response);
+          console.log(err.response.status);
         }
-      });
-
-    setFourWeeksArtists(data.items);
-    setFourWeeksTracks(tracks.data.items);
+      };
+    }
   };
 
   const topDataSixMonths = async () => {
     const query = "medium_term";
 
-    const { data } = await axios.get(`${url}?time_range=${query}&limit=10`, {
-      headers: {
-        Authorization: `Bearer ${user.profile.access_token}`,
-      },
-    });
+    try {
+      await axios
+        .post(
+          `http://localhost:8080/artists`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setSixMonthsArtists(res.data.items);
+        });
 
-    const tracks = await axios
-      .get(`${tracksUrl}?time_range=${query}&limit=10`, {
-        headers: {
-          Authorization: `Bearer ${user.profile.access_token}`,
-        },
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
+      await axios
+        .post(
+          `http://localhost:8080/tracks`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setSixMonthsTracks(res.data.items);
+        });
+    } catch {
+      (err) => {
+        if (err.response) {
+          console.log(err.response);
+          console.log(err.response.status);
         }
-      });
-
-    setSixMonthsArtists(data.items);
-    setSixMonthsTracks(tracks.data.items);
+      };
+    }
   };
 
   const topDataAllTime = async () => {
     const query = "long_term";
     const topArtistID = [];
 
-    const { data } = await axios.get(`${url}?time_range=${query}&limit=10`, {
-      headers: {
-        Authorization: `Bearer ${user.profile.access_token}`,
-      },
-    });
+    try {
+      await axios
+        .post(
+          `http://localhost:8080/artists`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          let topThree = res.data.items.slice(0, 3);
+          console.log(topThree);
+          topThree.forEach((artist) => {
+            topArtistID.push(artist.id);
+          });
+          localStorage.setItem("top artists", JSON.stringify(topArtistID));
+          user.setTopArtists(topArtistID);
+          setAllTimeArtists(res.data.items);
+        });
 
-    const tracks = await axios
-      .get(`${tracksUrl}?time_range=${query}&limit=10`, {
-        headers: {
-          Authorization: `Bearer ${user.profile.access_token}`,
-        },
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
+      await axios
+        .post(
+          `http://localhost:8080/tracks`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setAllTimeTracks(res.data.items);
+        });
+    } catch {
+      (err) => {
+        if (err.response) {
+          console.log(err.response);
+          console.log(err.response.status);
         }
-      });
-
-    setAllTimeArtists(data.items);
-    setAllTimeTracks(tracks.data.items);
+      };
+    }
   };
 
   const genrePieChart = (

@@ -118,21 +118,37 @@ app.post("/recommendations", (req, res) => {
   getRecommendations();
 });
 
-// app.post("/artists", (req, res) => {
-//   const getTopArtists = async () => {
-//     let { data } = await axios.get(
-//       `https://api.spotify.com/v1/me/top/artists?time_range=${req.query}&limit=10`,
-//       {
-//         headers: {
-//           Authorization: `Bearer ${req.user.access_token}`,
-//         },
-//       }
-//     );
-//     res.status(200).json(data);
-//   };
+app.post("/artists", (req, res) => {
+  const getTopArtists = async () => {
+    let { data } = await axios.get(
+      `https://api.spotify.com/v1/me/top/artists?time_range=${req.body.query}&limit=10`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.user.access_token}`,
+        },
+      }
+    );
+    res.status(200).json(data);
+  };
 
-//   getTopArtists();
-// });
+  getTopArtists();
+});
+
+app.post("/tracks", (req, res) => {
+  const getTopTracks = async () => {
+    let { data } = await axios.get(
+      `https://api.spotify.com/v1/me/top/tracks?time_range=${req.body.query}&limit=10`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.user.access_token}`,
+        },
+      }
+    );
+    res.status(200).json(data);
+  };
+
+  getTopTracks();
+});
 
 app.post("/embed", (req, res, next) => {
   const render_oEmbed = async () => {
