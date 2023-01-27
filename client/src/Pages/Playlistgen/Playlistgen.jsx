@@ -1,13 +1,13 @@
-import './Playlistgen.scss';
-import axios from 'axios';
-import { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../../Context/UserContext';
-import SpotifyEmbed from '../../Components/SpotifyEmbed/SpotifyEmbed';
+import "./Playlistgen.scss";
+import axios from "axios";
+import { useContext, useState, useEffect } from "react";
+import { UserContext } from "../../Context/UserContext";
+import SpotifyEmbed from "../../Components/SpotifyEmbed/SpotifyEmbed";
 
 const Playlistgen = () => {
   const user = useContext(UserContext);
   let [externalurl, setExternalUrl] = useState(null);
-  let [playlist_id, setPlaylist_id] = useState('');
+  let [playlist_id, setPlaylist_id] = useState("");
 
   const { id, spotify_id, access_token } = user.profile;
   const current_pl = user.recommended;
@@ -16,8 +16,8 @@ const Playlistgen = () => {
   const create_playlist = async () => {
     const url = `https://api.spotify.com/v1/users/${spotify_id}/playlists`;
     const req_body = {
-      name: 'spotifyML-test',
-      description: 'New playlist description for testing',
+      name: "spotifyML-test",
+      description: "New playlist description for testing",
       public: false,
     };
     let data = await axios
@@ -33,7 +33,11 @@ const Playlistgen = () => {
       });
     setExternalUrl(data.data.external_urls.spotify);
     // setPlaylist_id(data.data.id);
-    if (data.status === 201) addRecommendedTracks(data.data.id);
+    if (data.status === 201) {
+      addRecommendedTracks(data.data.id);
+      save_pl_data["spotify_playlist_id"] = data.data.id;
+      console.log("new save_pl_data", save_pl_data);
+    }
   };
 
   const addRecommendedTracks = (pl_id) => {
@@ -41,7 +45,7 @@ const Playlistgen = () => {
     current_pl.forEach((i) => uri_arr.push(i.uri));
 
     const url = `https://api.spotify.com/v1/playlists/${pl_id}/tracks?uris=${uri_arr.join(
-      ','
+      ","
     )}`;
     let { data } = axios
       .post(
@@ -63,8 +67,8 @@ const Playlistgen = () => {
 
   const savePlaylist = async () => {
     const url = `http://localhost:8080/user/${id}/saveplaylist`;
+    await create_playlist();
     await axios.post(`${url}`, save_pl_data);
-    create_playlist();
   };
 
   return (

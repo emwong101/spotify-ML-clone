@@ -30,10 +30,13 @@ const AccordionItem = ({ open, children, title }) => {
       <div className="accordion">
         <div className="accordion__con1">
           <div className="accordion__header">
-            <div className="accordion__title">{title}</div>
-            <button className="accordion__btn" onClick={handleOpening}>
-              {!isOpen ? "close" : "open"}
-            </button>
+            <div className="accordion__pl-cover">TEXT</div>
+            <div className="accordion__header-wrapper">
+              <div className="accordion__title">{title}</div>
+              <button className="accordion__btn" onClick={handleOpening}>
+                {!isOpen ? "close" : "open"}
+              </button>
+            </div>
           </div>
         </div>
         <div className="accordion__con2">

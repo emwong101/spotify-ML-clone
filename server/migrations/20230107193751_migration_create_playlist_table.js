@@ -8,6 +8,7 @@ exports.up = function (knex) {
     .createTable('playlist', (table) => {
       table.increments('playlist_id').primary();
       table.json('data').notNullable();
+      table.string('spotify_playlist_id').notNullable();
     });
 };
 

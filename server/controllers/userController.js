@@ -44,11 +44,11 @@ const knex = require('knex')(require('../knexfile').development);
 // };
 
 exports.saveUserPlaylist = (req, res) => {
-  const { id, current_pl } = req.body;
+  const { id, current_pl, spotify_playlist_id } = req.body;
   let insert_to_pl = [];
   insert_to_pl.push(
     knex('playlist')
-      .insert({ data: current_pl })
+      .insert({ data: current_pl, spotify_playlist_id: spotify_playlist_id })
       .then((d) => {
         return knex('userbyplaylist')
           .insert({
@@ -72,7 +72,8 @@ exports.getUserPlaylists = (req, res) => {
     .select(
       'u.id as user_id',
       'p.playlist_id as playlist_id',
-      'p.data as playlist_data'
+      'p.data as playlist_data',
+      'p.spotify_playlist_id as spotify_playlist_id'
     )
     .from('users as u')
     .leftJoin('userbyplaylist as ubp', 'u.id', '=', 'ubp.fk_user_id')

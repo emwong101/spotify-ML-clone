@@ -1,42 +1,29 @@
 .saved-pl {
   // display: flex;
-  padding-left: 24px;
-  width: 100%;
-  height: 100%;
-  background-color: #393939;
-  overflow: scroll;
-    &__track-lists{
-        display: inline-flex;
-        padding-bottom: 16px;
-    }
-    &__pl-id{
-        padding-top: 16px;
-        font-weight: 600;
-        padding-bottom: 10px;
-        color: white;
-    }
-    &__track{
-        padding-right: 16px;
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    &__track-cover {
-        width: 64px;
-        height: 64px;
-        display: inline-block;
-        margin-right: 0;
-    }
-    &__track-name{
-        font-weight: 600;
-        display: inline-block;
-    }
-    &__track-artist{
-        display: inline-block;
-    }
-    &__text-con{
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-    }
+  &__tracklist {
+  }
+  &__track {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding-top: 16px;
+      padding-bottom: 16px;
+  }
+  &__track-cover-con{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+  }
+  &__track-cover{
+      width: 64px;
+      height: 64px;
+  }
+  &__track-title,
+  &__track-artist,
+  &__track-album,
+  &__track-duration, {
+      display: flex;
+      align-items: center;
+      color: white;
+      
+  }
 }
