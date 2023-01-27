@@ -10,7 +10,7 @@ function Landing() {
   const params = useParams();
 
   useEffect(() => {
-    if (user.profile.access_token) navigate('/discover');
+    if (user.profile.access_token) navigate('/profile');
   }, []);
 
   return (
@@ -25,7 +25,7 @@ function Landing() {
                   type="button"
                   className="landing__button"
                   onClick={() => {
-                    localStorage.clear();
+                    sessionStorage.clear();
                   }}
                 >
                   Logout

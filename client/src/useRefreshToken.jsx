@@ -1,14 +1,14 @@
-import { useContext, useEffect } from "react";
-import axios from "axios";
-import { UserContext } from "./Context/UserContext";
+import { useContext, useEffect } from 'react';
+import axios from 'axios';
+import { UserContext } from './Context/UserContext';
 
 const grabNewAccessToken = (user) => {
   const response = axios
-    .get("http://localhost:8080/refresh", { withCredentials: true })
+    .get('http://localhost:8080/refresh', { withCredentials: true })
     .then((res) => {
       console.log(res);
       user.setProfileData(res.data);
-      localStorage.setItem("user profile", JSON.stringify(res.data));
+      sessionStorage.setItem('user profile', JSON.stringify(res.data));
     })
     .catch((err) => {
       console.log(err);
@@ -18,13 +18,12 @@ const grabNewAccessToken = (user) => {
 const grabProfile = (user) => {
   //axios call here
   const response = axios
-    .get("http://localhost:8080/auth/profile", {
+    .get('http://localhost:8080/auth/profile', {
       withCredentials: true,
     })
     .then((res) => {
       user.setProfileData(res.data);
-      localStorage.setItem("user profile", JSON.stringify(res.data));
-      top3ArtistsAllTime(res.data.access_token, user);
+      sessionStorage.setItem('user profile', JSON.stringify(res.data));
       console.log(res.data);
 
       // after grabbing profile for the first time, run this function every hour
@@ -33,7 +32,7 @@ const grabProfile = (user) => {
       }, res.data.expiry * 1000);
     })
     .catch((err) => {
-      console.log("this is the error", err);
+      console.log('this is the error', err);
       return;
     });
 };
