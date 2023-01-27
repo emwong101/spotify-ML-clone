@@ -1,16 +1,16 @@
-import './Playlistgen.scss';
-import axios from 'axios';
-import { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../../Context/UserContext';
-import SpotifyEmbed from '../../Components/SpotifyEmbed/SpotifyEmbed';
+import "./Playlistgen.scss";
+import axios from "axios";
+import { useContext, useState, useEffect } from "react";
+import { UserContext } from "../../Context/UserContext";
+import SpotifyEmbed from "../../Components/SpotifyEmbed/SpotifyEmbed";
 
 const Playlistgen = () => {
   const user = useContext(UserContext);
   let [externalurl, setExternalUrl] = useState(null);
-  let [playlist_id, setPlaylist_id] = useState('');
+  let [playlist_id, setPlaylist_id] = useState("");
 
   const { id, spotify_id, access_token } = JSON.parse(
-    localStorage.getItem('user profile')
+    localStorage.getItem("user profile")
   );
   const current_pl = user.recommended;
   let save_pl_data = { id, current_pl };
@@ -18,8 +18,8 @@ const Playlistgen = () => {
   const create_playlist = async () => {
     const url = `https://api.spotify.com/v1/users/${spotify_id}/playlists`;
     const req_body = {
-      name: 'spotifyML-test',
-      description: 'New playlist description for testing',
+      name: "spotifyML-test",
+      description: "New playlist description for testing",
       public: false,
     };
     let data = await axios
@@ -40,10 +40,10 @@ const Playlistgen = () => {
 
   const addRecommendedTracks = (pl_id) => {
     let uri_arr = [];
-    current_pl.tracks.forEach((i) => uri_arr.push(i.uri));
+    current_pl.forEach((i) => uri_arr.push(i.uri));
 
     const url = `https://api.spotify.com/v1/playlists/${pl_id}/tracks?uris=${uri_arr.join(
-      ','
+      ","
     )}`;
     let { data } = axios
       .post(
@@ -77,7 +77,7 @@ const Playlistgen = () => {
           <div className="plgen__content-1">
             <div className="plgen__list">
               {user.recommended &&
-                user.recommended.tracks.map((i) => (
+                user.recommended.map((i) => (
                   <div className="plgen__track-con" key={i.id.toString()}>
                     <div
                       className="plgen__track-content1"

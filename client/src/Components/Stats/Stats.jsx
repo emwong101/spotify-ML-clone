@@ -1,14 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { UserContext } from '../../Context/UserContext';
-import axios from 'axios';
+import React, { useState, useContext, useEffect } from "react";
+import { UserContext } from "../../Context/UserContext";
+import axios from "axios";
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-import './Stats.scss';
-import Top10Item from '../Top10Item/Top10Item';
+import "./Stats.scss";
+import Top10Item from "../Top10Item/Top10Item";
 
 function Stats(props) {
   const user = useContext(UserContext);
@@ -71,89 +71,123 @@ function Stats(props) {
     setTop10Track(tracksArr);
   };
 
-  const url = 'https://api.spotify.com/v1/me/top/artists';
-  const tracksUrl = 'https://api.spotify.com/v1/me/top/tracks';
-
   const topDataFourWeeks = async () => {
-    const query = 'short_term';
+    const query = "short_term";
 
-    const { data } = await axios
-      .get(`${url}?time_range=${query}&limit=10`, {
-        headers: {
-          Authorization: `Bearer ${user.profile.access_token}`,
-        },
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
+    try {
+      await axios
+        .post(
+          `http://localhost:8080/artists`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setFourWeeksArtists(res.data.items);
+        });
+
+      await axios
+        .post(
+          `http://localhost:8080/tracks`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setFourWeeksTracks(res.data.items);
+        });
+    } catch {
+      (err) => {
+        if (err.response) {
+          console.log(err.response);
+          console.log(err.response.status);
         }
-      });
-
-    const tracks = await axios
-      .get(`${tracksUrl}?time_range=${query}&limit=10`, {
-        headers: {
-          Authorization: `Bearer ${user.profile.access_token}`,
-        },
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
-        }
-      });
-
-    setFourWeeksArtists(data.items);
-    setFourWeeksTracks(tracks.data.items);
+      };
+    }
   };
 
   const topDataSixMonths = async () => {
-    const query = 'medium_term';
+    const query = "medium_term";
 
-    const { data } = await axios.get(`${url}?time_range=${query}&limit=10`, {
-      headers: {
-        Authorization: `Bearer ${user.profile.access_token}`,
-      },
-    });
+    try {
+      await axios
+        .post(
+          `http://localhost:8080/artists`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setSixMonthsArtists(res.data.items);
+        });
 
-    const tracks = await axios
-      .get(`${tracksUrl}?time_range=${query}&limit=10`, {
-        headers: {
-          Authorization: `Bearer ${user.profile.access_token}`,
-        },
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
+      await axios
+        .post(
+          `http://localhost:8080/tracks`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setSixMonthsTracks(res.data.items);
+        });
+    } catch {
+      (err) => {
+        if (err.response) {
+          console.log(err.response);
+          console.log(err.response.status);
         }
-      });
-
-    setSixMonthsArtists(data.items);
-    setSixMonthsTracks(tracks.data.items);
+      };
+    }
   };
 
   const topDataAllTime = async () => {
-    const query = 'long_term';
+    const query = "long_term";
     const topArtistID = [];
 
-    const { data } = await axios.get(`${url}?time_range=${query}&limit=10`, {
-      headers: {
-        Authorization: `Bearer ${user.profile.access_token}`,
-      },
-    });
+    try {
+      await axios
+        .post(
+          `http://localhost:8080/artists`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          let topThree = res.data.items.slice(0, 3);
+          console.log(topThree);
+          topThree.forEach((artist) => {
+            topArtistID.push(artist.id);
+          });
+          localStorage.setItem("top artists", JSON.stringify(topArtistID));
+          user.setTopArtists(topArtistID);
+          setAllTimeArtists(res.data.items);
+        });
 
-    const tracks = await axios
-      .get(`${tracksUrl}?time_range=${query}&limit=10`, {
-        headers: {
-          Authorization: `Bearer ${user.profile.access_token}`,
-        },
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
+      await axios
+        .post(
+          `http://localhost:8080/tracks`,
+          {
+            query: query,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setAllTimeTracks(res.data.items);
+        });
+    } catch {
+      (err) => {
+        if (err.response) {
+          console.log(err.response);
+          console.log(err.response.status);
         }
-      });
-
-    setAllTimeArtists(data.items);
-    setAllTimeTracks(tracks.data.items);
+      };
+    }
   };
 
   const genrePieChart = (
@@ -163,7 +197,7 @@ function Stats(props) {
         labels: Object.keys(genreStats),
         datasets: [
           {
-            label: 'My Genres',
+            label: "My Genres",
             data: Object.values(genreStats),
             backgroundColor: Object.values(genreStats).map(
               (data) =>

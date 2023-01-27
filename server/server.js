@@ -15,6 +15,7 @@ app.use(
   cors({
     origin: true,
     credentials: true,
+    methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
   })
 );
 
@@ -73,10 +74,10 @@ const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
 const usersRoutes = require('./routes/usersRouter');
-// const { reset } = require('nodemon');
+const { reset } = require('nodemon');
 app.use('/user', usersRoutes);
 
-app.get('/refresh', (req, res) => {
+app.get('/refresh', (req, res, next) => {
   refresh.requestNewAccessToken(
     'spotify',
     req.user.refresh_token,
@@ -93,6 +94,54 @@ app.get('/refresh', (req, res) => {
       res.status(200).json(userProfile);
     }
   );
+});
+
+app.post('/recommendations', (req, res) => {
+  const getRecommendations = async () => {
+    let { data } = await axios.get(
+      `https://api.spotify.com/v1/recommendations?limit=${req.body.length}&seed_artists=${req.body.artists}&${req.body.mood}`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.user.access_token}`,
+        },
+      }
+    );
+    res.status(200).json(data);
+  };
+
+  getRecommendations();
+});
+
+app.post('/artists', (req, res) => {
+  const getTopArtists = async () => {
+    let { data } = await axios.get(
+      `https://api.spotify.com/v1/me/top/artists?time_range=${req.body.query}&limit=10`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.user.access_token}`,
+        },
+      }
+    );
+    res.status(200).json(data);
+  };
+
+  getTopArtists();
+});
+
+app.post('/tracks', (req, res) => {
+  const getTopTracks = async () => {
+    let { data } = await axios.get(
+      `https://api.spotify.com/v1/me/top/tracks?time_range=${req.body.query}&limit=10`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.user.access_token}`,
+        },
+      }
+    );
+    res.status(200).json(data);
+  };
+
+  getTopTracks();
 });
 
 app.post('/embed', (req, res) => {
