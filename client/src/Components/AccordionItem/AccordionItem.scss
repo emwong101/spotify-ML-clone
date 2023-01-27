@@ -1,7 +1,7 @@
 .accordion {
     background-color: blue;
     min-width: 70vw;
-    height: 90vh;
+    // height: 90vh;
     color: white;
     padding-left: 16px;
     padding-right: 16px;
@@ -13,9 +13,14 @@
     }
     &__con2{
         min-width: 100%;
-        height: 100%;
+        // height: 100%;
     }
     &__saved-pl{
         width: 100%;
     }
+}
+
+.my-collapse {
+    overflow: hidden;
+    transition: height 0.2s ease-in-out;
 }

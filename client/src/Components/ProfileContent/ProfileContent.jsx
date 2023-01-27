@@ -3,7 +3,7 @@ import "./ProfileContent.scss";
 import Stats from "../Stats/Stats";
 import { UserContext } from "../../Context/UserContext";
 import SavedPlaylists from "../SavedPlaylists/SavedPlaylists";
-import Accordion from "../AccordionItem/AccordionItem";
+import AccordionList from "../AccordionList/AccordionList";
 import axios from "axios";
 
 function ProfileContent({ header }) {
@@ -76,7 +76,7 @@ function ProfileContent({ header }) {
   const contentSection =
     header === "Playlists" ? (
       // <SavedPlaylists />
-      <Accordion open={true} title={"TITLE"} children={<SavedPlaylists />} />
+      <AccordionList />
     ) : (
       <Stats allTimeArtists={allTimeArtists} allTimeTracks={allTimeTracks} />
     );
