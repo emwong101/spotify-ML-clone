@@ -9,9 +9,7 @@ function Landing() {
   const navigate = useNavigate();
   const params = useParams();
 
-  useEffect(() => {
-    if (user.profile.access_token) navigate('/profile');
-  }, []);
+  console.log(user);
 
   return (
     <>
