@@ -7,7 +7,6 @@ import { UserContext } from "../../Context/UserContext";
 const AccordionList = () => {
   let user = useContext(UserContext);
   const pl_data = user.savedplaylists;
-  console.log("pl_data", pl_data);
   const renderAccordionList = () => {
     if (Object.keys(pl_data).length !== 0) {
       return (
@@ -18,6 +17,7 @@ const AccordionList = () => {
                 key={i.playlist_id}
                 open={false}
                 title={`Playlist #${i.playlist_id}`}
+                spotify_playlist_id={i.spotify_playlist_id}
                 children={<SavedPlaylists playlist_data={i.playlist_data} />}
               />
             ))}

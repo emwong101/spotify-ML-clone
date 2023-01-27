@@ -6,7 +6,7 @@ import prettyMilliseconds from "pretty-ms";
 
 const SavedPlaylists = ({ playlist_data }) => {
   let user = useContext(UserContext);
-  console.log("playlist_data: ", JSON.parse(playlist_data));
+  // console.log("playlist_data: ", JSON.parse(playlist_data));
 
   const renderPlaylists = () => {
     // const pl_data = user.savedplaylists;

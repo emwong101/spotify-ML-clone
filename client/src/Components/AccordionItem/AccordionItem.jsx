@@ -1,14 +1,32 @@
 import "./AccordionItem.scss";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
+import axios from "axios";
+import { UserContext } from "../../Context/UserContext";
 
-const AccordionItem = ({ open, children, title }) => {
+const AccordionItem = ({ open, children, title, spotify_playlist_id }) => {
   const [isOpen, setIsOpen] = useState(open);
+  const [coverURL, setCoverURL] = useState("");
   const ref = useRef(null);
+  let user = useContext(UserContext);
+
+  let url = `https://api.spotify.com/v1/playlists/${spotify_playlist_id}/images`;
 
   const [height, setHeight] = useState(open ? undefined : 0);
   const handleOpening = () => {
     setIsOpen((prev) => !prev);
   };
+  useEffect(() => {
+    const grabPlaylistCover = async () => {
+      let { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${user.profile.access_token}`,
+        },
+      });
+      // console.log("grab image: ", data[2].url);
+      setCoverURL(data[2].url);
+    };
+    grabPlaylistCover();
+  }, []);
 
   useEffect(() => {
     if (!height || !isOpen || !ref.current) return undefined;
@@ -30,7 +48,10 @@ const AccordionItem = ({ open, children, title }) => {
       <div className="accordion">
         <div className="accordion__con1">
           <div className="accordion__header">
-            <div className="accordion__pl-cover">TEXT</div>
+            <div
+              className="accordion__pl-cover"
+              style={{ backgroundImage: `url(${coverURL})` }}
+            ></div>
             <div className="accordion__header-wrapper">
               <div className="accordion__title">{title}</div>
               <button className="accordion__btn" onClick={handleOpening}>
