@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './ProfileContent.scss';
-import Stats from '../Stats/Stats';
-import { UserContext } from '../../Context/UserContext';
-import SavedPlaylists from '../SavedPlaylists/SavedPlaylists';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from "react";
+import "./ProfileContent.scss";
+import Stats from "../Stats/Stats";
+import { UserContext } from "../../Context/UserContext";
+import SavedPlaylists from "../SavedPlaylists/SavedPlaylists";
+import Accordion from "../AccordionItem/AccordionItem";
+import axios from "axios";
 
 function ProfileContent({ header }) {
   const user = useContext(UserContext);
@@ -12,7 +13,7 @@ function ProfileContent({ header }) {
   const [allTimeTracks, setAllTimeTracks] = useState([]);
 
   const topDataAllTime = async () => {
-    const query = 'long_term';
+    const query = "long_term";
     const topArtistID = [];
 
     try {
@@ -29,7 +30,7 @@ function ProfileContent({ header }) {
           topThree.forEach((artist) => {
             topArtistID.push(artist.id);
           });
-          localStorage.setItem('top artists', JSON.stringify(topArtistID));
+          localStorage.setItem("top artists", JSON.stringify(topArtistID));
           user.setTopArtists(topArtistID);
           setAllTimeArtists(res.data.items);
         });
@@ -55,13 +56,27 @@ function ProfileContent({ header }) {
     }
   };
 
+  const grabSavedPlaylists = async () => {
+    let { data } = await axios.get(
+      `http://localhost:8080/user/${user.profile.id}/getuserplaylists`
+    );
+
+    if (data[0].playlist_id === null) {
+      console.log("no saved playlists");
+    } else {
+      user.setSavedplaylistsData(data);
+    }
+  };
+
   useEffect(() => {
     topDataAllTime();
+    grabSavedPlaylists();
   }, []);
 
   const contentSection =
-    header === 'Playlists' ? (
-      <SavedPlaylists />
+    header === "Playlists" ? (
+      // <SavedPlaylists />
+      <Accordion open={true} title={"TITLE"} children={<SavedPlaylists />} />
     ) : (
       <Stats allTimeArtists={allTimeArtists} allTimeTracks={allTimeTracks} />
     );

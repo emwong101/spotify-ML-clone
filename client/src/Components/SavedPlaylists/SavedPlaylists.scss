@@ -3,15 +3,17 @@
   padding-left: 24px;
   width: 100%;
   height: 100%;
-  background-color: #f2f2f2;
+  background-color: #393939;
   overflow: scroll;
     &__track-lists{
         display: inline-flex;
         padding-bottom: 16px;
     }
     &__pl-id{
+        padding-top: 16px;
         font-weight: 600;
         padding-bottom: 10px;
+        color: white;
     }
     &__track{
         padding-right: 16px;

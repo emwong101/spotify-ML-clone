@@ -1,22 +1,10 @@
-import './SavedPlaylists.scss';
-import axios from 'axios';
-import { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../../Context/UserContext';
+import "./SavedPlaylists.scss";
+import axios from "axios";
+import { useContext, useState, useEffect } from "react";
+import { UserContext } from "../../Context/UserContext";
 
 const SavedPlaylists = () => {
   let user = useContext(UserContext);
-  // const { id } = JSON.parse(localStorage.getItem("user profile"));
-  let grabSavedPlaylists = async () => {
-    let { data } = await axios.get(
-      `http://localhost:8080/user/${user.profile.id}/getuserplaylists`
-    );
-
-    if (data[0].playlist_id === null) {
-      console.log('no saved playlists');
-    } else {
-      user.setSavedplaylistsData(data);
-    }
-  };
 
   const renderPlaylists = () => {
     const pl_data = user.savedplaylists;
@@ -24,7 +12,6 @@ const SavedPlaylists = () => {
       return (
         <>
           <div className="saved-pl">
-            <h1>Saved Playlists content</h1>
             <div className="saved-pl__list">
               {pl_data.map((i) => (
                 <div className="saved-pl__single-pl" key={i.playlist_id}>
@@ -64,9 +51,9 @@ const SavedPlaylists = () => {
       );
     }
   };
-  useEffect(() => {
-    grabSavedPlaylists();
-  }, []);
+  // useEffect(() => {
+  //   grabSavedPlaylists();
+  // }, []);
   return <>{renderPlaylists()}</>;
 };
 
