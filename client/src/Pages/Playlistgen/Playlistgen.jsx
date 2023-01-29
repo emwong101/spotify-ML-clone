@@ -14,55 +14,27 @@ const Playlistgen = () => {
   let save_pl_data = { id, current_pl };
   //create playlist
   const create_playlist = async () => {
-    const url = `https://api.spotify.com/v1/users/${spotify_id}/playlists`;
-    const req_body = {
-      name: "spotifyML-test",
-      description: "New playlist description for testing",
-      public: false,
-    };
-    let data = await axios
-      .post(url, req_body, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
-        }
-      });
+    let data = await axios.get("http://localhost:8080/createplaylist", {
+      withCredentials: true,
+    });
     setExternalUrl(data.data.external_urls.spotify);
     // setPlaylist_id(data.data.id);
     if (data.status === 201) {
       addRecommendedTracks(data.data.id);
       save_pl_data["spotify_playlist_id"] = data.data.id;
-      console.log("new save_pl_data", save_pl_data);
+      // console.log("new save_pl_data", save_pl_data);
     }
   };
 
-  const addRecommendedTracks = (pl_id) => {
+  const addRecommendedTracks = async (pl_id) => {
     let uri_arr = [];
     current_pl.forEach((i) => uri_arr.push(i.uri));
-
-    const url = `https://api.spotify.com/v1/playlists/${pl_id}/tracks?uris=${uri_arr.join(
-      ","
-    )}`;
-    let { data } = axios
-      .post(
-        url,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        }
-      )
-      .catch((err) => {
-        if (err.response.status === 401) {
-          // make a call to the backend to get new access token
-        }
-      });
-    // setUris(uri_arr);
+    let url = "http://localhost:8080/addrecommendedtracks";
+    let track_data = {
+      pl_id,
+      uri_arr,
+    };
+    await axios.post(url, track_data, { withCredentials: true });
   };
 
   const savePlaylist = async () => {

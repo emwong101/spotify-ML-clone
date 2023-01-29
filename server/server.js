@@ -154,6 +154,56 @@ app.post('/embed', (req, res) => {
   render_oEmbed();
 });
 
+app.get('/createplaylist', (req, res) => {
+  let createPlaylist = async () => {
+    const url = `https://api.spotify.com/v1/users/${req.user.spotify_id}/playlists`;
+    const req_body = {
+      name: 'spotifyML-test',
+      description: 'New playlist description for testing',
+      public: false,
+    };
+    let data = await axios
+      .post(url, req_body, {
+        headers: {
+          Authorization: `Bearer ${req.user.access_token}`,
+        },
+      })
+      .catch((err) => {
+        if (err.response === 401) {
+          // make a call to the backend to get new access token
+        }
+      });
+    res.status(data.status).json(data.data);
+  };
+  createPlaylist();
+});
+
+app.post('/addrecommendedtracks', (req, res) => {
+  let { pl_id, uri_arr } = req.body;
+  const addTracks = async () => {
+    const url = `https://api.spotify.com/v1/playlists/${pl_id}/tracks?uris=${uri_arr.join(
+      ','
+    )}`;
+    let { data } = await axios
+      .post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${req.user.access_token}`,
+          },
+        }
+      )
+      .catch((err) => {
+        if (err.response.status === 401) {
+          // make a call to the backend to get new access token
+        }
+      });
+    res.status(200).json(data);
+  };
+  addTracks();
+});
+
 const PORT = process.env.PORT || 5500;
 
 app.listen(PORT, () => {
