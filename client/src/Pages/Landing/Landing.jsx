@@ -1,17 +1,17 @@
-import './Landing.scss';
-import React, { useContext, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { UserContext } from '../../Context/UserContext';
-import axios from 'axios';
+import "./Landing.scss";
+import React, { useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
+import axios from "axios";
 //
 function Landing() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const params = useParams();
 
-  useEffect(() => {
-    if (user.profile.access_token) navigate('/profile');
-  }, []);
+  // useEffect(() => {
+  //   if (user.profile.access_token) navigate('/profile');
+  // }, []);
 
   return (
     <>

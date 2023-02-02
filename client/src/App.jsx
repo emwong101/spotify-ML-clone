@@ -16,6 +16,7 @@ import PlaylistLength from "./Pages/playlistLength/PlaylistLength";
 import axios from "axios";
 import { UserContext } from "./Context/UserContext";
 import useRefreshToken from "./useRefreshToken";
+import LandingGradient from "./Components/LandingGradient/LandingGradient";
 
 function App() {
   //custom hook to grab new access token after an hour
@@ -31,7 +32,7 @@ function App() {
             <Route
               path="/"
               element={
-                user.profile ? (
+                user.profile.id ? (
                   <Navigate to="/profile" />
                 ) : (
                   <Navigate to="/landing" />
@@ -45,6 +46,7 @@ function App() {
             <Route path="/mood" element={<Mood />} />
             <Route path="/playlistgen" element={<Playlistgen />} />
             <Route path="/length" element={<PlaylistLength />} />
+            <Route path="/dev" element={<LandingGradient />} />
           </Routes>
         </div>
       </BrowserRouter>

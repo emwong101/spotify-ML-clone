@@ -1,0 +1,37 @@
+.main__container {
+  position: relative;
+  background: #c3adef;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border: none;
+
+  outline: none;
+  overflow: hidden;
+  height: 100vh;
+  z-index: 0;
+
+  &::before {
+    --size: 1000%;
+    content: "";
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle closest-side, #895de1, transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+    z-index: 0;
+  }
+
+  &:hover::before {
+    --size: 1000%;
+  }
+}
+
+.tagline {
+  z-index: 99999;
+  color: white;
+  position: relative;
+  padding: 10rem;
+}
