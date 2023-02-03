@@ -4,7 +4,7 @@
   }
   &__track {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       padding-top: 16px;
       padding-bottom: 16px;
   }
@@ -12,18 +12,36 @@
       display: flex;
       flex-direction: row;
       justify-content: center;
+      border: 1px dashed blue;
   }
   &__track-cover{
       width: 64px;
       height: 64px;
   }
-  &__track-title,
   &__track-artist,
   &__track-album,
   &__track-duration, {
-      display: flex;
       align-items: center;
       color: white;
       
   }
+  &__track-title{
+      display: flex;
+      align-items: center;
+      color: white;
+      font-size: 24px;
+  }
+  &__track-primary-con{
+      border: 1px dashed red;
+      display: flex;
+      flex-direction: row;
+  }
+  &__title-album-con {
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 220px;  /* don't grow, don't shrink, stay at 220px width */
+      justify-content: center;
+      border: 1px dashed yellow;
+  }
+  
 }

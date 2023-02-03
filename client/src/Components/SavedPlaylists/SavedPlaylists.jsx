@@ -17,20 +17,26 @@ const SavedPlaylists = ({ playlist_data }) => {
             <div className="saved-pl__tracklist">
               {JSON.parse(playlist_data).map((track) => (
                 <div className="saved-pl__track" key={`${track.id}`}>
-                  <div className="saved-pl__track-cover-con">
-                    <div
-                      className="saved-pl__track-cover"
-                      style={{
-                        backgroundImage: `url(${track.album.images[2].url})`,
-                      }}
-                    ></div>
-                  </div>
-                  <div className="saved-pl__track-title">{track.name}</div>
-                  <div className="saved-pl__track-album">
-                    {track.album.name}
-                  </div>
-                  <div className="saved-pl__track-artist">
-                    {track.artists[0].name}
+                  <div className="saved-pl__track-primary-con">
+                    <div className="saved-pl__track-cover-con">
+                      <div
+                        className="saved-pl__track-cover"
+                        style={{
+                          backgroundImage: `url(${track.album.images[2].url})`,
+                        }}
+                      ></div>
+                    </div>
+                    <div className="saved-pl__title-album-con">
+                      <div className="saved-pl__track-title">{track.name}</div>
+                      {/*
+                       * <div className="saved-pl__track-album">
+                       *   {track.album.name}
+                       * </div>
+                       */}
+                      <div className="saved-pl__track-artist">
+                        {track.artists[0].name}
+                      </div>
+                    </div>
                   </div>
                   <div className="saved-pl__track-duration">
                     {prettyMilliseconds(track.duration_ms, {

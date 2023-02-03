@@ -2,8 +2,8 @@ import "./AccordionItem.scss";
 import { useEffect, useState, useRef, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../../Context/UserContext";
-// import { FaChevronDown } from "react-icons/fa";
-// import { FaChevronUp } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
+import { FaChevronUp } from "react-icons/fa";
 const AccordionItem = ({ open, children, title, spotify_playlist_id }) => {
   const [isOpen, setIsOpen] = useState(open);
   const [coverURL, setCoverURL] = useState("");
@@ -56,7 +56,7 @@ const AccordionItem = ({ open, children, title, spotify_playlist_id }) => {
             <div className="accordion__header-wrapper">
               <div className="accordion__title">{title}</div>
               <button className="accordion__btn" onClick={handleOpening}>
-                {!isOpen ? "Close" : "Open"}
+                {!isOpen ? <FaChevronDown /> : <FaChevronUp />}
               </button>
             </div>
           </div>
