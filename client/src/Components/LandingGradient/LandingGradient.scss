@@ -1,9 +1,19 @@
+@font-face {
+  font-family: "Circular Std Bold";
+  src: url("/fonts/CircularStd-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Circular Std";
+  src: url("/fonts/circular-std-medium-500.ttf");
+}
+
 .main__container {
   position: relative;
   background: linear-gradient(
     0deg,
-    rgba(251, 250, 254, 1) 4%,
-    rgba(195, 173, 239, 1) 100%,
+    rgb(183, 159, 255) 4%,
+    rgb(147, 108, 226) 100%,
     rgba(255, 255, 255, 0) 100%
   );
   padding: 0.5rem 1rem;
@@ -16,27 +26,82 @@
   z-index: 0;
 
   &::before {
-    --size: 1000%;
+    --size: 500%;
     content: "";
     position: absolute;
     left: var(--x);
     top: var(--y);
     width: var(--size);
     height: var(--size);
-    background: radial-gradient(circle closest-side, #794ad7, transparent);
+    background: radial-gradient(circle closest-side, #ffffff, transparent);
     transform: translate(-50%, -50%);
     transition: width 0.2s ease, height 0.2s ease;
     z-index: 0;
   }
 
   &:hover::before {
-    --size: 1000%;
+    --size: 500%;
   }
 }
 
 .tagline {
   z-index: 99999;
-  color: white;
+  color: #4d4d4d;
+  font-size: 6.25rem;
+  letter-spacing: 5%;
   position: relative;
-  padding: 10rem;
+  padding: 0rem 18rem;
+  font-family: "Circular Std Bold", sans-serif;
+}
+
+.landing__button {
+  position: relative;
+  margin: 0rem 18rem;
+}
+
+.landing__card {
+  width: 16.8rem;
+  height: 16.8rem;
+  background-color: white;
+  color: #4d4d4d;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+
+  &--text {
+    padding: 1rem;
+  }
+
+  &--title {
+    margin: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(183, 46, 215, 1) 0%,
+      rgba(134, 75, 255, 1) 100%
+    );
+    border-radius: 20px;
+    color: white;
+    font-size: 0.75rem;
+    width: fit-content;
+    padding: 5px 10px;
+    text-align: center;
+    font-family: "Circular Std";
+    font-weight: 100;
+  }
+
+  &--body {
+    padding-left: 0.3rem;
+  }
+}
+
+.mixtape {
+  background: linear-gradient(
+    0deg,
+    rgba(255, 5, 155, 1) 0%,
+    rgba(134, 75, 255, 1) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
