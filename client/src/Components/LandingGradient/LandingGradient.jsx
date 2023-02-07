@@ -3,7 +3,10 @@ import "./LandingGradient.scss";
 import React from "react";
 import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../../Context/UserContext";
+import LandingCard from "../LandingCard/LandingCard";
 import Mixtape from "/assets/mixtape-background.svg";
+import Login from "/assets/login-background.svg";
+import Mood from "/assets/mood-background.svg";
 
 function LandingGradient() {
   const user = useContext(UserContext);
@@ -31,19 +34,29 @@ function LandingGradient() {
   return (
     <div>
       <div
-        className="main__container"
+        className="landing__container"
         style={{ "--x": positionX, "--y": positionY }}
       >
         <h1 className="tagline">
           Build the <span className="mixtape">mixtape</span> of <br />
           your dreams
         </h1>
-        <div className="landing__card">
-          <img className="landing__card--banner" src={Mixtape} />
-          <div className="landing__card--text">
-            <h5 className="landing__card--title">Step 3: Get Your Mixtape!</h5>
-            <p className="landing__card--body">text goes here</p>
-          </div>
+        <div className="landing__cards">
+          <LandingCard
+            banner={Login}
+            content="Log in with your Spotify account and let us handle the rest, while you Ubereats some drinks"
+            step="Step 1: Log in"
+          />
+          <LandingCard
+            banner={Mood}
+            content="Your mood is like your alarm clock, you have to set it! Choose the category you're feeling the most and hit submit."
+            step="Step 2: Set the Mood"
+          />
+          <LandingCard
+            banner={Mixtape}
+            content="Now, chill out, grab a beer, and enjoy your new custom mixtape!"
+            step="Step 3: Get Your Mixtape!"
+          />
         </div>
         {user.profile.id ? (
           <div className="landing__profile-container">

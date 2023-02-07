@@ -42,7 +42,7 @@ function App() {
             <Route path="/discover" element={<Discover />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/charts" element={<Charts />} />
-            <Route path="/landing" element={<Landing />} />
+            <Route path="/landing" element={<LandingGradient />} />
             <Route path="/mood" element={<Mood />} />
             <Route path="/playlistgen" element={<Playlistgen />} />
             <Route path="/length" element={<PlaylistLength />} />
