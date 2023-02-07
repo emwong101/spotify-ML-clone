@@ -5,6 +5,7 @@ import "./MoodInputs.scss";
 function MoodInputs({ type }) {
   const user = useContext(UserContext);
 
+  //string values for each mood param search
   const moods = {
     happy:
       "seed_genres=happy&min_danceability=0.55&min_energy=0.6&min_tempo=76&min_valence=0.6",
