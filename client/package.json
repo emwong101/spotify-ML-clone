@@ -15,6 +15,7 @@
     "axios": "^1.2.2",
     "chart.js": "^4.1.2",
     "html-react-parser": "^3.0.8",
+    "nuka-carousel": "^5.4.1",
     "pretty-ms": "^8.0.0",
     "rc-slider": "^10.1.0",
     "react": "^18.2.0",

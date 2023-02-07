@@ -4,7 +4,7 @@
   &__tracklist {
       display: inline-flex;
       flex-direction: row;
-      flex: 0 0 64px;  /* don't grow, don't shrink, stay at 64px width */
+      // flex: 0 0 64px;  /* don't grow, don't shrink, stay at 64px width */
   }
   &__track {
       // display: grid;
