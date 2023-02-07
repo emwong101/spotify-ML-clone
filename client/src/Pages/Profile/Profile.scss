@@ -1,9 +1,12 @@
 .profile {
   width: 100%;
+  height: 100vh;
+  
   &__main {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    padding: 0 8rem;
+    height: 100%;
+    // padding: 0 8rem;
   }
 
   &__back-icon {
@@ -18,5 +21,9 @@
   }
 
   &__content {
+      color: white;
+      height: 100%;
+      background-color: #323232;
+
   }
 }

@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './Profile.scss';
-import { IoIosArrowRoundBack } from 'react-icons/io';
-import { UserContext } from '../../Context/UserContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import "./Profile.scss";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { UserContext } from "../../Context/UserContext";
+import { useNavigate } from "react-router-dom";
 
-import ProfileMenu from '../../Components/ProfileMenu/ProfileMenu';
-import ProfileContent from '../../Components/ProfileContent/ProfileContent';
-import axios from 'axios';
-import useRefreshToken from '../../useRefreshToken';
+import ProfileMenu from "../../Components/ProfileMenu/ProfileMenu";
+import ProfileContent from "../../Components/ProfileContent/ProfileContent";
+import axios from "axios";
+import useRefreshToken from "../../useRefreshToken";
 
 function Profile(props) {
-  const [clickedItem, setClickedItem] = useState('Playlists');
+  const [clickedItem, setClickedItem] = useState("Playlists");
   const user = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -18,7 +18,6 @@ function Profile(props) {
 
   return (
     <div className="profile">
-      <IoIosArrowRoundBack className="profile__back-icon" />
       {user.profile.id ? (
         <section className="profile__main">
           <div className="profile__menu">
@@ -31,16 +30,18 @@ function Profile(props) {
           <div className="profile__content">
             <ProfileContent header={clickedItem} />
           </div>
-          <a href="http://localhost:8080/auth/logout">
-            <button
-              onClick={() => {
-                sessionStorage.clear();
-                navigate('/landing');
-              }}
-            >
-              Logout
-            </button>
-          </a>
+          {/*
+           * <a href="http://localhost:8080/auth/logout">
+           *   <button
+           *     onClick={() => {
+           *       sessionStorage.clear();
+           *       navigate('/landing');
+           *     }}
+           *   >
+           *     Logout
+           *   </button>
+           * </a>
+           */}
         </section>
       ) : (
         <>

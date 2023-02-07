@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ProfileContent.scss";
 import Stats from "../Stats/Stats";
 import { UserContext } from "../../Context/UserContext";
@@ -11,6 +12,7 @@ function ProfileContent({ header }) {
 
   const [allTimeArtists, setAllTimeArtists] = useState([]);
   const [allTimeTracks, setAllTimeTracks] = useState([]);
+  const navigate = useNavigate();
 
   const topDataAllTime = async () => {
     const query = "long_term";
@@ -83,7 +85,24 @@ function ProfileContent({ header }) {
 
   return (
     <div className="profile-content">
-      <h1 className="profile-content__header">{header.toUpperCase()}</h1>
+      {/*
+       * <h1 className="profile-content__header">{header.toUpperCase()}</h1>
+       */}
+      <div className="hero">
+        <div className="hero__left-con">
+          <div className="profile-content__header">
+            {`YOUR ` + header.toUpperCase()}
+          </div>
+        </div>
+        <div className="hero__right-con">
+          <button
+            className="hero__discovery-btn"
+            onClick={() => navigate("/discover")}
+          >
+            BUILD
+          </button>
+        </div>
+      </div>
       <section className="profile-content__content-section">
         {contentSection}
       </section>
