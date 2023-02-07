@@ -42,6 +42,7 @@ const useRefreshToken = () => {
   useEffect(() => {
     // if (window.location.href !== 'http://localhost:5173/landing') {
     grabProfile(user);
+    grabNewAccessToken(user);
     // }
   }, []);
 };

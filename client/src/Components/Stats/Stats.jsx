@@ -1,24 +1,24 @@
-import React, { useState, useContext, useEffect } from "react";
-import { UserContext } from "../../Context/UserContext";
-import axios from "axios";
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../../Context/UserContext';
+import axios from 'axios';
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-import "./Stats.scss";
-import Top10Item from "../Top10Item/Top10Item";
+import './Stats.scss';
+import Top10Item from '../Top10Item/Top10Item';
 
-function Stats(props) {
+function Stats({ allTimeArtists, allTimeTracks }) {
   const user = useContext(UserContext);
   const [genreStats, setGenreStats] = useState({});
   const [fourWeeksArtists, setFourWeeksArtists] = useState([]);
   const [fourWeeksTracks, setFourWeeksTracks] = useState([]);
   const [sixMonthsArtists, setSixMonthsArtists] = useState([]);
   const [sixMonthsTracks, setSixMonthsTracks] = useState([]);
-  const [allTimeArtists, setAllTimeArtists] = useState([]);
-  const [allTimeTracks, setAllTimeTracks] = useState([]);
+  // const [allTimeArtists, setAllTimeArtists] = useState([]);
+  // const [allTimeTracks, setAllTimeTracks] = useState([]);
   const [top10Artists, setTop10Artists] = useState([]);
   const [top10Tracks, setTop10Track] = useState([]);
 
@@ -72,7 +72,7 @@ function Stats(props) {
   };
 
   const topDataFourWeeks = async () => {
-    const query = "short_term";
+    const query = 'short_term';
 
     try {
       await axios
@@ -109,7 +109,7 @@ function Stats(props) {
   };
 
   const topDataSixMonths = async () => {
-    const query = "medium_term";
+    const query = 'medium_term';
 
     try {
       await axios
@@ -145,51 +145,6 @@ function Stats(props) {
     }
   };
 
-  const topDataAllTime = async () => {
-    const query = "long_term";
-    const topArtistID = [];
-
-    try {
-      await axios
-        .post(
-          `http://localhost:8080/artists`,
-          {
-            query: query,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          let topThree = res.data.items.slice(0, 3);
-          console.log(topThree);
-          topThree.forEach((artist) => {
-            topArtistID.push(artist.id);
-          });
-          localStorage.setItem("top artists", JSON.stringify(topArtistID));
-          user.setTopArtists(topArtistID);
-          setAllTimeArtists(res.data.items);
-        });
-
-      await axios
-        .post(
-          `http://localhost:8080/tracks`,
-          {
-            query: query,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          setAllTimeTracks(res.data.items);
-        });
-    } catch {
-      (err) => {
-        if (err.response) {
-          console.log(err.response);
-          console.log(err.response.status);
-        }
-      };
-    }
-  };
-
   const genrePieChart = (
     <Pie
       datasetIdKey="id"
@@ -197,7 +152,7 @@ function Stats(props) {
         labels: Object.keys(genreStats),
         datasets: [
           {
-            label: "My Genres",
+            label: 'My Genres',
             data: Object.values(genreStats),
             backgroundColor: Object.values(genreStats).map(
               (data) =>
@@ -216,7 +171,7 @@ function Stats(props) {
   useEffect(() => {
     topDataFourWeeks();
     topDataSixMonths();
-    topDataAllTime();
+    // topDataAllTime();
   }, []);
 
   useEffect(() => {
@@ -290,3 +245,48 @@ function Stats(props) {
 }
 
 export default Stats;
+
+//  export const topDataAllTime = async () => {
+//    const query = 'long_term';
+//    const topArtistID = [];
+
+//    try {
+//      await axios
+//        .post(
+//          `http://localhost:8080/artists`,
+//          {
+//            query: query,
+//          },
+//          { withCredentials: true }
+//        )
+//        .then((res) => {
+//          let topThree = res.data.items.slice(0, 3);
+//          console.log(topThree);
+//          topThree.forEach((artist) => {
+//            topArtistID.push(artist.id);
+//          });
+//          localStorage.setItem('top artists', JSON.stringify(topArtistID));
+//          user.setTopArtists(topArtistID);
+//          setAllTimeArtists(res.data.items);
+//        });
+
+//      await axios
+//        .post(
+//          `http://localhost:8080/tracks`,
+//          {
+//            query: query,
+//          },
+//          { withCredentials: true }
+//        )
+//        .then((res) => {
+//          setAllTimeTracks(res.data.items);
+//        });
+//    } catch {
+//      (err) => {
+//        if (err.response) {
+//          console.log(err.response);
+//          console.log(err.response.status);
+//        }
+//      };
+//    }
+//  };

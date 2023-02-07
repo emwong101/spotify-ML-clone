@@ -14,6 +14,8 @@ function Profile(props) {
   const user = useContext(UserContext);
   const navigate = useNavigate();
 
+  useRefreshToken();
+
   return (
     <div className="profile">
       <IoIosArrowRoundBack className="profile__back-icon" />
@@ -29,14 +31,16 @@ function Profile(props) {
           <div className="profile__content">
             <ProfileContent header={clickedItem} />
           </div>
-          <button
-            onClick={() => {
-              sessionStorage.clear();
-              navigate('/landing');
-            }}
-          >
-            Logout
-          </button>
+          <a href="http://localhost:8080/auth/logout">
+            <button
+              onClick={() => {
+                sessionStorage.clear();
+                navigate('/landing');
+              }}
+            >
+              Logout
+            </button>
+          </a>
         </section>
       ) : (
         <>
