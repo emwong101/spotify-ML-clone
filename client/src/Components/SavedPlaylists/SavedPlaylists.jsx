@@ -24,25 +24,32 @@ const SavedPlaylists = ({ playlist_data }) => {
                         style={{
                           backgroundImage: `url(${track.album.images[2].url})`,
                         }}
-                      ></div>
-                    </div>
-                    <div className="saved-pl__title-album-con">
-                      <div className="saved-pl__track-title">{track.name}</div>
-                      {/*
-                       * <div className="saved-pl__track-album">
-                       *   {track.album.name}
-                       * </div>
-                       */}
-                      <div className="saved-pl__track-artist">
-                        {track.artists[0].name}
+                      >
+                        <div className="inner-circle-w"></div>
+                        <div className="inner-circle-g"></div>
                       </div>
                     </div>
+                    {/* title-album
+                     * <div className="saved-pl__title-album-con">
+                     *   <div className="saved-pl__track-title">{track.name}</div>
+                     *   {#<{(|
+                     *    * <div className="saved-pl__track-album">
+                     *    *   {track.album.name}
+                     *    * </div>
+                     *    |)}>#}
+                     *   <div className="saved-pl__track-artist">
+                     *     {track.artists[0].name}
+                     *   </div>
+                     * </div>
+                     */}
                   </div>
-                  <div className="saved-pl__track-duration">
-                    {prettyMilliseconds(track.duration_ms, {
-                      secondsDecimalDigits: 0,
-                    })}
-                  </div>
+                  {/* duration
+                   * <div className="saved-pl__track-duration">
+                   *   {prettyMilliseconds(track.duration_ms, {
+                   *     secondsDecimalDigits: 0,
+                   *   })}
+                   * </div>
+                   */}
                 </div>
               ))}
             </div>

@@ -1,22 +1,28 @@
 .saved-pl {
-  // display: flex;
+    display: flex;
+    justify-content: space-around;
   &__tracklist {
+      display: inline-flex;
+      flex-direction: row;
+      flex: 0 0 64px;  /* don't grow, don't shrink, stay at 64px width */
   }
   &__track {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      padding-top: 16px;
-      padding-bottom: 16px;
+      // display: grid;
+      // display: inline-flex;
+      // grid-template-columns: repeat(2, 1fr);
+      padding: 16px;
   }
   &__track-cover-con{
       display: flex;
       flex-direction: row;
       justify-content: center;
-      border: 1px dashed blue;
+      // border: 1px dashed blue;
   }
   &__track-cover{
+      position: relative;
       width: 64px;
       height: 64px;
+      border-radius: 50%;
   }
   &__track-artist,
   &__track-album,
@@ -31,17 +37,38 @@
       color: white;
       font-size: 24px;
   }
-  &__track-primary-con{
-      border: 1px dashed red;
-      display: flex;
-      flex-direction: row;
-  }
-  &__title-album-con {
-      display: flex;
-      flex-direction: column;
-      flex: 0 0 220px;  /* don't grow, don't shrink, stay at 220px width */
-      justify-content: center;
-      border: 1px dashed yellow;
-  }
+  // &__track-primary-con{
+  //     // border: 1px dashed red;
+  //     display: flex;
+  //     flex-direction: row;
+  // }
+  // &__title-album-con {
+  //     display: inline-flex;
+  //     flex-direction: column;
+  //     flex: 0 0 220px;  /* don't grow, don't shrink, stay at 220px width */
+  //     justify-content: center;
+  //     border: 1px dashed yellow;
+  // }
   
+}
+.inner-circle-w {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -10px;
+}
+
+.inner-circle-g {
+    position: absolute;
+    background-color: #616161;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    top: 50%;
+    left: 50%;
+    margin: -7px 0 0 -7px;
 }

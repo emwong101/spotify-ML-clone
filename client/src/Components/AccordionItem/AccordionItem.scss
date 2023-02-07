@@ -1,10 +1,8 @@
 .accordion {
     background-color: #323232;
-    // min-width: 80vw;
-    // height: 90vh;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-bottom: 24px;
+    padding-left: 75px;
+    padding-right: 125px;
+    // margin-bottom: px;
     margin-top: 24px;
     &__header-wrapper{
         width: 100%;
@@ -13,10 +11,10 @@
         justify-content: space-between;
     }
     &__header{
-        background-color: #e5e5e5;
+        background-color: #414141;
         display: flex;
         justify-content: space-between;
-        color: black;
+        color: white;
     }
     &__con1{
         // width: 100vw;
@@ -34,6 +32,7 @@
         height: 60px;
     }
     &__btn {
+        background-color: #414141;
         border: none;
     }
 }
@@ -41,4 +40,5 @@
 .my-collapse {
     overflow: hidden;
     transition: height 0.2s ease-in-out;
+    background-color: #616161;
 }

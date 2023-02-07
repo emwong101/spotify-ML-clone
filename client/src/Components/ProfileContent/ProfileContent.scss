@@ -2,7 +2,7 @@
   position: relative;
   height: 40%;
   &__header {
-    padding-left: 16px;
+    padding-left: 75px;
     position: absolute;
     margin: 0;
     font-size: 80px;
@@ -19,20 +19,23 @@
   }
 }
 .hero{
-    // background-color: blue;
     background-image: url("../../assets/Mask_group.png");
     object-fit: cover;
     background-repeat: no-repeat;
     background-size: 100% 100%; 
-    // background-origin: content-box;
     width: 100%;
     height: 100%;
     &__discovery-btn {
         position: absolute;
-        right: 40px;
-        top: 20px;
+        right: 125px;
+        top: 50px;
         border: none;
-        background-color: purple;
+        background-color: #864BFF;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 16px 32px;
+        border-radius: 5px;
     }
     // &__right-con {
     //     border: 1px dashed red;

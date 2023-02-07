@@ -99,7 +99,7 @@ function ProfileContent({ header }) {
             className="hero__discovery-btn"
             onClick={() => navigate("/discover")}
           >
-            BUILD
+            Build Playlist
           </button>
         </div>
       </div>
