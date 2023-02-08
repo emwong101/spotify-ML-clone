@@ -97,7 +97,7 @@ function ProfileContent({ header }) {
         <div className="hero__right-con">
           <button
             className="hero__discovery-btn"
-            onClick={() => navigate("/discover")}
+            onClick={() => navigate("/mood")}
           >
             Build Playlist
           </button>
