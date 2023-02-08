@@ -15,7 +15,7 @@ const SavedPlaylists = ({ playlist_data }) => {
         <>
           <div className="saved-pl">
             <div className="saved-pl__tracklist">
-              <Carousel className="carousel"  slidesToShow={5} cellSpacing={1}>
+              <Carousel className="carousel" slidesToShow={5} cellSpacing={0}>
                 {JSON.parse(playlist_data).map((track) => (
                   <div className="saved-pl__track" key={`${track.id}`}>
                     <div className="saved-pl__track-primary-con">

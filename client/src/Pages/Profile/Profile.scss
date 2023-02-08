@@ -24,6 +24,7 @@
       color: white;
       height: 100%;
       background-color: #323232;
-
+      // overflow: hidden; //works how i want it, but does not let you vert scroll
+      overflow: auto; //works how i want it, but does not let you vert scroll
   }
 }

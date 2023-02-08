@@ -1,13 +1,14 @@
 .accordion {
     // display: flex;
     // flex-direction: column;
-    background-color: #323232;
-    // padding-left: 75px;
+    // background-color: #323232;
+    padding-left: 75px;
     // padding-right: 125px;
-    max-width: 60vw;
+    max-width: 68vw;
     // margin-bottom: px;
     margin-top: 24px;
     overflow: hidden;
+    flex-grow: 1;
     &__header-wrapper{
         width: 100%;
         display: flex;
@@ -25,7 +26,7 @@
         // flex-direction: row;
     }
     &__con2{
-        flex-basis: 90%;
+        flex-basis: 100%;
         // min-width: 100%;
         // height: 100%;
     }

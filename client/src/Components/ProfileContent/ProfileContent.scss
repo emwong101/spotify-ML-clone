@@ -11,13 +11,16 @@
 
   &__content-section {
     width: 100%;
-    min-height: 500px;
-    height: 500px;
+    // min-height: 500px;
+    // height: 500px;
+    height: max-content;
     margin-top: 4rem;
-    display: flex;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-wrap: wrap;
+    padding-bottom: 32px;
   }
 }
+
 .hero{
     background-image: url("../../assets/Mask_group.png");
     object-fit: cover;
