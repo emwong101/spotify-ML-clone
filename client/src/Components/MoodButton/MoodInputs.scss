@@ -1,19 +1,39 @@
-.mood-label {
-  min-width: 15rem;
-  height: 15rem;
-  padding: 2rem 1rem;
-  border-radius: 50%;
-  border: 3px solid #000;
-  text-align: center;
+.mood-input {
   cursor: pointer;
-  display: block;
-  color: #000;
+  &__radio {
+    display: none;
+  }
+  &__label {
+    min-width: 15rem;
+    height: 15rem;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    color: #000;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  &__picture {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    min-width: 15rem;
+    height: 15rem;
+    position: absolute;
+  }
+  &__selection {
+    z-index: 99;
+    color: white;
+    font-size: 2rem;
+  }
 }
 
-input[type="radio"]:checked + label {
-  background-color: aquamarine;
+.mood-label {
 }
 
-.moodRadio {
-  display: none;
-}
+// input[type='radio']:checked + label {
+//   background-color: aquamarine;
+// }
