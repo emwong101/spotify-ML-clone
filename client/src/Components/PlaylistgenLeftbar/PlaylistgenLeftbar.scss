@@ -1,0 +1,12 @@
+.playlistgen-leftbar{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #864BFF 80%, rgba(35,35,35, 0) 200%);
+    &__container-1{
+        height: 100%;
+        background-color: purple;
+        overflow: auto;
+    }
+}
