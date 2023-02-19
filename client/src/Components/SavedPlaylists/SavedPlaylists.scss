@@ -15,8 +15,9 @@
   }
   &__track-cover-con{
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
       // border: 1px dashed blue;
   }
   &__track-cover{
@@ -26,30 +27,33 @@
       border-radius: 50%;
   }
   &__track-artist,
-  &__track-album,
-  &__track-duration, {
+  &__track-album {
+      display: flex;
+      justify-content: center;
       align-items: center;
       color: white;
+      text-align: center;
+      font-size: 14px;
       
   }
   &__track-title{
       display: flex;
-      align-items: center;
+      flex-direction: row;
+      text-align: center;
+      justify-content: center;
       color: white;
-      font-size: 24px;
+      font-size: 18px;
+      font-weight: 600;
   }
   // &__track-primary-con{
   //     // border: 1px dashed red;
   //     display: flex;
   //     flex-direction: row;
   // }
-  // &__title-album-con {
-  //     display: inline-flex;
-  //     flex-direction: column;
-  //     flex: 0 0 220px;  /* don't grow, don't shrink, stay at 220px width */
-  //     justify-content: center;
-  //     border: 1px dashed yellow;
-  // }
+  &__title-album-con {
+      // flex: 0 0 220px;  /* don't grow, don't shrink, stay at 220px width */
+      align-items: center;
+  }
   
 }
 .inner-circle-w {
@@ -75,6 +79,10 @@
 }
 
 .carousel {
-    max-width: 60vw;
-    // flex: 0 1 0;
+    max-width: 55vw;
+    // flex: 1 1 1;
+}
+
+.slider-list {
+    width: 400%;
 }

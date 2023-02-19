@@ -15,7 +15,11 @@ const SavedPlaylists = ({ playlist_data }) => {
         <>
           <div className="saved-pl">
             <div className="saved-pl__tracklist">
-              <Carousel className="carousel" slidesToShow={5} cellSpacing={0}>
+              <Carousel
+                className="carousel"
+                slidesToShow={5}
+                renderBottomCenterControls={false}
+              >
                 {JSON.parse(playlist_data).map((track) => (
                   <div className="saved-pl__track" key={`${track.id}`}>
                     <div className="saved-pl__track-primary-con">
@@ -29,20 +33,20 @@ const SavedPlaylists = ({ playlist_data }) => {
                           <div className="inner-circle-w"></div>
                           <div className="inner-circle-g"></div>
                         </div>
+                        <div className="saved-pl__title-album-con">
+                          <div className="saved-pl__track-title">
+                            {track.name}
+                          </div>
+                          {/*
+                           * <div className="saved-pl__track-album">
+                           *   {track.album.name}
+                           * </div>
+                           */}
+                          <div className="saved-pl__track-artist">
+                            {track.artists[0].name}
+                          </div>
+                        </div>
                       </div>
-                      {/* title-album
-                       * <div className="saved-pl__title-album-con">
-                       *   <div className="saved-pl__track-title">{track.name}</div>
-                       *   {#<{(|
-                       *    * <div className="saved-pl__track-album">
-                       *    *   {track.album.name}
-                       *    * </div>
-                       *    |)}>#}
-                       *   <div className="saved-pl__track-artist">
-                       *     {track.artists[0].name}
-                       *   </div>
-                       * </div>
-                       */}
                     </div>
                     {/* duration
                      * <div className="saved-pl__track-duration">

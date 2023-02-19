@@ -30,18 +30,6 @@ function Profile(props) {
           <div className="profile__content">
             <ProfileContent header={clickedItem} />
           </div>
-          {/*
-           * <a href="http://localhost:8080/auth/logout">
-           *   <button
-           *     onClick={() => {
-           *       sessionStorage.clear();
-           *       navigate('/landing');
-           *     }}
-           *   >
-           *     Logout
-           *   </button>
-           * </a>
-           */}
         </section>
       ) : (
         <>

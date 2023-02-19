@@ -1,6 +1,17 @@
-.plgen{
-    display: flex;
-    flex-direction: column;
+.playlist-gen{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    // flex-direction: column;
+    &__container-1{
+        height: 100%;
+        background-color: purple;
+        overflow: auto;
+    }
+    &__container-2{
+        height: 100%;
+    }
+
     &__content-con {
         display: inline-flex;
         flex-direction: row;

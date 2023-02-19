@@ -77,10 +77,11 @@ function ProfileContent({ header }) {
 
   const contentSection =
     header === "Playlists" ? (
-      // <SavedPlaylists />
       <AccordionList />
     ) : (
-      <Stats allTimeArtists={allTimeArtists} allTimeTracks={allTimeTracks} />
+      <div className="stats-content-con">
+        <Stats allTimeArtists={allTimeArtists} allTimeTracks={allTimeTracks} />
+      </div>
     );
 
   return (

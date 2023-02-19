@@ -45,41 +45,53 @@ const Playlistgen = () => {
 
   return (
     <>
-      <div className="plgen">
-        <div className="plgen__heading">Here is your playlist</div>
-        <div className="plgen__content-con">
-          <div className="plgen__content-1">
-            <div className="plgen__list">
-              {user.recommended &&
-                user.recommended.map((i) => (
-                  <div className="plgen__track-con" key={i.id.toString()}>
+      <div className="playlist-gen">
+        <div className="playlist-gen__container-1">left-sidebar</div>
+        <div className="playlist-gen__container-2">
+          <div className="playlist-gen__heading">Here is your playlist</div>
+          <div className="playlist-gen__content-con">
+            <div className="playlist-gen__content-1">
+              <div className="playlist-gen__list">
+                {user.recommended &&
+                  user.recommended.map((i) => (
                     <div
-                      className="plgen__track-content1"
-                      style={{
-                        backgroundImage: `url(${i.album.images[2].url})`,
-                      }}
-                    ></div>
-                    <div className="plgen__track-content2">
-                      <div className="plgen__trackname">{i.name}</div>
-                      <div className="plgen__artist">{i.artists[0].name}</div>
-                      <div className="plgen__trackid">TrackID: {i.id}</div>
+                      className="playlist-gen__track-con"
+                      key={i.id.toString()}
+                    >
+                      <div
+                        className="playlist-gen__track-content1"
+                        style={{
+                          backgroundImage: `url(${i.album.images[2].url})`,
+                        }}
+                      ></div>
+                      <div className="playlist-gen__track-content2">
+                        <div className="playlist-gen__trackname">{i.name}</div>
+                        <div className="playlist-gen__artist">
+                          {i.artists[0].name}
+                        </div>
+                        <div className="playlist-gen__trackid">
+                          TrackID: {i.id}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+              </div>
             </div>
-          </div>
-          <div className="plgen__content-2">
-            <div className="plgen__spotify-embed">
-              {externalurl && <SpotifyEmbed externalurl={externalurl} />}
-            </div>
-            <div className="plgen__buttons-con">
-              <button className="plgen__btn-spotify">Open in Spotify</button>
-              <button
-                className="plgen__btn-save"
-                onClick={() => savePlaylist()}
-              >
-                save
-              </button>
+            <div className="playlist-gen__content-2">
+              <div className="playlist-gen__spotify-embed">
+                {externalurl && <SpotifyEmbed externalurl={externalurl} />}
+              </div>
+              <div className="playlist-gen__buttons-con">
+                <button className="playlist-gen__btn-spotify">
+                  Open in Spotify
+                </button>
+                <button
+                  className="playlist-gen__btn-save"
+                  onClick={() => savePlaylist()}
+                >
+                  save
+                </button>
+              </div>
             </div>
           </div>
         </div>

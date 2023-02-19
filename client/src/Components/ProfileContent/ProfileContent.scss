@@ -11,14 +11,16 @@
 
   &__content-section {
     width: 100%;
-    // min-height: 500px;
-    // height: 500px;
-    height: max-content;
     margin-top: 4rem;
+    padding-bottom: 125px;
+    // min-height: 500px;
+    // height: max-content;
     // display: flex;
     // flex-wrap: wrap;
-    padding-bottom: 32px;
   }
+}
+.stats-content-con{
+    height: 500px;
 }
 
 .hero{
