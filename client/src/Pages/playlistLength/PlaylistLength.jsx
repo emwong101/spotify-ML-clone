@@ -4,6 +4,7 @@ import { UserContext } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import "./PlaylistLength.scss";
 import axios from "axios";
+import CircularSlider from "@fseehawer/react-circular-slider";
 import Slider from "@mui/material/Slider";
 
 function PlaylistLength() {
@@ -37,6 +38,17 @@ function PlaylistLength() {
 
   return (
     <div>
+      <CircularSlider
+        min={5}
+        max={100}
+        onChange={(e) => {
+          setLength(e.value);
+        }}
+        label="Songs"
+        labelBottom={true}
+        labelColor={"#FFFFFF"}
+        appendToValue={"/100"}
+      ></CircularSlider>
       <div className="playlist-length__slider">
         <Slider
           min={5}

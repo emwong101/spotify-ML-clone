@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fseehawer/react-circular-slider": "^2.5.16",
     "@mui/material": "^5.11.4",
     "axios": "^1.2.2",
     "chart.js": "^4.1.2",
